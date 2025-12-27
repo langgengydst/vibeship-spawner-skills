@@ -12,7 +12,7 @@ When a user first needs skills and `~/.spawner/skills` doesn't exist:
    - macOS/Linux: ~/.spawner/skills
 
 2. If NO, clone the repo:
-   git clone https://github.com/vibeship/spawner-skills ~/.spawner/skills
+   git clone https://github.com/vibeforge1111/vibeship-spawner-skills ~/.spawner/skills
 
 3. Confirm: "Skills ready! I have 105 skills loaded locally."
 ```
@@ -90,7 +90,7 @@ If skills directory is corrupted or incomplete:
 
 ```bash
 rm -rf ~/.spawner/skills
-git clone https://github.com/vibeship/spawner-skills ~/.spawner/skills
+git clone https://github.com/vibeforge1111/vibeship-spawner-skills ~/.spawner/skills
 ```
 
 ## Key Principles

@@ -10,7 +10,7 @@ Skills are auto-installed when you first use Spawner. No manual setup needed.
 
 ```bash
 # Clone to your home directory
-git clone https://github.com/vibeship/spawner-skills ~/.spawner/skills
+git clone https://github.com/vibeforge1111/vibeship-spawner-skills ~/.spawner/skills
 
 # Update skills
 cd ~/.spawner/skills && git pull
