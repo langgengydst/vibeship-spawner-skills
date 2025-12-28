@@ -22,18 +22,19 @@ cd ~/.spawner/skills && git pull
 2. Claude reads skills directly from `~/.spawner/skills/`
 3. No API calls for skill loading = free, fast, offline
 
-## Skill Categories (136 Total)
+## Skill Categories (148 Total)
 
 | Category | Skills | Description |
 |----------|--------|-------------|
 | `development` | 43 | Backend, frontend, devops, security, testing |
 | `marketing` | 33 | AI video, copywriting, SEO, growth |
+| `mind-v5` | 22 | Memory system, semantic search, context management |
 | `strategy` | 10 | Product strategy, growth, founder skills |
-| `data` | 7 | Postgres, Redis, vectors, graphs, Drizzle |
+| `data` | 9 | Postgres, Redis, vectors, graphs, job queues |
+| `integration` | 8 | Stripe, email, queues, webhooks, auth |
 | `frameworks` | 6 | Next.js, React, Svelte, Tailwind |
 | `ai` | 4 | LLM architect, ML memory, RAG |
 | `design` | 4 | UI, UX, branding, landing pages |
-| `integration` | 4 | Stripe, email, Vercel, auth |
 | `product` | 4 | Analytics, A/B testing, PM |
 | `startup` | 3 | YC playbook, founder mode, burn rate |
 | `communications` | 2 | Dev comms, community building |
@@ -44,15 +45,16 @@ cd ~/.spawner/skills && git pull
 ~/.spawner/skills/
 ├── registry.yaml          # Pack definitions
 ├── development/           # Backend, frontend, devops, etc.
-├── data/                  # Databases, vectors, graphs
+├── data/                  # Databases, vectors, graphs, job queues
 ├── ai/                    # LLM, ML, embeddings
 ├── design/                # UI, UX, branding
 ├── frameworks/            # React, Next.js, Vue, etc.
 ├── marketing/             # Growth, content, SEO
+├── mind-v5/               # Memory system, semantic search
 ├── startup/               # YC, fundraising, founder
 ├── strategy/              # Business, market analysis
 ├── communications/        # Writing, pitching
-├── integration/           # APIs, webhooks
+├── integration/           # APIs, webhooks, queues
 └── product/               # PM, roadmapping
 ```
 
