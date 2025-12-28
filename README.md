@@ -22,16 +22,21 @@ cd ~/.spawner/skills && git pull
 2. Claude reads skills directly from `~/.spawner/skills/`
 3. No API calls for skill loading = free, fast, offline
 
-## Skill Packs
+## Skill Categories (136 Total)
 
-| Pack | Skills | Description |
-|------|--------|-------------|
-| `essentials` | ~30 | Core skills for building apps (auto-installed) |
-| `data` | 6 | Database and data engineering |
-| `ai` | 3 | LLM, ML, and AI systems |
-| `startup` | 8+ | Founder and fundraising skills |
-| `marketing` | 10+ | Growth, content, SEO |
-| `frameworks` | 15+ | React, Next.js, Vue, etc. |
+| Category | Skills | Description |
+|----------|--------|-------------|
+| `development` | 43 | Backend, frontend, devops, security, testing |
+| `marketing` | 33 | AI video, copywriting, SEO, growth |
+| `strategy` | 10 | Product strategy, growth, founder skills |
+| `data` | 7 | Postgres, Redis, vectors, graphs, Drizzle |
+| `frameworks` | 6 | Next.js, React, Svelte, Tailwind |
+| `ai` | 4 | LLM architect, ML memory, RAG |
+| `design` | 4 | UI, UX, branding, landing pages |
+| `integration` | 4 | Stripe, email, Vercel, auth |
+| `product` | 4 | Analytics, A/B testing, PM |
+| `startup` | 3 | YC playbook, founder mode, burn rate |
+| `communications` | 2 | Dev comms, community building |
 
 ## Directory Structure
 
