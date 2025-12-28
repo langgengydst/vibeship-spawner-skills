@@ -143,3 +143,87 @@ ecosystem:
     - "typing.Optional instead of X | None"
     - "Union[X, Y] instead of X | Y"
     - "Dict, List, Tuple from typing instead of builtins"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Python code quality and idioms
+  pod: interface
+  python_standards:
+    version: "3.12+"
+    type_checking: "mypy --strict"
+    formatter: "ruff format"
+    linter: "ruff check"
+  critical_patterns:
+    dataclasses:
+      - "@dataclass(frozen=True) for events and memories"
+      - "@dataclass(slots=True) for performance"
+      - "Use field(default_factory=list) not = []"
+    type_hints:
+      - "All public functions typed"
+      - "Use X | None not Optional[X]"
+      - "Use generics for reusable code"
+    async:
+      - "async def for all I/O"
+      - "asyncio.gather for concurrent operations"
+      - "Never mix sync/async in same code path"
+    error_handling:
+      - "Result[T] over exceptions for expected failures"
+      - "Specific exception types, never bare except"
+      - "Error context in MindError.context dict"
+  mind_v5_idioms:
+    events:
+      example: |
+        @dataclass(frozen=True)
+        class MemoryExtracted:
+            memory_id: UUID
+            user_id: UUID
+            correlation_id: UUID
+            causation_id: UUID
+            content_hash: str
+            temporal_level: TemporalLevel
+            occurred_at: datetime
+    memory:
+      example: |
+        @dataclass(frozen=True, slots=True)
+        class Memory:
+            memory_id: UUID
+            user_id: UUID
+            temporal_level: TemporalLevel
+            base_salience: float
+            outcome_adjustment: float = 0.0
+
+            @property
+            def effective_salience(self) -> float:
+                return max(0.0, min(1.0, self.base_salience + self.outcome_adjustment))
+    result:
+      example: |
+        @dataclass
+        class Result(Generic[T]):
+            value: T | None = None
+            error: MindError | None = None
+
+            @classmethod
+            def ok(cls, value: T) -> Result[T]:
+                return cls(value=value)
+
+            @classmethod
+            def err(cls, error: MindError) -> Result[T]:
+                return cls(error=error)
+  delegation:
+    - trigger: "API endpoint implementation"
+      delegate_to: api-designer
+      pattern: parallel
+      context: "Endpoint requirements and schemas"
+      receive: "FastAPI route structure"
+
+    - trigger: "test strategy for Mind v5 code"
+      delegate_to: test-architect
+      pattern: sequential
+      context: "Code requiring tests"
+      receive: "pytest fixtures and test plan"
+
+    - trigger: "performance bottleneck in Python"
+      delegate_to: performance-hunter
+      pattern: sequential
+      context: "Slow code location"
+      receive: "Profiling and optimization suggestions"

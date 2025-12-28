@@ -468,3 +468,108 @@ sharp_edges:
       - "Signal handler logic runs multiple times"
     detection_pattern: '@workflow\\.signal[\\s\\S]*?execute_activity'
     version_range: ">=1.0.0"
+
+  # Mind v5 Specific Sharp Edges
+  - id: mind-v5-consolidation-workflow-timeout
+    summary: Memory consolidation takes longer than workflow timeout
+    severity: critical
+    situation: |
+      MemoryConsolidationWorkflow processes 50K memories per user. With
+      100K users, daily consolidation takes 12+ hours. Workflow times out.
+    why: |
+      Mind v5 consolidation is per-user. Processing all users in one workflow
+      is unbounded. Default workflow timeouts cause job to fail mid-run.
+    solution: |
+      # Split consolidation into per-user child workflows
+      @workflow.defn
+      class DailyConsolidationOrchestrator:
+          @workflow.run
+          async def run(self, input: OrchestratorInput) -> OrchestratorResult:
+              # Get user batch
+              users = await workflow.execute_activity(
+                  fetch_users_for_consolidation,
+                  input.batch_id,
+                  start_to_close_timeout=timedelta(minutes=5),
+              )
+
+              # Fan-out to per-user workflows
+              handles = []
+              for user_id in users:
+                  handle = await workflow.start_child_workflow(
+                      UserConsolidationWorkflow.run,
+                      UserConsolidationInput(user_id=user_id),
+                      id=f"consolidation-{user_id}-{input.date}",
+                      parent_close_policy=ParentClosePolicy.ABANDON,
+                  )
+                  handles.append(handle)
+
+              # Await all (with continue-as-new for large batches)
+              results = []
+              for handle in handles[:100]:  # Process in chunks
+                  results.append(await handle.result())
+
+              if len(handles) > 100:
+                  # Continue with remaining
+                  workflow.continue_as_new(
+                      OrchestratorInput(
+                          batch_id=input.batch_id,
+                          remaining_users=users[100:],
+                          accumulated_results=results,
+                      )
+                  )
+
+              return OrchestratorResult(results=results)
+    symptoms:
+      - "Daily consolidation fails with timeout"
+      - "Partial user consolidation"
+      - "Growing backlog of unconsolidated memories"
+    detection_pattern: 'ConsolidationWorkflow.*for.*user.*in'
+    version_range: ">=1.0.0"
+
+  - id: mind-v5-llm-activity-timeout
+    summary: LLM extraction activity times out on complex content
+    severity: high
+    situation: |
+      Memory extraction uses Claude for entity/relation extraction.
+      Simple content: 2s. Complex content: 30s. Activity times out,
+      retries, burns tokens on repeat.
+    why: |
+      Mind v5 LLM calls vary wildly in duration. Fixed timeout either
+      too short (timeouts) or too long (slow failure detection).
+    solution: |
+      @activity.defn
+      async def extract_memories_with_llm(content: str) -> ExtractionResult:
+          # Heartbeat immediately
+          activity.heartbeat("Starting LLM extraction")
+
+          # Start LLM call with streaming
+          async with llm.stream(extraction_prompt(content)) as stream:
+              chunks = []
+              async for chunk in stream:
+                  # Heartbeat on each chunk to prove progress
+                  activity.heartbeat(f"Received {len(chunks)} chunks")
+                  chunks.append(chunk)
+
+                  # Check cancellation
+                  if activity.is_cancelled():
+                      raise asyncio.CancelledError()
+
+          return parse_extraction("".join(chunks))
+
+      # Call with generous timeout but strict heartbeat
+      await workflow.execute_activity(
+          extract_memories_with_llm,
+          content,
+          start_to_close_timeout=timedelta(minutes=5),
+          heartbeat_timeout=timedelta(seconds=30),  # Detect stuck early
+          retry_policy=RetryPolicy(
+              maximum_attempts=2,  # Don't burn tokens
+              non_retryable_error_types=["RateLimitError", "ContentTooLarge"],
+          ),
+      )
+    symptoms:
+      - "LLM activities timeout on long content"
+      - "Same extraction runs multiple times"
+      - "High LLM token costs from retries"
+    detection_pattern: 'llm.*extract(?!.*heartbeat)'
+    version_range: ">=1.0.0"

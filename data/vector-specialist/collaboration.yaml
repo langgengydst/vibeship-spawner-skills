@@ -134,3 +134,47 @@ ecosystem:
     - "Single embedding model without reranking"
     - "Pure keyword search for semantic queries"
     - "Storing embeddings in relational DB without vector extension"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Semantic retrieval with outcome-weighted ranking
+  critical_artifacts:
+    - src/infrastructure/qdrant/*.py
+    - src/core/memory/retrieval.py
+    - src/core/memory/embedding.py
+  metrics_owned:
+    - mind_retrieval_latency_seconds
+    - mind_retrieval_relevance_score
+    - mind_embedding_cache_hit_ratio
+    - mind_rrf_fusion_result_count
+  retrieval_sources:
+    - Qdrant (primary vector search)
+    - pgvectorscale (fallback)
+    - BM25 (keyword)
+    - FalkorDB (graph neighbors)
+  fusion_strategy: |
+    1. Vector search (semantic similarity)
+    2. Keyword search (exact terms)
+    3. Graph neighbors (related entities)
+    4. RRF fusion (k=60)
+    5. Outcome weighting (boost successful memories)
+    6. Reranking (cross-encoder)
+
+  delegation:
+    - trigger: "graph-based retrieval or entity relationships"
+      delegate_to: graph-engineer
+      pattern: parallel
+      context: "Memory IDs for graph neighbor expansion"
+      receive: "Related entity IDs and memory IDs from graph"
+
+    - trigger: "memory hierarchy or temporal level"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Retrieved memories needing level-based filtering"
+      receive: "Filtered memories by temporal level and salience"
+
+    - trigger: "retrieval latency issues"
+      delegate_to: performance-hunter
+      pattern: review
+      context: "Retrieval pipeline with latency breakdown"
+      receive: "Optimization recommendations for Qdrant/pgvector"

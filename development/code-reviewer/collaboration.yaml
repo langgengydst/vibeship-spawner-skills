@@ -137,3 +137,55 @@ ecosystem:
     - "Drive-by criticism without explanation"
     - "Reviewing 1000+ line PRs in one sitting"
     - "Approving without running the code"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Code quality gate for all Mind v5 changes
+  pod: quality
+  reviews_from:
+    - event-architect      # Event schema changes
+    - graph-engineer       # Graph query patterns
+    - vector-specialist    # Embedding implementations
+    - temporal-craftsman   # Workflow definitions
+    - ml-memory            # Memory models
+    - causal-scientist     # Causal algorithms
+    - api-designer         # API contracts
+    - python-craftsman     # Python code
+  priority_review_triggers:
+    - event_schema_change: "Blocks deployment - event compatibility critical"
+    - security_sensitive: "Requires privacy-guardian co-review"
+    - api_contract_change: "Breaking change analysis required"
+    - performance_critical: "Requires performance-hunter benchmarks"
+    - memory_schema_change: "User data impact assessment"
+  review_checklist:
+    events:
+      - "Event is frozen (immutable) dataclass"
+      - "Has correlation_id and causation_id"
+      - "Past-tense naming (Created, Updated, etc.)"
+      - "No large payloads (use references)"
+    memory:
+      - "User isolation enforced (user_id filters)"
+      - "Outcome tracking supported (trace_id param)"
+      - "PII handling documented"
+    causal:
+      - "Confidence scores present"
+      - "Temporal validity bounds set"
+      - "Refutation test coverage"
+  delegation:
+    - trigger: "security vulnerability detected"
+      delegate_to: privacy-guardian
+      pattern: parallel
+      context: "Specific vulnerability and affected code"
+      receive: "Security assessment and remediation steps"
+
+    - trigger: "event schema modification"
+      delegate_to: event-architect
+      pattern: review
+      context: "Schema changes for backward compatibility check"
+      receive: "Compatibility assessment and migration needs"
+
+    - trigger: "performance concern in hot path"
+      delegate_to: performance-hunter
+      pattern: parallel
+      context: "Potential performance issue location"
+      receive: "Benchmark results and optimization suggestions"

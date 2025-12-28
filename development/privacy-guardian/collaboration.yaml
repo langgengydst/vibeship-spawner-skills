@@ -146,3 +146,61 @@ ecosystem:
     - "Static encryption keys"
     - "Client-side only encryption"
     - "Security through obscurity"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Privacy and security for all user data
+  pod: quality
+  critical_artifacts:
+    - src/shared/security/*.py
+    - src/core/federation/*.py
+    - src/infrastructure/*/encryption.py
+  metrics_owned:
+    - mind_privacy_budget_remaining
+    - mind_pii_sanitization_rate
+    - mind_encryption_key_age_days
+    - mind_audit_events_per_second
+  privacy_requirements:
+    federation:
+      epsilon_max: 0.1
+      k_anonymity_threshold: 10
+      source_count_minimum: 100
+    memory:
+      encryption: "AES-256-GCM at rest"
+      pii_sanitization: "Before embedding generation"
+      user_isolation: "user_id filter on all queries"
+    audit:
+      immutability: "Hash chain with merkle proofs"
+      retention: "7 years for compliance"
+      access_logging: "All memory retrievals traced"
+  review_requirements:
+    requires_my_review:
+      - "Any code touching user PII"
+      - "Federation pattern publishing"
+      - "Encryption key handling"
+      - "Audit log modifications"
+      - "Memory content storage"
+    i_review_from:
+      - ml-memory: "Memory content encryption"
+      - vector-specialist: "PII sanitization before embedding"
+      - event-architect: "Event payload privacy"
+      - data-engineer: "Data pipeline privacy"
+      - api-designer: "Authentication/authorization"
+  delegation:
+    - trigger: "need to sanitize content before federation"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Content fields and sanitization requirements"
+      receive: "Sanitized content safe for federation"
+
+    - trigger: "need to verify differential privacy implementation"
+      delegate_to: causal-scientist
+      pattern: review
+      context: "Epsilon values and privacy budget"
+      receive: "Mathematical verification of privacy guarantees"
+
+    - trigger: "need performance optimization for encryption"
+      delegate_to: performance-hunter
+      pattern: parallel
+      context: "Encryption latency requirements"
+      receive: "Optimized implementation with benchmarks"

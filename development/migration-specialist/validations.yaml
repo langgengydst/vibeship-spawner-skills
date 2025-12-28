@@ -157,3 +157,43 @@ validations:
     applies_to:
       - "**/*.sql"
       - "**/migrations/**/*"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-memory-migration-no-dual-write
+    name: Memory Schema Migration Without Dual-Write
+    severity: error
+    type: regex
+    pattern:
+      - 'ALTER TABLE memories(?!.*dual.*write|.*expand)'
+      - 'DROP COLUMN.*memory(?!.*contract.*phase)'
+    message: "Mind v5 memory schema changes require dual-write migration pattern."
+    fix_action: "Use expand-contract: write to both schemas during transition"
+    applies_to:
+      - "**/migrations/**/*.sql"
+      - "**/migrations/**/*.py"
+
+  - id: mind-v5-embedding-migration-no-reindex
+    name: Embedding Migration Without Reindex Plan
+    severity: error
+    type: regex
+    pattern:
+      - 'UPDATE.*embedding(?!.*reindex|.*rebuild)'
+      - 'ALTER.*vector(?!.*dimension)'
+    message: "Mind v5 embedding migrations must include vector reindex plan."
+    fix_action: "Plan for re-embedding with new model or dimension change"
+    applies_to:
+      - "**/migrations/**/*.sql"
+      - "**/migrations/**/*.py"
+
+  - id: mind-v5-causal-edge-migration-no-preserve
+    name: Causal Edge Migration Without History Preservation
+    severity: warning
+    type: regex
+    pattern:
+      - 'DELETE FROM.*causal(?!.*archive)'
+      - 'DROP TABLE.*causal_edge(?!.*backup)'
+    message: "Mind v5 causal edge migrations should preserve historical relationships."
+    fix_action: "Archive old edges before migration for counterfactual consistency"
+    applies_to:
+      - "**/migrations/**/*.sql"
+      - "**/migrations/**/*.py"

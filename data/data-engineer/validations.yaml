@@ -156,3 +156,43 @@ validations:
     applies_to:
       - "**/*.py"
       - "**/*.ts"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-pattern-extraction-no-threshold
+    name: Pattern Extraction Without Source Threshold
+    severity: error
+    type: regex
+    pattern:
+      - 'extract.*pattern(?!.*threshold|.*min.*count)'
+      - 'aggregate.*pattern(?!.*100)'
+    message: "Mind v5 pattern extraction requires minimum 100 sources for privacy."
+    fix_action: "Add threshold check: if source_count >= 100 then extract"
+    applies_to:
+      - "src/core/federation/*.py"
+      - "**/pipeline/**/*.py"
+
+  - id: mind-v5-privacy-epsilon-check
+    name: Privacy Sanitization Without Epsilon Check
+    severity: error
+    type: regex
+    pattern:
+      - 'sanitize.*pattern(?!.*epsilon)'
+      - 'differential.*privacy(?!.*<=.*0\.1)'
+    message: "Mind v5 pattern sanitization requires epsilon <= 0.1."
+    fix_action: "Verify epsilon parameter is 0.1 or lower for meaningful privacy"
+    applies_to:
+      - "src/core/federation/*.py"
+      - "**/privacy/**/*.py"
+
+  - id: mind-v5-outcome-aggregation-no-window
+    name: Outcome Aggregation Without Time Window
+    severity: warning
+    type: regex
+    pattern:
+      - 'aggregate.*outcome(?!.*window|.*time)'
+      - 'SUM.*outcome_quality(?!.*WHERE.*created_at)'
+    message: "Mind v5 outcome aggregation should use time-bounded windows."
+    fix_action: "Add time window: WHERE created_at > NOW() - INTERVAL '30 days'"
+    applies_to:
+      - "src/core/causal/*.py"
+      - "**/pipeline/**/*.py"

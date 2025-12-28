@@ -183,3 +183,43 @@ validations:
       - "**/*.ts"
       - "**/*.py"
       - "**/*.sql"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-memory-endpoint-no-trace
+    name: Memory Endpoint Without Trace Support
+    severity: error
+    type: regex
+    pattern:
+      - 'POST.*/memories(?!.*trace_id)'
+      - '@app.post.*/retrieve(?!.*decision_id)'
+    message: "Mind v5 memory endpoints must support trace_id for outcome attribution."
+    fix_action: "Accept optional trace_id header or body parameter"
+    applies_to:
+      - "src/api/**/*.py"
+      - "**/routes/**/*.py"
+
+  - id: mind-v5-decision-endpoint-missing
+    name: Missing Decision Tracking Endpoints
+    severity: warning
+    type: regex
+    pattern:
+      - '/v1(?!.*/decisions)'
+      - '/api(?!.*/decisions)'
+    message: "Mind v5 API should include /decisions and /decisions/{id}/outcome endpoints."
+    fix_action: "Add POST /decisions/record and POST /decisions/{id}/outcome"
+    applies_to:
+      - "src/api/**/*.py"
+      - "**/openapi*.yaml"
+
+  - id: mind-v5-context-retrieve-no-user
+    name: Context Retrieve Without User Scoping
+    severity: error
+    type: regex
+    pattern:
+      - '/retrieve(?!.*user_id)'
+      - 'retrieve.*context(?!.*auth.*user)'
+    message: "Mind v5 context retrieval must be user-scoped for isolation."
+    fix_action: "Require user_id in auth header or request body"
+    applies_to:
+      - "src/api/**/*.py"
+      - "**/routes/**/*.py"

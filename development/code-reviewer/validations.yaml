@@ -163,3 +163,53 @@ validations:
     fix_action: "Add docstring explaining purpose, params, and return"
     applies_to:
       - "**/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-event-mutable
+    name: Mind v5 Event Not Immutable
+    severity: error
+    type: regex
+    pattern:
+      - '@dataclass\s+class\s+\w+Event(?!.*frozen.*=.*True)'
+      - 'class\s+\w+Event.*(?!frozen)'
+    message: "Mind v5 events must be immutable (frozen=True dataclass)."
+    fix_action: "Use @dataclass(frozen=True) for all event classes"
+    applies_to:
+      - "src/core/events/*.py"
+      - "**/events.py"
+
+  - id: mind-v5-event-past-tense
+    name: Mind v5 Event Not Past Tense
+    severity: warning
+    type: regex
+    pattern:
+      - 'class\s+\w+(?:Create|Update|Delete|Send|Process)(?!ed|d)Event'
+    message: "Mind v5 events should be past-tense (MemoryCreated, not MemoryCreate)."
+    fix_action: "Rename to past tense: Created, Updated, Deleted, Sent, Processed"
+    applies_to:
+      - "src/core/events/*.py"
+
+  - id: mind-v5-memory-no-outcome-tracking
+    name: Memory Operation Without Outcome Tracking
+    severity: warning
+    type: regex
+    pattern:
+      - 'def.*retrieve.*memory(?![\s\S]*trace|[\s\S]*outcome)'
+      - 'async def.*get.*context(?![\s\S]*decision)'
+    message: "Mind v5 memory operations should support outcome tracking."
+    fix_action: "Accept optional trace_id parameter for decision attribution"
+    applies_to:
+      - "src/core/memory/*.py"
+
+  - id: mind-v5-causal-edge-no-confidence
+    name: Causal Edge Creation Without Confidence
+    severity: error
+    type: regex
+    pattern:
+      - 'CausalEdge\((?!.*confidence)'
+      - 'store.*causal.*edge(?!.*confidence)'
+    message: "Mind v5 causal edges must include confidence scores."
+    fix_action: "Add confidence: float from refutation test results"
+    applies_to:
+      - "src/core/causal/*.py"
+      - "src/infrastructure/falkordb/*.py"

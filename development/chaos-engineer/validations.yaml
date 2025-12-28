@@ -138,3 +138,40 @@ validations:
     fix_action: "Use label selectors instead of hardcoded names"
     applies_to:
       - "**/chaos/**/*.yaml"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-chaos-qdrant-no-fallback
+    name: Qdrant Chaos Without Fallback Test
+    severity: error
+    type: regex
+    pattern:
+      - 'target.*qdrant(?!.*fallback|.*pgvector)'
+      - 'chaos.*vector.*db(?!.*graceful)'
+    message: "Mind v5 Qdrant chaos must test graceful degradation to pgvectorscale."
+    fix_action: "Add hypothesis: 'System falls back to pgvectorscale within 5s'"
+    applies_to:
+      - "**/chaos/**/*.yaml"
+
+  - id: mind-v5-chaos-nats-no-persistence
+    name: NATS Chaos Without Event Persistence Test
+    severity: error
+    type: regex
+    pattern:
+      - 'target.*nats(?!.*persist|.*replay)'
+      - 'chaos.*event.*backbone(?!.*durability)'
+    message: "Mind v5 NATS chaos must verify events persist and replay correctly."
+    fix_action: "Add probe: verify events replayed after NATS recovery"
+    applies_to:
+      - "**/chaos/**/*.yaml"
+
+  - id: mind-v5-chaos-falkordb-no-query-limit
+    name: FalkorDB Chaos Without Query Limit Test
+    severity: warning
+    type: regex
+    pattern:
+      - 'target.*falkordb(?!.*limit|.*timeout)'
+      - 'chaos.*graph.*db(?!.*bound)'
+    message: "Mind v5 FalkorDB chaos should test query timeout handling."
+    fix_action: "Add probe: verify graph queries timeout gracefully under OOM pressure"
+    applies_to:
+      - "**/chaos/**/*.yaml"

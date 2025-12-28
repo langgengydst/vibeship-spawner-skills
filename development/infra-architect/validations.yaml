@@ -161,3 +161,56 @@ validations:
     applies_to:
       - "**/kubernetes/**/*.yaml"
       - "**/k8s/**/*.yaml"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-namespace-structure
+    name: Mind v5 Missing Namespace Separation
+    severity: warning
+    type: regex
+    pattern:
+      - 'namespace:\s*mind(?!-core|-platform|-workers)'
+      - 'namespace:\s*default(?=.*mind)'
+    message: "Mind v5 requires separate namespaces: mind-core, mind-platform, mind-workers."
+    fix_action: "Deploy to appropriate namespace: mind-core for memory, mind-workers for Gardener"
+    applies_to:
+      - "**/k8s/**/*.yaml"
+      - "**/kubernetes/**/*.yaml"
+
+  - id: mind-v5-falkordb-no-redis-operator
+    name: FalkorDB Without Redis Operator
+    severity: error
+    type: regex
+    pattern:
+      - 'kind:\s*Deployment(?=[\s\S]*falkordb)(?![\s\S]*RedisCluster)'
+      - 'image:.*falkordb(?!.*operator)'
+    message: "Mind v5 FalkorDB should use Redis Operator for HA and persistence."
+    fix_action: "Deploy via Redis Operator with FalkorDB module loaded"
+    applies_to:
+      - "**/k8s/**/*.yaml"
+      - "**/kubernetes/**/*.yaml"
+
+  - id: mind-v5-no-user-tier-quotas
+    name: Mind v5 Missing User Tier Resource Quotas
+    severity: warning
+    type: regex
+    pattern:
+      - 'kind:\s*ResourceQuota(?!.*tier)'
+      - 'namespace:\s*mind(?!.*quota)'
+    message: "Mind v5 should have resource quotas per user tier for fair usage."
+    fix_action: "Create ResourceQuota per tier: free, pro, enterprise"
+    applies_to:
+      - "**/k8s/**/*.yaml"
+      - "**/kubernetes/**/*.yaml"
+
+  - id: mind-v5-temporal-no-persistence
+    name: Temporal Without Persistent Storage
+    severity: error
+    type: regex
+    pattern:
+      - 'temporal(?!.*persistentVolumeClaim)'
+      - 'kind:\s*Deployment(?=[\s\S]*temporal)(?![\s\S]*storage)'
+    message: "Mind v5 Temporal needs persistent storage for workflow history."
+    fix_action: "Configure Temporal with PostgreSQL or Cassandra persistence"
+    applies_to:
+      - "**/k8s/**/*.yaml"
+      - "**/kubernetes/**/*.yaml"

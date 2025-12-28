@@ -167,3 +167,55 @@ validations:
     applies_to:
       - "**/auth/**/*.py"
       - "**/session/**/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-pii-in-federation
+    name: PII in Federated Patterns
+    severity: error
+    type: regex
+    pattern:
+      - 'federat.*pattern.*(?!.*sanitiz)'
+      - 'publish.*intent.*graph(?!.*clean|.*strip)'
+    message: "Patterns must be sanitized before federation. PII can leak to Intent Graph."
+    fix_action: "Run PII sanitization before pattern federation"
+    applies_to:
+      - "src/core/federation/*.py"
+      - "**/federation/**/*.py"
+
+  - id: mind-v5-differential-privacy-epsilon
+    name: Differential Privacy Epsilon Too High
+    severity: error
+    type: regex
+    pattern:
+      - 'epsilon\\s*[=>]\\s*(?:0\\.[2-9]|[1-9])'
+      - 'epsilon.*=.*(?:0\\.[3-9]|[1-9]\\.[0-9])'
+    message: "Mind v5 requires epsilon <= 0.1 for meaningful privacy guarantees."
+    fix_action: "Reduce epsilon to 0.1 or lower for federation"
+    applies_to:
+      - "src/core/federation/*.py"
+      - "**/privacy/**/*.py"
+
+  - id: mind-v5-memory-no-user-isolation
+    name: Memory Query Without User Isolation
+    severity: error
+    type: regex
+    pattern:
+      - 'SELECT.*FROM.*memories(?!.*user_id)'
+      - 'qdrant\\.search(?!.*user_id)'
+    message: "Mind v5 memory queries must include user_id filter for isolation."
+    fix_action: "Always filter by user_id in memory queries"
+    applies_to:
+      - "src/core/memory/*.py"
+      - "src/infrastructure/**/*.py"
+
+  - id: mind-v5-decision-trace-no-encryption
+    name: Decision Trace Without Content Encryption
+    severity: warning
+    type: regex
+    pattern:
+      - 'DecisionTrace.*content(?!.*encrypt)'
+      - 'store.*trace.*memory_content'
+    message: "Decision traces with memory content should be encrypted."
+    fix_action: "Encrypt memory content in decision traces"
+    applies_to:
+      - "src/core/decision/*.py"

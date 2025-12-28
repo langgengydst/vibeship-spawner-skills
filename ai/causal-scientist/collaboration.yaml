@@ -141,3 +141,53 @@ ecosystem:
     - "A/B tests without heterogeneity analysis"
     - "Single estimator without robustness checks"
     - "Causal discovery without domain constraints"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Causal inference for memory-outcome relationships
+  critical_artifacts:
+    - src/core/causal/discovery.py
+    - src/core/causal/estimation.py
+    - src/core/causal/counterfactual.py
+    - src/core/causal/attribution.py
+  metrics_owned:
+    - mind_causal_edge_count
+    - mind_causal_edge_confidence_avg
+    - mind_causal_discovery_duration_seconds
+    - mind_refutation_pass_rate
+    - mind_attribution_accuracy
+  causal_edge_schema:
+    required_properties:
+      - causal_strength
+      - confidence
+      - evidence_count
+      - discovery_method
+    optional_properties:
+      - conditions
+      - counterfactual
+      - refutation_passed
+      - temporal_validity
+  delegation:
+    - trigger: "causal graph storage"
+      delegate_to: graph-engineer
+      pattern: parallel
+      context: "Causal DAG with edge properties"
+      receive: "Cypher patterns for CAUSES edges with metadata"
+
+    - trigger: "memory salience from attribution"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Attribution scores for memory update"
+      receive: "Salience adjustment method with bounded learning rate"
+
+    - trigger: "causal discovery workflow"
+      delegate_to: temporal-craftsman
+      pattern: sequential
+      context: "Long-running discovery job"
+      receive: "CausalDiscoveryWorkflow with checkpointing"
+
+    - trigger: "decision trace for attribution"
+      delegate_to: event-architect
+      pattern: parallel
+      context: "Need trace schema for outcome learning"
+      receive: "DecisionTrace event with memory attribution fields"

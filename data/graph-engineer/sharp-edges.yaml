@@ -380,3 +380,77 @@ sharp_edges:
       - "Each node is several KB"
     detection_pattern: 'embedding.*List\\[float\\]|embedding.*\\$'
     version_range: ">=1.0.0"
+
+  # Mind v5 Specific Sharp Edges
+  - id: mind-v5-unbounded-memory-traversal
+    summary: Memory graph traversal without LIMIT on user with years of data
+    severity: critical
+    situation: |
+      Query traverses user's memory graph without limits. Works in dev
+      with 100 memories. User with 5 years of data has 50K+ memories.
+      Query times out.
+    why: |
+      Mind v5 stores all user memories in graph. Long-term users accumulate
+      massive graphs. Unbounded traversal is exponential death.
+    solution: |
+      // ❌ BAD: Unbounded traversal
+      MATCH (u:User {id: $user_id})-[:HAS_MEMORY]->(m)-[:RELATES_TO]->(e)
+      RETURN m, e
+
+      // ✅ GOOD: Bounded with salience ordering
+      MATCH (u:User {id: $user_id})-[:HAS_MEMORY]->(m:Memory)
+      WHERE m.valid_until IS NULL
+      WITH m ORDER BY m.effective_salience DESC LIMIT 100
+      MATCH (m)-[:RELATES_TO]->(e:Entity)
+      RETURN m, e
+      LIMIT 500
+
+      // ✅ BETTER: Time-bounded first
+      MATCH (u:User {id: $user_id})-[:HAS_MEMORY]->(m:Memory)
+      WHERE m.valid_until IS NULL
+        AND m.created_at > datetime() - duration({days: 90})
+      WITH m ORDER BY m.effective_salience DESC LIMIT 50
+      MATCH (m)-[:RELATES_TO]->(e:Entity)
+      RETURN m, e
+    symptoms:
+      - "Query works for new users, times out for old users"
+      - "Redis CPU at 100% during query"
+      - "Memory usage spikes on traversal"
+    detection_pattern: 'MATCH.*User.*HAS_MEMORY.*RELATES_TO(?![\s\S]{0,100}LIMIT)'
+    version_range: ">=1.0.0"
+
+  - id: mind-v5-causal-edge-no-confidence
+    summary: Causal edges without confidence score break downstream inference
+    severity: high
+    situation: |
+      You create causal edges from LLM extraction without confidence scores.
+      DoWhy and causal inference algorithms fail or produce garbage.
+    why: |
+      Mind v5 uses DoWhy for causal inference. It weights edges by confidence.
+      Missing confidence defaults to 1.0, making weak edges look strong.
+    solution: |
+      // ❌ BAD: No confidence
+      CREATE (s)-[:CAUSES {strength: 0.8}]->(t)
+
+      // ✅ GOOD: Always include confidence
+      CREATE (s)-[:CAUSES {
+          strength: $strength,
+          confidence: $confidence,  // REQUIRED
+          evidence_count: $evidence_count,
+          discovery_method: $method,  // "llm", "statistical", "observed"
+          valid_from: datetime()
+      }]->(t)
+
+      # Python: Validate before insertion
+      def create_causal_edge(source_id, target_id, strength, confidence, **kwargs):
+          if confidence is None:
+              raise ValueError("Causal edges require confidence score")
+          if confidence < 0 or confidence > 1:
+              raise ValueError(f"Confidence must be 0-1, got {confidence}")
+          # ... create edge
+    symptoms:
+      - "Causal inference gives overconfident results"
+      - "LLM-extracted edges dominate statistical ones"
+      - "Refutation tests fail unexpectedly"
+    detection_pattern: 'CREATE.*:CAUSES\s*\{(?![\s\S]*confidence)'
+    version_range: ">=1.0.0"

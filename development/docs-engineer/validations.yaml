@@ -151,3 +151,40 @@ validations:
     applies_to:
       - "**/*.py"
       - "**/*.ts"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-docs-missing-memory-hierarchy
+    name: Missing Memory Hierarchy Documentation
+    severity: warning
+    type: regex
+    pattern:
+      - '##.*Memory(?![\s\S]*temporal|[\s\S]*hierarchy|[\s\S]*level)'
+    message: "Mind v5 memory docs should explain 4-level temporal hierarchy."
+    fix_action: "Add section on immediate → situational → seasonal → identity"
+    applies_to:
+      - "docs/**/*.md"
+      - "**/memory*.md"
+
+  - id: mind-v5-docs-missing-causal-schema
+    name: Missing Causal Edge Schema Documentation
+    severity: warning
+    type: regex
+    pattern:
+      - '##.*Causal(?![\s\S]*strength|[\s\S]*confidence|[\s\S]*schema)'
+    message: "Mind v5 causal docs should include edge schema reference."
+    fix_action: "Document causal_strength, confidence, evidence_count, conditions fields"
+    applies_to:
+      - "docs/**/*.md"
+      - "**/causal*.md"
+
+  - id: mind-v5-docs-missing-outcome-guide
+    name: Missing Outcome Attribution Guide
+    severity: info
+    type: regex
+    pattern:
+      - '##.*Decision(?![\s\S]*outcome|[\s\S]*attribution)'
+    message: "Mind v5 decision docs should explain outcome attribution."
+    fix_action: "Add guide on recording outcomes and how salience is updated"
+    applies_to:
+      - "docs/**/*.md"
+      - "**/decision*.md"

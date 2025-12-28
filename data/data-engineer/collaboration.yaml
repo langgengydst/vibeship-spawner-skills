@@ -142,3 +142,61 @@ ecosystem:
     - "Non-idempotent pipelines"
     - "Processing time windows for late data"
     - "Hardcoded connection strings"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Data pipelines for memory consolidation and analytics
+  pod: quality
+  critical_artifacts:
+    - src/workers/pipelines/**/*.py
+    - src/core/analytics/*.py
+  pipelines:
+    memory_consolidation:
+      source: "PostgreSQL memories table"
+      destination: "Consolidated memories + analytics"
+      schedule: "Daily at 3 AM UTC"
+      sla: "Complete within 2 hours"
+    causal_feature_engineering:
+      source: "Decision traces + outcomes"
+      destination: "Causal feature store"
+      schedule: "Hourly"
+      sla: "< 15 minutes"
+    federation_aggregation:
+      source: "Individual user patterns"
+      destination: "Intent Graph candidates"
+      schedule: "Continuous streaming"
+      sla: "< 5 seconds latency"
+  data_quality_checks:
+    - "Memory content not null"
+    - "Salience in [0, 1] range"
+    - "Temporal level valid enum"
+    - "User isolation maintained"
+    - "PII sanitized before federation"
+  metrics_owned:
+    - mind_pipeline_records_processed
+    - mind_pipeline_duration_seconds
+    - mind_data_quality_failures
+  delegation:
+    - trigger: "memory consolidation logic"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Consolidation rules and promotion criteria"
+      receive: "Business logic for memory promotion"
+
+    - trigger: "event sourcing for pipelines"
+      delegate_to: event-architect
+      pattern: sequential
+      context: "Events needed for pipeline triggers"
+      receive: "CDC setup and event schema"
+
+    - trigger: "privacy before federation"
+      delegate_to: privacy-guardian
+      pattern: review
+      context: "Data flowing to Intent Graph"
+      receive: "Sanitization rules and differential privacy params"
+
+    - trigger: "pipeline monitoring"
+      delegate_to: observability-sre
+      pattern: parallel
+      context: "Pipeline SLOs and failure modes"
+      receive: "Dagster/Airflow monitoring dashboards"

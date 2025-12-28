@@ -154,3 +154,64 @@ validations:
     applies_to:
       - "**/memory/**/*.py"
       - "**/fact/**/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-memory-no-decision-trace
+    name: Memory Retrieval Without Decision Trace
+    severity: error
+    type: regex
+    pattern:
+      - 'async def retrieve.*memory[\\s\\S]*?return(?![\\s\\S]*DecisionTrace|[\\s\\S]*trace)'
+    message: "Mind v5 retrieval must create DecisionTrace for outcome learning."
+    fix_action: "Wrap retrieval in tracer.start_trace() context"
+    applies_to:
+      - "src/core/memory/retrieval.py"
+      - "**/memory/retrieval*.py"
+
+  - id: mind-v5-decay-includes-identity
+    name: Memory Decay Applied to Identity Level
+    severity: error
+    type: regex
+    pattern:
+      - 'UPDATE.*memories.*salience.*decay(?![\\s\\S]*temporal_level.*!=.*4|[\\s\\S]*IDENTITY)'
+    message: "Mind v5 must never decay identity-level memories (level 4)."
+    fix_action: "Add WHERE temporal_level != 4 to exclude identity memories"
+    applies_to:
+      - "src/core/memory/forgetting.py"
+      - "**/memory/decay*.py"
+
+  - id: mind-v5-salience-unbounded
+    name: Salience Adjustment Without Bounds Check
+    severity: warning
+    type: regex
+    pattern:
+      - 'salience.*=.*salience.*[\\+\\-](?![\\s\\S]*GREATEST|[\\s\\S]*LEAST|[\\s\\S]*min|[\\s\\S]*max)'
+    message: "Salience adjustment must be bounded between 0.01 and 1.0."
+    fix_action: "Use GREATEST(0.01, LEAST(1.0, new_salience)) or Python min/max"
+    applies_to:
+      - "src/core/memory/salience.py"
+      - "**/memory/*.py"
+
+  - id: mind-v5-promotion-no-evidence-count
+    name: Memory Promotion Without Evidence Threshold
+    severity: warning
+    type: regex
+    pattern:
+      - 'promote.*memory(?![\\s\\S]*evidence_count|[\\s\\S]*threshold)'
+    message: "Mind v5 promotion requires evidence count threshold (5/10/20)."
+    fix_action: "Check evidence_count >= LEVEL_CONFIG[level].promotion_threshold"
+    applies_to:
+      - "src/core/memory/consolidation.py"
+      - "**/memory/hierarchy*.py"
+
+  - id: mind-v5-outcome-no-influence-weight
+    name: Outcome Attribution Without Influence Weight
+    severity: error
+    type: regex
+    pattern:
+      - 'update.*salience.*outcome(?![\\s\\S]*influence|[\\s\\S]*weight|[\\s\\S]*attribution)'
+    message: "Mind v5 outcome adjustment must weight by memory influence score."
+    fix_action: "Multiply adjustment by trace.memory_influence[memory_id]"
+    applies_to:
+      - "src/core/memory/salience.py"
+      - "**/memory/outcome*.py"

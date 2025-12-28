@@ -567,3 +567,134 @@ sharp_edges:
       - "Can't debug why bad memories were retrieved"
     detection_pattern: 'retrieve.*memor|search.*memor(?!.*trace|.*log)'
     version_range: ">=1.0.0"
+
+  # Mind v5 Specific Sharp Edges
+  - id: mind-v5-retrieval-no-decision-trace
+    summary: Memory retrieval without creating decision trace
+    severity: critical
+    situation: |
+      You retrieve memories for a decision but don't create a DecisionTrace.
+      Later, you can't attribute outcomes back to memories that influenced them.
+    why: |
+      Mind v5's core value proposition is learning from outcomes. Without traces,
+      salience learning is impossible. The system never gets better.
+    solution: |
+      # Always wrap retrieval in decision trace context
+      async def retrieve_for_decision(
+          user_id: UUID,
+          query: str,
+          context: DecisionContext,
+      ) -> Tuple[List[Memory], DecisionTrace]:
+          # Start trace BEFORE retrieval
+          trace = await self.tracer.start_trace(user_id, query)
+
+          try:
+              memories = await self.retriever.retrieve(user_id, query)
+
+              # Record what was retrieved
+              await self.tracer.record_retrieval(
+                  trace,
+                  memory_ids=[m.memory_id for m in memories],
+                  relevance_scores={m.memory_id: m.score for m in memories},
+              )
+
+              return memories, trace
+          except Exception as e:
+              await self.tracer.record_error(trace, e)
+              raise
+
+      # After decision is made, record usage
+      async def finalize_decision(
+          trace: DecisionTrace,
+          used_memory_ids: List[UUID],
+          influence_scores: Dict[UUID, float],
+      ) -> None:
+          await self.tracer.record_usage(trace, used_memory_ids, influence_scores)
+    symptoms:
+      - "Salience scores remain static over time"
+      - "No way to know which memories helped decisions"
+      - "Can't improve retrieval quality from feedback"
+    detection_pattern: 'retrieve.*memor(?!.*trace|.*DecisionTrace)'
+    version_range: ">=5.0.0"
+
+  - id: mind-v5-identity-memory-forgetting
+    summary: Applying forgetting to identity-level memories
+    severity: high
+    situation: |
+      Your decay job runs across all temporal levels. It forgets identity-level
+      memories like "user is vegetarian" or "user's mother is named Sarah".
+    why: |
+      Identity memories are the most valuable in Mind v5. They're promoted
+      after extensive evidence (20+ confirmations). Forgetting them loses
+      hard-won knowledge that took months to accumulate.
+    solution: |
+      # Exempt identity level from decay
+      async def apply_decay(user_id: UUID) -> DecayResult:
+          result = await self.db.execute(
+              """
+              UPDATE memories
+              SET base_salience = GREATEST(0.05, base_salience * 0.95)
+              WHERE user_id = $1
+                AND temporal_level != 4  -- NEVER decay identity (level 4)
+                AND last_accessed < NOW() - INTERVAL '24 hours'
+              RETURNING memory_id
+              """,
+              user_id
+          )
+          return DecayResult(decayed_count=len(result))
+
+      # Identity memories have separate maintenance
+      async def consolidate_identity(user_id: UUID) -> None:
+          # Only merge duplicates, never delete
+          await self._merge_duplicate_identities(user_id)
+          # Update confidence based on continued evidence
+          await self._update_identity_confidence(user_id)
+    symptoms:
+      - "User says 'I already told you I'm vegetarian' repeatedly"
+      - "Core preferences lost over time"
+      - "Identity memories need re-learning"
+    detection_pattern: 'decay.*memor(?!.*temporal_level|.*identity|.*level.*4)'
+    version_range: ">=5.0.0"
+
+  - id: mind-v5-outcome-not-bounded
+    summary: Outcome adjustments can overflow salience bounds
+    severity: medium
+    situation: |
+      A memory gets used in many successful decisions. Outcome adjustments
+      accumulate until salience exceeds 1.0 or goes negative after failures.
+    why: |
+      Mind v5 outcome learning uses additive adjustment. Without bounds,
+      salience loses meaning. A memory at salience 5.0 breaks ranking.
+    solution: |
+      class BoundedSalienceAdjuster:
+          MIN_SALIENCE = 0.01
+          MAX_SALIENCE = 1.0
+
+          async def adjust_from_outcome(
+              self,
+              memory_id: UUID,
+              adjustment: float,
+          ) -> float:
+              current = await self.db.get_salience(memory_id)
+
+              # Apply bounded adjustment
+              new_salience = current + adjustment
+              new_salience = max(self.MIN_SALIENCE, min(self.MAX_SALIENCE, new_salience))
+
+              # Log when hitting bounds
+              if new_salience == self.MAX_SALIENCE or new_salience == self.MIN_SALIENCE:
+                  logger.info(
+                      "salience_hit_bound",
+                      memory_id=str(memory_id),
+                      attempted=current + adjustment,
+                      bounded_to=new_salience,
+                  )
+
+              await self.db.update_salience(memory_id, new_salience)
+              return new_salience
+    symptoms:
+      - "Salience values > 1.0 in database"
+      - "Negative salience values"
+      - "Top memories all have same max salience"
+    detection_pattern: 'salience.*\\+.*adjustment(?!.*min|.*max|.*bound|.*clamp)'
+    version_range: ">=5.0.0"

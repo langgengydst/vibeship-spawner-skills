@@ -142,3 +142,71 @@ ecosystem:
     - "100% coverage as goal"
     - "Mocking everything"
     - "Tests without assertions"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Test strategy and quality assurance for Mind v5
+  pod: quality
+  critical_artifacts:
+    - tests/unit/**/*.py
+    - tests/integration/**/*.py
+    - tests/e2e/**/*.py
+    - tests/benchmarks/**/*.py
+  test_pyramid:
+    unit:
+      coverage_target: 80%
+      focus:
+        - Event handlers (idempotency)
+        - Memory operations (salience calculation)
+        - Causal edge validation
+    integration:
+      coverage_target: 60%
+      focus:
+        - PostgreSQL projections
+        - Qdrant retrieval pipeline
+        - FalkorDB graph queries
+        - NATS consumer groups
+    e2e:
+      coverage_target: critical_paths
+      focus:
+        - Memory extraction → retrieval → decision
+        - Outcome observation → salience update
+        - Pattern federation flow
+  testing_patterns:
+    event_sourcing:
+      pattern: "Test event replay idempotency"
+      fixture: "Event stream with duplicates"
+    memory:
+      pattern: "Test outcome-weighted retrieval"
+      fixture: "Memories with known salience"
+    causal:
+      pattern: "Test refutation catches spurious correlations"
+      fixture: "Confounded causal data"
+  metrics_owned:
+    - mind_test_coverage_percent
+    - mind_test_duration_seconds
+    - mind_flaky_test_rate
+  delegation:
+    - trigger: "event handler testing"
+      delegate_to: event-architect
+      pattern: sequential
+      context: "Event handlers to test"
+      receive: "Test fixtures with replay scenarios"
+
+    - trigger: "memory retrieval testing"
+      delegate_to: ml-memory
+      pattern: parallel
+      context: "Retrieval scenarios to test"
+      receive: "Test fixtures with known relevance"
+
+    - trigger: "causal validation testing"
+      delegate_to: causal-scientist
+      pattern: parallel
+      context: "Causal algorithms to test"
+      receive: "Test data with known causal relationships"
+
+    - trigger: "performance testing"
+      delegate_to: performance-hunter
+      pattern: parallel
+      context: "Endpoints and throughput requirements"
+      receive: "Load test suite and benchmarks"

@@ -129,3 +129,58 @@ ecosystem:
     - "Celery for durable workflows (not designed for long-running)"
     - "Redis queues for saga patterns (no built-in compensation)"
     - "Manual state machines in database (reinventing Temporal poorly)"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Durable execution for Gardener background workflows
+  critical_artifacts:
+    - src/workers/gardener/workflows/*.py
+    - src/workers/gardener/activities/*.py
+    - src/infrastructure/temporal/*.py
+  metrics_owned:
+    - mind_workflow_duration_seconds
+    - mind_workflow_failure_rate
+    - mind_activity_latency_seconds
+    - mind_consolidation_memories_processed
+    - mind_causal_edges_discovered
+    - mind_patterns_federated
+  gardener_workflows:
+    - name: MemoryConsolidation
+      schedule: daily
+      purpose: Promote memories up temporal hierarchy based on evidence
+    - name: CausalDiscovery
+      schedule: weekly
+      purpose: Mine decision traces for causal patterns
+    - name: PatternFederation
+      schedule: continuous
+      purpose: Publish validated patterns to Intent Graph
+    - name: OutcomeAttribution
+      schedule: on_feedback
+      purpose: Update memory salience based on decision outcomes
+    - name: GraphMaintenance
+      schedule: monthly
+      purpose: Prune orphan nodes, reindex for performance
+  delegation:
+    - trigger: "memory promotion rules"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Consolidation workflow needs promotion thresholds"
+      receive: "TemporalLevel promotion criteria and evidence thresholds"
+
+    - trigger: "causal pattern mining"
+      delegate_to: causal-scientist
+      pattern: parallel
+      context: "Decision traces for DoWhy analysis"
+      receive: "Causal edge discovery activities with proper refutation"
+
+    - trigger: "pattern privacy before federation"
+      delegate_to: privacy-guardian
+      pattern: review
+      context: "Patterns ready for Intent Graph"
+      receive: "Sanitized patterns with differential privacy guarantees"
+
+    - trigger: "workflow performance tuning"
+      delegate_to: performance-hunter
+      pattern: review
+      context: "Worker configuration and activity latencies"
+      receive: "Optimized worker pools and batch sizes"

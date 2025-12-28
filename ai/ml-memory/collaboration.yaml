@@ -146,3 +146,63 @@ ecosystem:
     - "Static salience scores"
     - "Hard delete without soft delete migration path"
     - "LLM for every extraction without batching"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Hierarchical memory lifecycle with outcome-based learning
+  critical_artifacts:
+    - src/core/memory/hierarchy.py
+    - src/core/memory/salience.py
+    - src/core/memory/consolidation.py
+    - src/core/memory/forgetting.py
+    - src/core/memory/entity_resolution.py
+  metrics_owned:
+    - mind_memory_level_distribution
+    - mind_salience_adjustment_rate
+    - mind_promotion_rate
+    - mind_decay_rate
+    - mind_entity_resolution_accuracy
+    - mind_decision_success_rate
+  temporal_levels:
+    - level: immediate
+      max_age: "24 hours"
+      promotion_threshold: 5
+    - level: situational
+      max_age: "14 days"
+      promotion_threshold: 10
+    - level: seasonal
+      max_age: "6 months"
+      promotion_threshold: 20
+    - level: identity
+      max_age: "permanent"
+      promotion_threshold: null
+  delegation:
+    - trigger: "embedding model selection for memories"
+      delegate_to: vector-specialist
+      pattern: sequential
+      context: "Memory content types and retrieval requirements"
+      receive: "Model recommendation with dimension tradeoffs"
+
+    - trigger: "memory consolidation workflow"
+      delegate_to: temporal-craftsman
+      pattern: sequential
+      context: "Consolidation frequency, batch sizes, failure handling"
+      receive: "MemoryConsolidationWorkflow with proper timeouts"
+
+    - trigger: "entity graph relationships"
+      delegate_to: graph-engineer
+      pattern: parallel
+      context: "Entity mentions needing graph storage"
+      receive: "Cypher patterns for entity linking"
+
+    - trigger: "causal memory relationships"
+      delegate_to: causal-scientist
+      pattern: parallel
+      context: "Memories that might have causal links"
+      receive: "Causal edge creation with DoWhy validation"
+
+    - trigger: "memory privacy and encryption"
+      delegate_to: privacy-guardian
+      pattern: review
+      context: "Sensitive memory fields requiring protection"
+      receive: "Field-level encryption strategy"

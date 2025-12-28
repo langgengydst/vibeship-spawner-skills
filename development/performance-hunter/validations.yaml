@@ -155,3 +155,57 @@ validations:
     fix_action: "Serialize outside loop or use streaming JSON parser"
     applies_to:
       - "**/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-n-plus-one-memory
+    name: N+1 Memory Retrieval Pattern
+    severity: error
+    type: regex
+    pattern:
+      - 'for.*in.*:.*await.*get_memory\('
+      - 'for.*in.*:.*await.*fetch_memory\('
+      - 'for.*in.*:.*await.*qdrant.*search\('
+    message: "Mind v5 memory retrieval in loop. Use batch fetch instead."
+    fix_action: "Use fetch_memories(ids) or batch vector search"
+    applies_to:
+      - "src/core/memory/*.py"
+      - "**/retrieval/**/*.py"
+
+  - id: mind-v5-sequential-retrieval-sources
+    name: Sequential Retrieval Source Queries
+    severity: warning
+    type: regex
+    pattern:
+      - 'await.*qdrant.*search[\s\S]*await.*falkordb.*query(?!.*gather)'
+      - 'await.*vector.*search[\s\S]*await.*graph.*traverse(?!.*gather)'
+    message: "Mind v5 retrieval sources should run in parallel with asyncio.gather()."
+    fix_action: "Use asyncio.gather(qdrant_search(), graph_traverse(), keyword_search())"
+    applies_to:
+      - "src/core/memory/*.py"
+      - "**/retrieval/**/*.py"
+
+  - id: mind-v5-embedding-no-batch
+    name: Single Embedding Generation in Loop
+    severity: warning
+    type: regex
+    pattern:
+      - 'for.*:.*await.*embed\('
+      - 'for.*:.*await.*embedder\.'
+    message: "Mind v5 embeddings should be batched. Reduces API calls and latency."
+    fix_action: "Use embed_batch(texts) instead of loop of embed(text)"
+    applies_to:
+      - "src/core/memory/*.py"
+      - "**/embedding/**/*.py"
+
+  - id: mind-v5-outcome-update-unbatched
+    name: Sequential Memory Salience Updates
+    severity: info
+    type: regex
+    pattern:
+      - 'for.*in.*trace\\.memory.*:.*await.*update.*salience'
+      - 'for.*in.*attribution.*:.*await.*db\\.execute'
+    message: "Mind v5 outcome updates should be batched in single transaction."
+    fix_action: "Use executemany() or batch UPDATE with CASE WHEN"
+    applies_to:
+      - "src/core/memory/*.py"
+      - "**/causal/**/*.py"

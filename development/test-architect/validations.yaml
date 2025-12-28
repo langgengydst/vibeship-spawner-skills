@@ -166,3 +166,51 @@ validations:
     applies_to:
       - "**/test_*.py"
       - "**/*.test.ts"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-missing-decision-trace-test
+    name: Decision Code Without Trace Tests
+    severity: error
+    type: regex
+    pattern:
+      - 'src/core/decision/.*\\.py(?!.*test.*trace|.*test.*attribution)'
+    message: "Mind v5 decision code requires tests for outcome attribution."
+    fix_action: "Add test_decision_trace_captures_memories, test_outcome_updates_salience"
+    applies_to:
+      - "tests/unit/core/decision/**/*.py"
+      - "tests/integration/decision/**/*.py"
+
+  - id: mind-v5-missing-causal-refutation-test
+    name: Causal Inference Without Refutation Tests
+    severity: error
+    type: regex
+    pattern:
+      - 'test.*causal(?!.*refut)'
+      - 'class TestCausal(?![\s\S]*refut)'
+    message: "Mind v5 causal tests must include refutation test cases."
+    fix_action: "Add test_random_common_cause_refutation, test_placebo_refutation"
+    applies_to:
+      - "tests/**/test_*causal*.py"
+
+  - id: mind-v5-missing-federation-privacy-test
+    name: Federation Code Without Privacy Tests
+    severity: error
+    type: regex
+    pattern:
+      - 'src/core/federation/.*\\.py(?!.*test.*privacy|.*test.*pii)'
+    message: "Mind v5 federation requires privacy leakage tests."
+    fix_action: "Add test_no_pii_in_federated_patterns, test_differential_privacy_epsilon"
+    applies_to:
+      - "tests/**/test_*federation*.py"
+
+  - id: mind-v5-missing-memory-isolation-test
+    name: Memory Retrieval Without Isolation Tests
+    severity: warning
+    type: regex
+    pattern:
+      - 'class TestMemory(?![\s\S]*isolation|.*user.*cannot.*access)'
+    message: "Mind v5 memory tests should verify user isolation."
+    fix_action: "Add test_user_cannot_access_other_user_memories"
+    applies_to:
+      - "tests/**/test_*memory*.py"
+      - "tests/**/test_*retrieval*.py"

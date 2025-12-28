@@ -144,3 +144,68 @@ ecosystem:
     - "Sync-only SDKs for new projects"
     - "Breaking changes in minor versions"
     - "Undocumented API surface"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Python SDK for Mind v5 API
+  pod: interface
+  critical_artifacts:
+    - src/sdk/python/**/*.py
+    - src/sdk/python/mind/**/*.py
+  sdk_structure:
+    client:
+      - MindClient (main entry point)
+      - AsyncMindClient (async version)
+    modules:
+      - mind.memory (retrieve, store)
+      - mind.decision (track, observe)
+      - mind.context (get_context)
+    models:
+      - Memory, RetrievalResult
+      - Decision, DecisionTrace
+      - Outcome, SalienceUpdate
+  key_methods:
+    retrieve:
+      signature: "async def retrieve(query: str, limit: int = 10) -> RetrievalResult"
+      returns: "List of memories with trace_id for outcome tracking"
+    track_decision:
+      signature: "async def track(memories_used: List[UUID], choice: str) -> DecisionTrace"
+      returns: "Trace for later outcome observation"
+    observe_outcome:
+      signature: "async def observe(trace_id: UUID, success: bool) -> List[SalienceUpdate]"
+      returns: "Updated salience scores for memories"
+  patterns:
+    context_manager:
+      example: |
+        async with MindClient(api_key=...) as mind:
+            result = await mind.memory.retrieve("project X")
+            trace = await mind.decision.track(result.memories)
+            # ... later
+            await mind.outcome.observe(trace.id, success=True)
+  metrics_owned:
+    - mind_sdk_requests_total
+    - mind_sdk_latency_client_seconds
+  delegation:
+    - trigger: "API specification"
+      delegate_to: api-designer
+      pattern: sequential
+      context: "SDK requirements and use cases"
+      receive: "OpenAPI spec for SDK generation"
+
+    - trigger: "Python patterns"
+      delegate_to: python-craftsman
+      pattern: parallel
+      context: "SDK implementation"
+      receive: "Pythonic async patterns and type hints"
+
+    - trigger: "SDK documentation"
+      delegate_to: docs-engineer
+      pattern: parallel
+      context: "SDK structure and methods"
+      receive: "README, tutorials, API reference"
+
+    - trigger: "SDK testing"
+      delegate_to: test-architect
+      pattern: parallel
+      context: "SDK test requirements"
+      receive: "Test fixtures and mocking strategy"

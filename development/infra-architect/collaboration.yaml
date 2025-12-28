@@ -146,3 +146,67 @@ ecosystem:
     - "Docker Swarm for orchestration"
     - "Manual infrastructure changes"
     - "Storing tfstate locally"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Kubernetes deployment and GitOps for Mind v5 infrastructure
+  pod: platform
+  critical_artifacts:
+    - deploy/k8s/*.yaml
+    - deploy/terraform/*.tf
+    - deploy/docker/*.dockerfile
+  infrastructure_components:
+    databases:
+      - PostgreSQL (primary event store, memories)
+      - Qdrant (vector store)
+      - FalkorDB (causal knowledge graph)
+      - Redis (caching layer)
+    messaging:
+      - NATS JetStream (event backbone, 400K msg/sec target)
+    orchestration:
+      - Temporal.io (Gardener workflows)
+    observability:
+      - Prometheus + Grafana
+      - OpenTelemetry
+      - Loki
+  metrics_owned:
+    - mind_infra_pod_restarts_total
+    - mind_infra_node_memory_utilization
+    - mind_infra_pvc_usage_bytes
+  deployment_requirements:
+    nats:
+      replicas: 3
+      storage: persistent
+      jetstream: enabled
+    qdrant:
+      replicas: 3
+      raft_enabled: true
+    falkordb:
+      replicas: 1
+      persistence: enabled
+    temporal:
+      cluster_mode: multi-cluster-ready
+  delegation:
+    - trigger: "NATS cluster configuration"
+      delegate_to: event-architect
+      pattern: sequential
+      context: "Throughput requirements and partition strategy"
+      receive: "JetStream configuration and consumer design"
+
+    - trigger: "database deployment and scaling"
+      delegate_to: postgres-wizard
+      pattern: parallel
+      context: "Storage requirements and HA needs"
+      receive: "PostgreSQL operator config and connection pooling"
+
+    - trigger: "monitoring and alerting"
+      delegate_to: observability-sre
+      pattern: parallel
+      context: "SLO requirements and dashboards needed"
+      receive: "Prometheus rules and Grafana dashboards"
+
+    - trigger: "secrets and encryption"
+      delegate_to: privacy-guardian
+      pattern: review
+      context: "Sensitive configuration and key management"
+      receive: "Vault integration and encryption at rest config"

@@ -146,3 +146,70 @@ ecosystem:
     - "Average-only latency metrics"
     - "Sync I/O in async code"
     - "Connection per request pattern"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Performance optimization for Mind v5 retrieval and processing
+  pod: quality
+  critical_artifacts:
+    - tests/benchmarks/**/*.py
+    - src/core/memory/retrieval.py
+    - src/infrastructure/**/*.py
+  performance_targets:
+    memory_retrieval:
+      p50: 50ms
+      p99: 200ms
+      throughput: 1000 queries/sec
+    event_processing:
+      p50: 10ms
+      p99: 100ms
+      throughput: 400K events/sec
+    causal_query:
+      p50: 100ms
+      p99: 500ms
+    embedding_generation:
+      p50: 20ms
+      p99: 100ms
+      batch_size: 100
+  bottleneck_patterns:
+    vector_search:
+      symptoms: "High Qdrant latency in traces"
+      investigation: "Check HNSW parameters, quantization"
+      solution: "Tune ef_search, enable scalar quantization"
+    graph_traversal:
+      symptoms: "FalkorDB query timeout"
+      investigation: "Check query complexity, missing indexes"
+      solution: "Add composite indexes, limit traversal depth"
+    event_consumer_lag:
+      symptoms: "NATS consumer lag growing"
+      investigation: "Check consumer throughput, batch size"
+      solution: "Increase workers, optimize handler code"
+  metrics_owned:
+    - mind_retrieval_latency_histogram
+    - mind_event_processing_latency_histogram
+    - mind_cache_hit_ratio
+    - mind_connection_pool_utilization
+  delegation:
+    - trigger: "vector search latency"
+      delegate_to: vector-specialist
+      pattern: parallel
+      context: "Qdrant query patterns and latencies"
+      receive: "HNSW tuning and quantization recommendations"
+
+    - trigger: "graph query performance"
+      delegate_to: graph-engineer
+      pattern: parallel
+      context: "FalkorDB queries and execution plans"
+      receive: "Index recommendations and query optimization"
+
+    - trigger: "database query performance"
+      delegate_to: postgres-wizard
+      pattern: parallel
+      context: "PostgreSQL EXPLAIN ANALYZE output"
+      receive: "Index and query optimization"
+
+    - trigger: "Python code profiling"
+      delegate_to: python-craftsman
+      pattern: parallel
+      context: "Profiling results and hot spots"
+      receive: "Code optimization suggestions"

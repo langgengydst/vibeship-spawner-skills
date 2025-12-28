@@ -142,3 +142,70 @@ ecosystem:
     - "Auto-increment IDs in public APIs"
     - "Undocumented breaking changes"
     - "Verbs in REST URLs"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: gRPC and REST API design for Mind v5
+  pod: interface
+  critical_artifacts:
+    - src/api/grpc/**/*.proto
+    - src/api/rest/**/*.py
+    - docs/api/*.md
+  api_types:
+    grpc:
+      use_for: "Internal service communication"
+      endpoints:
+        - MemoryService
+        - DecisionService
+        - CausalService
+    rest:
+      use_for: "External SDK and integrations"
+      endpoints:
+        - /v1/memories
+        - /v1/decisions
+        - /v1/context
+  key_endpoints:
+    memory_retrieval:
+      method: POST
+      path: "/v1/memories/retrieve"
+      request: "RetrieveRequest (query, user_id, limit)"
+      response: "RetrievalResponse (memories[], trace_id)"
+      slo: "200ms p99"
+    decision_track:
+      method: POST
+      path: "/v1/decisions/track"
+      request: "DecisionRequest (context_used[], choice, confidence)"
+      response: "DecisionTrace (trace_id, correlation_id)"
+    outcome_observe:
+      method: POST
+      path: "/v1/outcomes/observe"
+      request: "OutcomeRequest (trace_id, success, feedback)"
+      response: "OutcomeAck (salience_updates[])"
+  metrics_owned:
+    - mind_api_requests_total
+    - mind_api_latency_seconds
+    - mind_api_errors_total
+  delegation:
+    - trigger: "SDK generation from API"
+      delegate_to: sdk-builder
+      pattern: sequential
+      context: "OpenAPI/protobuf specs"
+      receive: "Generated SDK with type safety"
+
+    - trigger: "API documentation"
+      delegate_to: docs-engineer
+      pattern: parallel
+      context: "Endpoint specs and examples"
+      receive: "API reference documentation"
+
+    - trigger: "API authentication"
+      delegate_to: privacy-guardian
+      pattern: sequential
+      context: "API access requirements"
+      receive: "JWT/API key authentication design"
+
+    - trigger: "API performance"
+      delegate_to: performance-hunter
+      pattern: parallel
+      context: "Endpoint latency requirements"
+      receive: "Caching and optimization recommendations"

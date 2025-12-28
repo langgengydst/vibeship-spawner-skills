@@ -149,3 +149,64 @@ validations:
     fix_action: "Consider CATE (Conditional Average Treatment Effect) for heterogeneous effects"
     applies_to:
       - "**/causal/**/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-causal-edge-missing-confidence
+    name: Causal Edge Without Confidence Score
+    severity: error
+    type: regex
+    pattern:
+      - 'CREATE.*CAUSES.*{(?![\\s\\S]*confidence)'
+      - 'store_causal.*(?!.*confidence)'
+    message: "Mind v5 causal edges must include confidence score."
+    fix_action: "Add confidence score from DoWhy CI width and refutation"
+    applies_to:
+      - "src/core/causal/*.py"
+      - "src/infrastructure/falkordb/*.py"
+
+  - id: mind-v5-causal-edge-missing-evidence
+    name: Causal Edge Without Evidence Count
+    severity: error
+    type: regex
+    pattern:
+      - 'CREATE.*CAUSES.*{(?![\\s\\S]*evidence_count)'
+    message: "Mind v5 causal edges must track evidence count."
+    fix_action: "Add evidence_count from estimate.n_observations"
+    applies_to:
+      - "src/core/causal/*.py"
+      - "src/infrastructure/falkordb/*.py"
+
+  - id: mind-v5-attribution-no-decision-trace
+    name: Causal Attribution Without Decision Trace
+    severity: error
+    type: regex
+    pattern:
+      - 'async def.*attribut[\\s\\S]*?(?!.*DecisionTrace|.*trace:)'
+    message: "Mind v5 attribution requires DecisionTrace for memory usage context."
+    fix_action: "Pass DecisionTrace with memories_used and memory_influence"
+    applies_to:
+      - "src/core/causal/attribution.py"
+      - "**/causal/*.py"
+
+  - id: mind-v5-discovery-no-temporal-order
+    name: Causal Discovery Without Temporal Constraints
+    severity: warning
+    type: regex
+    pattern:
+      - 'pc\\(|fci\\((?!.*temporal|.*time_order)'
+    message: "Mind v5 causal discovery should use temporal ordering constraints."
+    fix_action: "Apply temporal_order constraints based on created_at/observed_at"
+    applies_to:
+      - "src/core/causal/discovery.py"
+      - "**/causal/*.py"
+
+  - id: mind-v5-causal-no-refutation-store
+    name: Storing Causal Edge Without Refutation Status
+    severity: warning
+    type: regex
+    pattern:
+      - 'CAUSES.*{(?![\\s\\S]*refutation)'
+    message: "Mind v5 should track whether causal edge passed refutation tests."
+    fix_action: "Add refutation_passed: bool from DoWhy refutation"
+    applies_to:
+      - "src/core/causal/*.py"

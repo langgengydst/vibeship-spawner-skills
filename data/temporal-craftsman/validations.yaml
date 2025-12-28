@@ -144,3 +144,62 @@ validations:
     fix_action: "Use named constants or configuration for timeouts"
     applies_to:
       - "**/workflows/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-consolidation-no-heartbeat
+    name: Memory Consolidation Without Heartbeat
+    severity: error
+    type: regex
+    pattern:
+      - 'MemoryConsolidation[\s\S]*?execute_activity(?![\s\S]*heartbeat_timeout)'
+    message: "Mind v5 consolidation workflows must have heartbeat for long-running activities."
+    fix_action: "Add heartbeat_timeout=timedelta(minutes=2) to execute_activity"
+    applies_to:
+      - "src/workers/gardener/*.py"
+      - "**/workflows/consolidation*.py"
+
+  - id: mind-v5-llm-activity-short-timeout
+    name: LLM Activity With Short Timeout
+    severity: error
+    type: regex
+    pattern:
+      - 'execute_activity[\s\S]*?(?:llm|claude|gpt|extract)[\s\S]*?start_to_close_timeout=timedelta\((?:seconds|minutes=[0-1]))'
+    message: "Mind v5 LLM activities need at least 2 minute timeout for complex extraction."
+    fix_action: "Set start_to_close_timeout=timedelta(minutes=5) for LLM activities"
+    applies_to:
+      - "src/workers/gardener/*.py"
+      - "src/workers/extractors/*.py"
+
+  - id: mind-v5-gardener-no-continue-as-new
+    name: Gardener Workflow Missing Continue-As-New
+    severity: warning
+    type: regex
+    pattern:
+      - 'class.*(?:MemoryConsolidation|CausalDiscovery|PatternFederation)Workflow[\s\S]*?(?!continue_as_new)'
+    message: "Mind v5 Gardener workflows processing many memories must use continue_as_new."
+    fix_action: "Add continue_as_new after processing batch to prevent history overflow"
+    applies_to:
+      - "src/workers/gardener/*.py"
+
+  - id: mind-v5-causal-workflow-no-idempotency
+    name: Causal Discovery Activity Not Idempotent
+    severity: error
+    type: regex
+    pattern:
+      - 'CausalDiscovery[\s\S]*?CREATE.*CAUSES(?!.*ON CONFLICT|.*MERGE)'
+    message: "Causal discovery must be idempotent for workflow replay safety."
+    fix_action: "Use MERGE or ON CONFLICT for causal edge creation"
+    applies_to:
+      - "src/workers/gardener/*.py"
+      - "src/core/causal/*.py"
+
+  - id: mind-v5-outcome-workflow-missing-trace
+    name: Outcome Attribution Missing Decision Trace
+    severity: error
+    type: regex
+    pattern:
+      - 'OutcomeAttribution[\s\S]*?update.*salience(?![\s\S]*decision_trace|trace_id)'
+    message: "Outcome attribution must link to decision trace for causality."
+    fix_action: "Include decision_trace_id when updating memory salience"
+    applies_to:
+      - "src/workers/gardener/*.py"

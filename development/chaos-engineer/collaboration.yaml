@@ -138,3 +138,79 @@ ecosystem:
     - "Running chaos without team notification"
     - "Same chaos experiment without follow-up on findings"
     - "Chaos in production before staging"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Resilience testing for Mind v5 distributed system
+  pod: platform
+  critical_artifacts:
+    - tests/chaos/*.yaml
+    - deploy/k8s/litmus/*.yaml
+  failure_domains:
+    nats:
+      experiments:
+        - Consumer lag spike (partition loss)
+        - Cluster leader election
+        - Message replay during split-brain
+      steady_state: "Event processing latency < 100ms p99"
+    qdrant:
+      experiments:
+        - Node failure during search
+        - Collection shard migration
+        - Concurrent write/read during rebalance
+      steady_state: "Vector search latency < 50ms p99"
+    falkordb:
+      experiments:
+        - Connection pool exhaustion
+        - Query timeout during graph traversal
+      steady_state: "Graph query latency < 100ms p99"
+    temporal:
+      experiments:
+        - Worker crash during workflow
+        - Activity retry exhaustion
+        - Workflow timeout and continuation
+      steady_state: "Gardener workflows complete < error budget"
+    postgres:
+      experiments:
+        - Primary failover to replica
+        - Connection pool exhaustion
+        - Long-running query kill
+      steady_state: "Event store writes succeed 99.99%"
+  game_day_scenarios:
+    - name: "Memory Retrieval Under Fire"
+      description: "Kill Qdrant node during decision support"
+      hypothesis: "Retrieval gracefully degrades to cache"
+    - name: "Event Backbone Partition"
+      description: "NATS network partition between clusters"
+      hypothesis: "Consumers resume from last checkpoint"
+    - name: "Gardener Storm"
+      description: "Mass workflow failures during discovery"
+      hypothesis: "Temporal retries with backoff"
+  metrics_owned:
+    - mind_chaos_experiments_run_total
+    - mind_chaos_steady_state_violations
+    - mind_chaos_recovery_time_seconds
+  delegation:
+    - trigger: "infrastructure failure modes"
+      delegate_to: infra-architect
+      pattern: parallel
+      context: "Components to test for resilience"
+      receive: "Redundancy design and failure domain analysis"
+
+    - trigger: "chaos experiment monitoring"
+      delegate_to: observability-sre
+      pattern: parallel
+      context: "Metrics needed for steady state"
+      receive: "Dashboards and alerts for chaos experiments"
+
+    - trigger: "event system resilience"
+      delegate_to: event-architect
+      pattern: parallel
+      context: "NATS failure scenarios"
+      receive: "Consumer recovery patterns and replay safety"
+
+    - trigger: "database failover testing"
+      delegate_to: postgres-wizard
+      pattern: parallel
+      context: "PostgreSQL HA testing"
+      receive: "Failover experiment design and recovery metrics"

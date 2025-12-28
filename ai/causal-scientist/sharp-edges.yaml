@@ -488,3 +488,163 @@ sharp_edges:
       - "Selection mechanism related to treatment or outcome"
     detection_pattern: 'filter.*\\[|query.*WHERE(?!.*random)'
     version_range: ">=1.0.0"
+
+  # Mind v5 Specific Sharp Edges
+  - id: mind-v5-causal-edge-no-confidence
+    summary: Causal edge stored without confidence score
+    severity: critical
+    situation: |
+      You discover a causal relationship and store it in FalkorDB.
+      You store causal_strength but forget confidence. Later, high-confidence
+      and low-confidence edges are treated equally.
+    why: |
+      Mind v5 uses confidence for retrieval ranking and decision making.
+      A causal edge with 0.3 confidence from 5 observations should not
+      be treated the same as one with 0.95 confidence from 500 observations.
+    solution: |
+      # Always store confidence with causal edges
+      async def store_causal_edge(
+          source_id: UUID,
+          target_id: UUID,
+          estimate: CausalEstimate,
+      ) -> None:
+          await self.graph.query(
+              """
+              MATCH (source:Entity {id: $source_id})
+              MATCH (target:Entity {id: $target_id})
+              CREATE (source)-[r:CAUSES {
+                  causal_strength: $strength,
+                  confidence: $confidence,  // REQUIRED
+                  evidence_count: $evidence_count,
+                  discovery_method: $method,
+                  refutation_passed: $refutation,
+                  created_at: datetime()
+              }]->(target)
+              """,
+              source_id=str(source_id),
+              target_id=str(target_id),
+              strength=estimate.effect,
+              confidence=estimate.confidence,  # From CI width + refutation
+              evidence_count=estimate.n_observations,
+              method=estimate.method,
+              refutation=estimate.refutation_passed,
+          )
+
+      # Query should filter by confidence
+      async def get_causal_effects(entity_id: UUID, min_confidence: float = 0.7):
+          return await self.graph.query(
+              """
+              MATCH (e:Entity {id: $id})-[r:CAUSES]->(effect)
+              WHERE r.confidence >= $min_conf
+              RETURN effect, r.causal_strength, r.confidence
+              ORDER BY r.confidence DESC
+              """,
+              id=str(entity_id), min_conf=min_confidence
+          )
+    symptoms:
+      - "Low-quality causal edges used in decisions"
+      - "Causal reasoning unreliable"
+      - "No way to distinguish good from bad causal claims"
+    detection_pattern: 'CAUSES.*{(?!.*confidence)'
+    version_range: ">=5.0.0"
+
+  - id: mind-v5-attribution-no-trace
+    summary: Memory attribution computed without decision trace
+    severity: high
+    situation: |
+      You want to learn which memories helped decisions. You compute
+      attribution but without the decision trace context. You're attributing
+      based on retrieval, not actual usage.
+    why: |
+      Mind v5 outcome learning requires knowing which memories were actually
+      USED in decisions, not just retrieved. Attribution without trace
+      gives credit to memories that were fetched but ignored.
+    solution: |
+      class MindV5CausalAttributor:
+          async def attribute_outcome(
+              self,
+              trace: DecisionTrace,  # REQUIRED
+              outcome_quality: float,
+          ) -> Dict[UUID, float]:
+              if not trace.memories_used:
+                  return {}
+
+              # Only attribute to memories that were USED
+              # trace.memories_used is subset of trace.memories_retrieved
+              attributions = {}
+
+              for memory_id in trace.memories_used:
+                  # Get influence from trace
+                  influence = trace.memory_influence.get(memory_id, 0.0)
+
+                  # Causal attribution = outcome * influence
+                  attribution = outcome_quality * influence
+
+                  attributions[memory_id] = attribution
+
+              return attributions
+
+          async def apply_attributions(
+              self,
+              attributions: Dict[UUID, float],
+          ) -> None:
+              for memory_id, attribution in attributions.items():
+                  await self.salience_adjuster.adjust(
+                      memory_id,
+                      adjustment=attribution * 0.1,  # Learning rate
+                  )
+    symptoms:
+      - "Retrieved but unused memories get credit"
+      - "Salience doesn't reflect actual usefulness"
+      - "High-ranked memories don't improve outcomes"
+    detection_pattern: 'attribut.*(?!.*trace|.*DecisionTrace)'
+    version_range: ">=5.0.0"
+
+  - id: mind-v5-discovery-no-temporal-constraint
+    summary: Causal discovery without temporal ordering constraints
+    severity: medium
+    situation: |
+      You run causal discovery on Mind v5 data. The algorithm finds that
+      "user satisfaction" causes "product quality". But temporally,
+      product quality comes first. The edge direction is wrong.
+    why: |
+      Causal discovery algorithms can't determine direction from data alone.
+      Mind v5 has temporal metadata (created_at, observed_at) that must
+      constrain discovery. Effects cannot precede causes.
+    solution: |
+      class TemporalCausalDiscovery:
+          async def discover_with_temporal_order(
+              self,
+              data: pd.DataFrame,
+              temporal_columns: Dict[str, str],  # variable -> timestamp column
+          ) -> nx.DiGraph:
+              # 1. Run base discovery
+              graph = await self._run_pc_algorithm(data)
+
+              # 2. Apply temporal constraints
+              for source, target in list(graph.edges()):
+                  source_time = temporal_columns.get(source)
+                  target_time = temporal_columns.get(target)
+
+                  if source_time and target_time:
+                      # Check temporal order from data
+                      if data[source_time].mean() > data[target_time].mean():
+                          # Source is LATER than target - wrong direction
+                          graph.remove_edge(source, target)
+                          graph.add_edge(target, source)
+                          logger.info(f"Reversed {source}->{target} due to temporal order")
+
+              return graph
+
+      # Mind v5 specific: use memory.created_at for ordering
+      temporal_columns = {
+          "memory_content": "memory.created_at",
+          "decision_outcome": "trace.outcome_at",
+          "user_action": "interaction.occurred_at",
+      }
+    symptoms:
+      - "Causal edges point backwards in time"
+      - "Effects appear before causes"
+      - "Domain experts reject discovered structure"
+    detection_pattern: 'causal.*discover(?!.*temporal|.*time)'
+    version_range: ">=5.0.0"

@@ -142,3 +142,73 @@ ecosystem:
     - "Running without connection pooler"
     - "Using ORM without understanding generated SQL"
     - "Tuning parameters without baseline metrics"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Event store and memory persistence with pgvectorscale
+  pod: platform
+  critical_artifacts:
+    - src/infrastructure/postgres/*.py
+    - deploy/k8s/postgres/*.yaml
+    - src/core/events/store.py
+  databases:
+    primary:
+      name: mind_events
+      purpose: Event store with append-only semantics
+      extensions:
+        - pgvectorscale
+        - pg_partman
+    replica:
+      name: mind_memories
+      purpose: Memory projections for read queries
+  key_tables:
+    events:
+      - event_id (UUID, PK)
+      - aggregate_id (UUID, indexed)
+      - event_type (varchar, indexed)
+      - payload (jsonb)
+      - occurred_at (timestamptz, partitioned)
+      - correlation_id (UUID, indexed)
+      - causation_id (UUID, indexed)
+    memories:
+      - memory_id (UUID, PK)
+      - user_id (UUID, indexed, RLS)
+      - content_encrypted (bytea)
+      - embedding (vector(1536))
+      - temporal_level (int)
+      - salience (float)
+      - valid_from (timestamptz)
+      - valid_until (timestamptz, nullable)
+  metrics_owned:
+    - mind_pg_connections_active
+    - mind_pg_query_duration_seconds
+    - mind_pg_replication_lag_seconds
+    - mind_pg_partition_count
+  performance_targets:
+    event_append: "<10ms p99"
+    memory_query: "<50ms p99"
+    connection_pool: "pgbouncer, 100 connections"
+  delegation:
+    - trigger: "vector search optimization"
+      delegate_to: vector-specialist
+      pattern: parallel
+      context: "pgvectorscale indexes and query patterns"
+      receive: "HNSW index configuration and query optimization"
+
+    - trigger: "schema migration needed"
+      delegate_to: migration-specialist
+      pattern: sequential
+      context: "Current schema and proposed changes"
+      receive: "Zero-downtime migration plan with backward compat"
+
+    - trigger: "database monitoring setup"
+      delegate_to: observability-sre
+      pattern: parallel
+      context: "Key metrics and SLO requirements"
+      receive: "pg_exporter config and Grafana dashboards"
+
+    - trigger: "infrastructure scaling"
+      delegate_to: infra-architect
+      pattern: parallel
+      context: "Resource requirements and HA needs"
+      receive: "Kubernetes operator config and scaling policies"

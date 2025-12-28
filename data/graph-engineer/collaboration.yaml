@@ -135,3 +135,52 @@ ecosystem:
     - "OrientDB (acquired, limited development)"
     - "Titan (abandoned, use JanusGraph instead)"
     - "Storing graphs in relational DB with join tables (performance nightmare)"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Causal Knowledge Graph and entity relationships
+  critical_artifacts:
+    - src/infrastructure/falkordb/*.py
+    - src/core/causal/graph.py
+    - src/core/memory/graph_store.py
+  metrics_owned:
+    - mind_graph_nodes_total
+    - mind_graph_edges_total
+    - mind_graph_query_latency_seconds
+    - mind_causal_edge_confidence_histogram
+  node_types:
+    - User
+    - Memory
+    - Entity
+    - Concept
+    - Decision
+  edge_types:
+    - HAS_MEMORY (User -> Memory)
+    - RELATES_TO (Memory -> Entity)
+    - CAUSES (Entity -> Entity)
+    - CORRELATES (Entity -> Entity)
+    - MENTIONED_IN (Entity -> Memory)
+  critical_patterns:
+    - Temporal validity on all edges
+    - Confidence + evidence_count on CAUSES edges
+    - Salience-ordered traversal
+    - User-scoped queries with LIMIT
+
+  delegation:
+    - trigger: "statistical validation of causal edge"
+      delegate_to: causal-scientist
+      pattern: sequential
+      context: "Causal edge candidate with observational data"
+      receive: "Validated edge with confidence from DoWhy"
+
+    - trigger: "vector search before graph enrichment"
+      delegate_to: vector-specialist
+      pattern: parallel
+      context: "Query requiring semantic + graph retrieval"
+      receive: "Memory IDs from vector search for graph traversal"
+
+    - trigger: "memory hierarchy or consolidation"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Memory nodes requiring promotion/demotion"
+      receive: "Updated temporal levels and salience scores"

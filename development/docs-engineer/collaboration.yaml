@@ -136,3 +136,81 @@ ecosystem:
     - "Auto-generated docs without curation"
     - "Docs in separate repo from code"
     - "PDF-only documentation"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Documentation for Mind v5 system and SDK
+  pod: interface
+  critical_artifacts:
+    - docs/**/*.md
+    - docs/api/*.md
+    - docs/sdk/*.md
+    - docs/architecture/*.md
+  documentation_structure:
+    getting_started:
+      - Quick Start (5 min to first memory)
+      - Installation (pip, docker)
+      - Configuration (API keys, endpoints)
+    concepts:
+      - Memory Hierarchy (4 temporal levels)
+      - Outcome-Weighted Retrieval
+      - Causal Knowledge Graph
+      - Decision Traces
+    guides:
+      - Integrating with Your Agent
+      - Tracking Decision Outcomes
+      - Building on Patterns
+    api_reference:
+      - REST API
+      - Python SDK
+      - gRPC Services
+    architecture:
+      - System Overview
+      - Event Sourcing
+      - Data Privacy
+  key_examples:
+    memory_retrieval: |
+      ```python
+      async with MindClient(api_key=...) as mind:
+          result = await mind.retrieve("user preferences for UI")
+          for memory in result.memories:
+              print(f"{memory.content} (salience: {memory.salience})")
+      ```
+    outcome_tracking: |
+      ```python
+      # Track which memories influenced a decision
+      trace = await mind.track_decision(
+          memories_used=[m.id for m in result.memories],
+          choice="dark_mode"
+      )
+
+      # Later, when you know the outcome
+      await mind.observe_outcome(trace.id, success=True)
+      ```
+  metrics_owned:
+    - mind_docs_page_views
+    - mind_docs_feedback_rating
+  delegation:
+    - trigger: "API documentation"
+      delegate_to: api-designer
+      pattern: parallel
+      context: "Endpoints to document"
+      receive: "OpenAPI spec and design decisions"
+
+    - trigger: "SDK examples"
+      delegate_to: sdk-builder
+      pattern: parallel
+      context: "SDK methods to document"
+      receive: "Working code examples"
+
+    - trigger: "example verification"
+      delegate_to: test-architect
+      pattern: sequential
+      context: "Code examples in docs"
+      receive: "Verified examples with test coverage"
+
+    - trigger: "architecture diagrams"
+      delegate_to: event-architect
+      pattern: parallel
+      context: "System architecture to visualize"
+      receive: "Event flow and component diagrams"

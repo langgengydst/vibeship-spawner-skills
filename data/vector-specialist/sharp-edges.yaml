@@ -489,3 +489,92 @@ sharp_edges:
       - "Latency spikes periodically"
     detection_pattern: 'setex.*\\d+\\)'
     version_range: ">=1.0.0"
+
+  # Mind v5 Specific Sharp Edges
+  - id: mind-v5-qdrant-filter-after-search
+    summary: Qdrant payload filters run AFTER vector search in Mind v5
+    severity: critical
+    situation: |
+      You add a filter to search: search(query, filter={"user_id": user_id}).
+      Expect 20 results, get 3 because filter applied after top-K.
+    why: |
+      Mind v5 uses user_id filtering. If user has few memories in top-1000
+      vector matches, filter returns almost nothing. New users get empty results.
+    solution: |
+      # Use scroll with filter for guaranteed results
+      results = await qdrant.scroll(
+          collection_name="memories",
+          scroll_filter=Filter(
+              must=[FieldCondition(key="user_id", match=MatchValue(value=str(user_id)))]
+          ),
+          limit=100,
+          with_vectors=True,  # Get vectors for reranking
+      )
+
+      # Then rerank by similarity to query
+      query_vector = await embed(query)
+      scored = [(r, cosine_sim(query_vector, r.vector)) for r in results]
+      return sorted(scored, key=lambda x: x[1], reverse=True)[:20]
+
+      # OR: Use separate collection per user (better for large scale)
+      # OR: Use payload index on user_id
+      await qdrant.create_payload_index(
+          collection_name="memories",
+          field_name="user_id",
+          field_schema=PayloadSchemaType.KEYWORD,
+      )
+    symptoms:
+      - "Search returns fewer results than limit"
+      - "New users get empty results"
+      - "Inconsistent result counts across users"
+    detection_pattern: 'search\\([^)]*filter.*user_id'
+    version_range: ">=1.0.0"
+
+  - id: mind-v5-outcome-weight-overflow
+    summary: Outcome weights accumulate unbounded over time
+    severity: high
+    situation: |
+      Outcome-weighted retrieval uses cumulative scores. Long-term users
+      have memories with 10x higher outcome scores than new users.
+      Old memories always win, new relevant memories get buried.
+    why: |
+      Mind v5 accumulates outcome_adjustment over decisions. A memory used
+      in 100 good decisions has +10 adjustment. A new relevant memory
+      has 0. Similarity gets overwhelmed by historical success.
+    solution: |
+      # Normalize outcome weights per query
+      async def retrieve_with_normalized_outcomes(
+          query: str,
+          user_id: UUID,
+      ) -> List[Memory]:
+          vector_results = await qdrant.search(embed(query), limit=50)
+          memory_ids = [r.id for r in vector_results]
+
+          # Get outcome scores
+          outcome_scores = await fetch_outcome_scores(memory_ids)
+
+          # Normalize to 0-1 range within this result set
+          if outcome_scores:
+              min_score = min(outcome_scores.values())
+              max_score = max(outcome_scores.values())
+              score_range = max_score - min_score or 1
+
+              normalized = {
+                  mid: (score - min_score) / score_range
+                  for mid, score in outcome_scores.items()
+              }
+          else:
+              normalized = {}
+
+          # Apply normalized boost (max +20% boost)
+          for result in vector_results:
+              boost = normalized.get(result.id, 0) * 0.2
+              result.score = result.score * (1 + boost)
+
+          return sorted(vector_results, key=lambda x: x.score, reverse=True)
+    symptoms:
+      - "Old memories always rank first"
+      - "New relevant content doesn't surface"
+      - "Score distributions skewed by account age"
+    detection_pattern: 'outcome_adjustment(?!.*normalize)'
+    version_range: ">=1.0.0"

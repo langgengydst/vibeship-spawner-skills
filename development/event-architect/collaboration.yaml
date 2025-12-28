@@ -133,3 +133,45 @@ ecosystem:
     - "RabbitMQ for event sourcing (not designed for replay/persistence)"
     - "In-memory event stores (lose data on restart)"
     - "Single-partition Kafka topics (ordering bottleneck)"
+
+# Mind v5 Specific Context
+mind_v5_specific:
+  primary_responsibility: Event backbone and all event schemas
+  critical_artifacts:
+    - src/core/events/*.py
+    - src/infrastructure/nats/*.py
+    - src/workers/projectors/*.py
+  metrics_owned:
+    - mind_events_published_total
+    - mind_event_processing_latency
+    - mind_projection_lag_seconds
+  critical_events:
+    - InteractionRecorded
+    - MemoryExtracted
+    - DecisionMade
+    - OutcomeObserved
+    - CausalLinkDiscovered
+    - PatternValidated
+  event_flow: |
+    Interaction -> MemoryExtracted -> (stored) -> DecisionMade -> OutcomeObserved
+                                           |
+                                CausalLinkDiscovered -> PatternValidated
+
+  delegation:
+    - trigger: "memory extraction from events"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "Event schema for MemoryExtracted, extraction triggers"
+      receive: "Extraction pipeline that produces MemoryExtracted events"
+
+    - trigger: "causal relationship from event sequence"
+      delegate_to: causal-scientist
+      pattern: parallel
+      context: "Event stream for pattern analysis"
+      receive: "CausalLinkDiscovered events"
+
+    - trigger: "decision outcome tracking"
+      delegate_to: ml-memory
+      pattern: sequential
+      context: "DecisionMade event schema"
+      receive: "OutcomeObserved event handling"

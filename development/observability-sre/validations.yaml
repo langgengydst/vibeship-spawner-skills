@@ -170,3 +170,53 @@ validations:
     applies_to:
       - "**/*.py"
       - "**/*.go"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-missing-decision-metric
+    name: Decision Handler Without Success Metric
+    severity: error
+    type: regex
+    pattern:
+      - 'async def.*decision(?![\s\S]*mind_decision)'
+      - 'def handle_decision(?![\s\S]*decision.*counter|gauge)'
+    message: "Mind v5 decision handlers must emit mind_decision_success_rate metric."
+    fix_action: "Add DECISION_OUTCOMES.labels(result='success').inc()"
+    applies_to:
+      - "src/core/decision/*.py"
+      - "src/api/**/*.py"
+
+  - id: mind-v5-missing-retrieval-metric
+    name: Memory Retrieval Without Relevance Metric
+    severity: warning
+    type: regex
+    pattern:
+      - 'async def.*retrieve(?![\s\S]*retrieval.*histogram|relevance)'
+    message: "Mind v5 memory retrieval should emit mind_memory_retrieval_relevance metric."
+    fix_action: "Add RETRIEVAL_RELEVANCE.observe(avg_score)"
+    applies_to:
+      - "src/core/memory/*.py"
+
+  - id: mind-v5-missing-causal-metric
+    name: Causal Inference Without Prediction Metric
+    severity: info
+    type: regex
+    pattern:
+      - 'async def.*discover.*causal(?![\s\S]*causal.*metric)'
+      - 'async def.*estimate_effect(?![\s\S]*prediction.*accuracy)'
+    message: "Mind v5 causal inference should emit mind_causal_prediction_accuracy metric."
+    fix_action: "Track prediction accuracy with CAUSAL_ACCURACY.set(accuracy)"
+    applies_to:
+      - "src/core/causal/*.py"
+
+  - id: mind-v5-missing-federation-metric
+    name: Pattern Federation Without Count Metric
+    severity: warning
+    type: regex
+    pattern:
+      - 'async def.*federat(?![\s\S]*federation.*counter)'
+      - 'publish.*intent.*graph(?![\s\S]*pattern.*count)'
+    message: "Mind v5 pattern federation should emit mind_federation_pattern_count metric."
+    fix_action: "Add FEDERATION_PATTERNS.labels(status='published').inc()"
+    applies_to:
+      - "src/core/federation/*.py"
+      - "**/federation/**/*.py"

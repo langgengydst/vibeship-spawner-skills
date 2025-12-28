@@ -158,3 +158,56 @@ validations:
     applies_to:
       - "*.py"
       - "*.cypher"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-memory-traversal-no-limit
+    name: Memory Graph Traversal Without LIMIT
+    severity: error
+    type: regex
+    pattern:
+      - 'MATCH.*User.*HAS_MEMORY.*Memory[\s\S]*RETURN(?![\s\S]*LIMIT)'
+      - 'MATCH.*Memory.*RELATES_TO[\s\S]*RETURN(?![\s\S]*LIMIT)'
+    message: "Mind v5 memory traversal without LIMIT. Users can have 50K+ memories."
+    fix_action: "Add ORDER BY salience DESC LIMIT N before traversal"
+    applies_to:
+      - "src/infrastructure/falkordb/*.py"
+      - "**/graph/*.py"
+
+  - id: mind-v5-causal-edge-missing-confidence
+    name: Causal Edge Without Confidence Score
+    severity: error
+    type: regex
+    pattern:
+      - 'CREATE.*:CAUSES\s*\{(?![\s\S]*confidence)'
+      - 'MERGE.*:CAUSES\s*\{(?![\s\S]*confidence)'
+    message: "Mind v5 causal edges require confidence for DoWhy inference."
+    fix_action: "Add confidence: $confidence to CAUSES edge properties"
+    applies_to:
+      - "src/core/causal/*.py"
+      - "src/infrastructure/falkordb/*.py"
+      - "**/graph/*.py"
+
+  - id: mind-v5-causal-edge-missing-evidence
+    name: Causal Edge Without Evidence Count
+    severity: warning
+    type: regex
+    pattern:
+      - 'CREATE.*:CAUSES\s*\{(?![\s\S]*evidence_count)'
+    message: "Causal edges should track evidence_count for confidence calibration."
+    fix_action: "Add evidence_count: $count to track supporting observations"
+    applies_to:
+      - "src/core/causal/*.py"
+      - "src/infrastructure/falkordb/*.py"
+
+  - id: mind-v5-graph-query-interpolation
+    name: Graph Query With String Interpolation
+    severity: error
+    type: regex
+    pattern:
+      - 'graph\.query\([^)]*f["\']'
+      - 'graph\.query\([^)]*\.format\('
+      - 'graph\.query\([^)]*\%\s*\('
+    message: "Graph queries must use parameters for plan caching and security."
+    fix_action: "Use graph.query(query, {'param': value}) not f-strings"
+    applies_to:
+      - "**/*.py"

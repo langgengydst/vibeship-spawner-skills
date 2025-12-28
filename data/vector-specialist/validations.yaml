@@ -150,3 +150,54 @@ validations:
     applies_to:
       - "*.py"
       - "**/api/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-qdrant-no-user-payload-index
+    name: Qdrant Search With User Filter But No Payload Index
+    severity: error
+    type: regex
+    pattern:
+      - 'search.*user_id(?![\s\S]*create_payload_index.*user_id)'
+      - 'Filter.*user_id(?![\s\S]*payload_index)'
+    message: "Mind v5 user_id filter without payload index. Results will be inconsistent."
+    fix_action: "Create payload index on user_id field for consistent filtered search"
+    applies_to:
+      - "src/infrastructure/qdrant/*.py"
+      - "**/vector/*.py"
+
+  - id: mind-v5-retrieval-no-outcome-weighting
+    name: Memory Retrieval Without Outcome Weighting
+    severity: warning
+    type: regex
+    pattern:
+      - 'async def retrieve.*memory[\s\S]*?return.*search(?![\s\S]*outcome)'
+    message: "Mind v5 retrieval should include outcome weighting for decision quality."
+    fix_action: "Add outcome-weighted scoring after initial retrieval"
+    applies_to:
+      - "src/core/memory/retrieval.py"
+      - "**/retrieval/*.py"
+
+  - id: mind-v5-embedding-model-not-tracked
+    name: Embedding Without Model Version Tracking
+    severity: error
+    type: regex
+    pattern:
+      - 'INSERT INTO.*memories.*embedding(?![\s\S]*model_version)'
+      - 'store_embedding(?![\s\S]*model)'
+    message: "Embeddings must track model version for safe upgrades."
+    fix_action: "Add model_version column and store with each embedding"
+    applies_to:
+      - "src/infrastructure/qdrant/*.py"
+      - "**/embeddings/*.py"
+
+  - id: mind-v5-vector-search-no-temporal-filter
+    name: Vector Search Without Temporal Validity Filter
+    severity: warning
+    type: regex
+    pattern:
+      - 'qdrant\.search(?![\s\S]*valid_until)'
+    message: "Mind v5 memory search should filter by temporal validity."
+    fix_action: "Add filter for valid_until IS NULL OR valid_until > now()"
+    applies_to:
+      - "src/core/memory/*.py"
+      - "src/infrastructure/qdrant/*.py"

@@ -176,3 +176,54 @@ validations:
       - "**/*.sql"
       - "**/*.py"
       - "**/*.ts"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-memories-no-partition
+    name: Memories Table Without Partitioning
+    severity: error
+    type: regex
+    pattern:
+      - 'CREATE TABLE memories(?!.*PARTITION)'
+      - 'CREATE TABLE.*memory(?!.*PARTITION BY)'
+    message: "Mind v5 memories table must be partitioned by user_id for scale."
+    fix_action: "Use PARTITION BY HASH (user_id) for horizontal scaling"
+    applies_to:
+      - "**/migrations/**/*.sql"
+      - "**/migrations/**/*.py"
+      - "**/schema/**/*.sql"
+
+  - id: mind-v5-decision-trace-no-index
+    name: Decision Traces Without Composite Index
+    severity: warning
+    type: regex
+    pattern:
+      - 'CREATE TABLE.*decision_trace(?![\s\S]*INDEX.*user_id.*created_at)'
+    message: "Mind v5 decision_traces needs (user_id, created_at) composite index."
+    fix_action: "CREATE INDEX ON decision_traces (user_id, created_at DESC)"
+    applies_to:
+      - "**/migrations/**/*.sql"
+      - "**/migrations/**/*.py"
+
+  - id: mind-v5-causal-edges-no-gin
+    name: Causal Edge Conditions Without GIN Index
+    severity: info
+    type: regex
+    pattern:
+      - 'CREATE TABLE.*causal.*conditions.*jsonb(?![\s\S]*GIN)'
+    message: "Mind v5 causal edge conditions field should have GIN index for queries."
+    fix_action: "CREATE INDEX ON causal_edges USING GIN (conditions)"
+    applies_to:
+      - "**/migrations/**/*.sql"
+
+  - id: mind-v5-memory-query-no-user-filter
+    name: Memory Query Without User ID Filter
+    severity: error
+    type: regex
+    pattern:
+      - 'SELECT.*FROM.*memories(?!.*user_id)'
+      - 'DELETE FROM memories(?!.*user_id)'
+    message: "Mind v5 memory queries must include user_id for data isolation."
+    fix_action: "Always filter by user_id in memory table queries"
+    applies_to:
+      - "**/*.py"
+      - "**/*.sql"

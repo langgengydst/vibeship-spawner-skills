@@ -153,3 +153,40 @@ validations:
     fix_action: "Rename to past tense: Created, Updated, Deleted, Sent, Processed"
     applies_to:
       - "**/events/*.py"
+
+  # Mind v5 Specific Validations
+  - id: event-missing-causation-id
+    name: Event Without Causation ID
+    severity: error
+    type: regex
+    pattern:
+      - '@dataclass.*class\\s+\\w+(?:Event|Recorded|Made|Observed)[\\s\\S]{0,500}(?!causation_id)'
+    message: "Mind v5 events require causation_id for decision trace lineage."
+    fix_action: "Add causation_id: UUID field linking to triggering event"
+    applies_to:
+      - "src/core/events/*.py"
+      - "**/events.py"
+
+  - id: nats-publish-without-await
+    name: NATS Publish Without Await
+    severity: error
+    type: regex
+    pattern:
+      - 'js\\.publish\\([^)]+\\)(?!\\s*$)(?!.*await)'
+      - '(?<!await\\s)nc\\.publish\\('
+    message: "NATS publish must be awaited for delivery confirmation."
+    fix_action: "Add await before publish call"
+    applies_to:
+      - "**/*.py"
+
+  - id: event-handler-not-idempotent
+    name: Event Handler INSERT Without Idempotency
+    severity: error
+    type: regex
+    pattern:
+      - 'async def (?:on_|handle_)\\w+[\\s\\S]{0,300}INSERT INTO(?!.*ON CONFLICT)'
+    message: "Event handlers must be idempotent for replay safety."
+    fix_action: "Add ON CONFLICT clause or check-before-insert pattern"
+    applies_to:
+      - "src/workers/projectors/*.py"
+      - "src/core/events/handlers/*.py"

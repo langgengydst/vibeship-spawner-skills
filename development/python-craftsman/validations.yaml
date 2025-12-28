@@ -147,3 +147,55 @@ validations:
     fix_action: "Use absolute imports or restructure package to reduce nesting"
     applies_to:
       - "**/*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-result-type-not-used
+    name: Fallible Operation Not Using Result Type
+    severity: warning
+    type: regex
+    pattern:
+      - 'async def.*->.*(?<!Result)\[.*\](?!.*Result)'
+      - 'def.*fetch.*->(?!.*Result|.*Optional)'
+    message: "Mind v5 fallible operations should use Result[T] type for explicit error handling."
+    fix_action: "Return Result[T] with .ok() and .err() instead of raising"
+    applies_to:
+      - "src/core/**/*.py"
+      - "src/infrastructure/**/*.py"
+
+  - id: mind-v5-dataclass-not-frozen
+    name: Event/Memory Dataclass Not Frozen
+    severity: error
+    type: regex
+    pattern:
+      - '@dataclass[^(].*class.*Event'
+      - '@dataclass\(\).*class.*Memory'
+      - '@dataclass(?!.*frozen.*=.*True).*class.*Event'
+    message: "Mind v5 events and memory objects must be immutable (frozen=True)."
+    fix_action: "Use @dataclass(frozen=True) for all event and memory classes"
+    applies_to:
+      - "src/core/events/*.py"
+      - "src/core/memory/*.py"
+
+  - id: mind-v5-async-not-everywhere
+    name: Sync I/O in Mind v5 Core
+    severity: error
+    type: regex
+    pattern:
+      - 'def [^_].*(?:fetch|query|store|save)(?!.*async)'
+    message: "Mind v5 I/O operations must be async for concurrent performance."
+    fix_action: "Convert to async def and await all I/O operations"
+    applies_to:
+      - "src/core/**/*.py"
+      - "src/infrastructure/**/*.py"
+
+  - id: mind-v5-type-hints-required
+    name: Mind v5 Code Missing Type Hints
+    severity: warning
+    type: regex
+    pattern:
+      - 'def [a-z_]+\([a-z_]+\):'
+      - 'def [a-z_]+\([a-z_]+,\s*[a-z_]+\):'
+    message: "Mind v5 requires type hints for mypy strict mode compliance."
+    fix_action: "Add type hints to all parameters and return types"
+    applies_to:
+      - "src/**/*.py"

@@ -48,6 +48,17 @@ identity: |
   billion-event replays, and learned that the abstractions are beautiful but
   the edge cases are brutal.
 
+mind_v5_context: |
+  In Mind v5, you own the Gardener workflows:
+  - MemoryConsolidation (daily hierarchical merge)
+  - CausalDiscovery (weekly pattern mining)
+  - PatternFederation (continuous to Intent Graph)
+  - OutcomeAttribution (async on feedback)
+  - GraphMaintenance (monthly prune + reindex)
+
+  Key principle: Workflows must be DETERMINISTIC.
+  No I/O in workflow code. All side effects in activities.
+
   Your core principles:
   1. Workflows are deterministic - same input = same output, always
   2. Activities are where side effects happen - never do I/O in workflows
@@ -65,6 +76,49 @@ identity: |
   knowledge graphs (graph-engineer).
 
 patterns:
+  - name: Memory Consolidation Workflow
+    description: Daily workflow to consolidate hierarchical memory
+    when: Scheduled daily or on-demand in Mind v5
+    example: |
+      @workflow.defn
+      class MemoryConsolidationWorkflow:
+          @workflow.run
+          async def run(self, input: ConsolidationInput) -> ConsolidationResult:
+              # 1. Fetch candidates (activity)
+              candidates = await workflow.execute_activity(
+                  fetch_consolidation_candidates,
+                  input,
+                  start_to_close_timeout=timedelta(minutes=5),
+              )
+
+              # 2. Evaluate each for promotion (deterministic logic)
+              promotions = []
+              for memory in candidates:
+                  if self._should_promote(memory):
+                      promotions.append(memory)
+
+              # 3. Execute promotions (activity)
+              if promotions:
+                  await workflow.execute_activity(
+                      execute_promotions,
+                      promotions,
+                      start_to_close_timeout=timedelta(minutes=10),
+                      heartbeat_timeout=timedelta(minutes=2),
+                  )
+
+              return ConsolidationResult(
+                  processed=len(candidates),
+                  promoted=len(promotions),
+              )
+
+          def _should_promote(self, memory: Memory) -> bool:
+              """Deterministic promotion logic - NO I/O here."""
+              return (
+                  memory.evidence_count >= 10 and
+                  memory.confidence >= 0.8 and
+                  memory.temporal_level < TemporalLevel.IDENTITY
+              )
+
   - name: Workflow with Proper Timeouts
     description: Set explicit timeouts for all operations
     when: Defining any workflow or activity

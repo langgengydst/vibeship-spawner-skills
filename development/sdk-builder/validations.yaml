@@ -153,3 +153,42 @@ validations:
     fix_action: "Add async def close() and __aenter__/__aexit__ methods"
     applies_to:
       - "**/client*.py"
+
+  # Mind v5 Specific Validations
+  - id: mind-v5-sdk-memory-create-no-level
+    name: Memory Create Without Temporal Level
+    severity: warning
+    type: regex
+    pattern:
+      - 'def.*create.*memory(?!.*temporal_level)'
+      - 'memories\.create(?!.*level)'
+    message: "Mind v5 SDK memory create should accept temporal_level parameter."
+    fix_action: "Add optional temporal_level: TemporalLevel parameter (defaults to IMMEDIATE)"
+    applies_to:
+      - "**/client*.py"
+      - "**/sdk*.py"
+
+  - id: mind-v5-sdk-retrieve-no-trace
+    name: Context Retrieve Without Trace Parameter
+    severity: error
+    type: regex
+    pattern:
+      - 'def.*retrieve(?!.*trace_id|.*decision_id)'
+      - 'context\.retrieve\((?!.*trace)'
+    message: "Mind v5 SDK retrieve should support trace_id for outcome attribution."
+    fix_action: "Add optional trace_id parameter for decision tracking"
+    applies_to:
+      - "**/client*.py"
+      - "**/sdk*.py"
+
+  - id: mind-v5-sdk-outcome-method-missing
+    name: SDK Missing Outcome Recording Method
+    severity: warning
+    type: regex
+    pattern:
+      - 'class.*Client(?![\s\S]*record_outcome|[\s\S]*outcome)'
+    message: "Mind v5 SDK should have record_outcome() method for feedback loop."
+    fix_action: "Add client.decisions.record_outcome(decision_id, quality)"
+    applies_to:
+      - "**/client*.py"
+      - "**/sdk*.py"

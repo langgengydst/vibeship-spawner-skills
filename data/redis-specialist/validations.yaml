@@ -212,3 +212,44 @@ validations:
       - "**/*.tsx"
       - "**/*.js"
       - "**/*.jsx"
+
+  # Mind v5 Specific Validations (FalkorDB runs as Redis module)
+  - id: mind-v5-falkordb-memory-policy
+    name: FalkorDB Without NoEviction Policy
+    severity: error
+    type: regex
+    pattern:
+      - 'maxmemory-policy(?!.*noeviction)'
+      - 'redis.*config(?!.*noeviction)'
+    message: "Mind v5 FalkorDB requires maxmemory-policy noeviction to prevent graph data loss."
+    fix_action: "Set maxmemory-policy noeviction in Redis config for FalkorDB"
+    applies_to:
+      - "**/redis.conf"
+      - "**/docker-compose*.yaml"
+      - "**/k8s/**/*.yaml"
+
+  - id: mind-v5-falkordb-no-persistence
+    name: FalkorDB Without RDB Persistence
+    severity: warning
+    type: regex
+    pattern:
+      - 'save.*""'
+      - 'appendonly.*no(?!.*falkordb)'
+    message: "Mind v5 FalkorDB should have persistence enabled for causal graph durability."
+    fix_action: "Enable RDB snapshots or AOF for FalkorDB data"
+    applies_to:
+      - "**/redis.conf"
+      - "**/docker-compose*.yaml"
+
+  - id: mind-v5-redis-session-no-prefix
+    name: Redis Keys Without Mind v5 Prefix
+    severity: info
+    type: regex
+    pattern:
+      - "redis\\.set\\(['\"][^m][^i][^n][^d]"
+      - "\\.setex\\(['\"][^m][^i][^n][^d]"
+    message: "Mind v5 Redis keys should use 'mind:' prefix for namespace isolation."
+    fix_action: "Prefix all keys with 'mind:' e.g., 'mind:session:{user_id}'"
+    applies_to:
+      - "src/**/*.py"
+      - "src/**/*.ts"

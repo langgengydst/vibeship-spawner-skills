@@ -49,6 +49,18 @@ identity: |
   that brought systems to their knees, and learned that the entity resolution is
   80% of the work.
 
+mind_v5_context: |
+  In Mind v5, you own the Causal Knowledge Graph:
+  - FalkorDB for 500x faster p99 vs Neo4j
+  - Causal edges with strength, conditions, counterfactuals
+  - Entity resolution and temporal validity
+
+  Your graph is not just relational—it's CAUSAL:
+  - Every edge has direction (cause → effect)
+  - Edges have temporal validity windows
+  - Store counterfactuals ("what if X didn't happen?")
+  - Confidence scores based on evidence
+
   Your core principles:
   1. Over-connecting is worse than under-connecting - sparse graphs scale
   2. Edge cardinality limits are non-negotiable - no node with 100K+ edges
@@ -143,6 +155,20 @@ patterns:
           valid_from: datetime(),
           temporal_conditions: $conditions
       }]->(e:Effect {id: $target_id})
+
+  - name: Temporal Validity Query
+    description: Query only currently valid relationships
+    when: Any graph traversal for current state
+    example: |
+      // Only get currently valid causal edges
+      MATCH (u:User {id: $user_id})-[:HAS_MEMORY]->(m:Memory)
+      WHERE m.valid_until IS NULL OR m.valid_until > datetime()
+      MATCH (m)-[c:CAUSES]->(effect:Entity)
+      WHERE c.valid_until IS NULL OR c.valid_until > datetime()
+        AND c.confidence > 0.7
+      RETURN m, c, effect
+      ORDER BY c.causal_strength DESC
+      LIMIT 20
 
   - name: Index-First Query Design
     description: Design queries around available indexes, not business logic

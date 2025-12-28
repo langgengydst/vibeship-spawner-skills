@@ -411,3 +411,80 @@ sharp_edges:
       - "Single projection failure blocks all events"
     detection_pattern: null
     version_range: ">=1.0.0"
+
+  # Mind v5 Specific Sharp Edges
+  - id: nats-consumer-ack-timeout-ml
+    summary: NATS consumer ack timeout too short for ML workloads
+    severity: high
+    situation: |
+      Default NATS ack timeout is 30 seconds. ML extraction can take longer.
+      Consumer times out, message redelivers, duplicate processing.
+    why: |
+      Mind v5 uses LLM for memory extraction. Claude Haiku can take 2-5 seconds,
+      but under load or for complex content, can exceed 30s.
+    solution: |
+      # Configure longer ack timeout for ML consumers
+      consumer_config = ConsumerConfig(
+          ack_wait=timedelta(minutes=2),  # 2 minutes for ML
+          max_deliver=3,  # Retry limit
+
+          # Use explicit ack, not auto
+          ack_policy=AckPolicy.EXPLICIT,
+      )
+
+      # Implement heartbeat during long processing
+      async def process_with_heartbeat(msg):
+          async def heartbeat():
+              while True:
+                  await msg.in_progress()
+                  await asyncio.sleep(10)
+
+          task = asyncio.create_task(heartbeat())
+          try:
+              result = await extract_memory(msg.data)
+              await msg.ack()
+          finally:
+              task.cancel()
+    symptoms:
+      - "Message processed multiple times"
+      - "Duplicate memories created"
+      - "Consumer lag spikes then drops"
+    detection_pattern: 'ConsumerConfig\([^)]*(?!ack_wait)'
+    version_range: ">=1.0.0"
+
+  - id: event-replay-projection-state
+    summary: Projection state lost if checkpoint not atomic
+    severity: critical
+    situation: |
+      You update projection state, then store checkpoint position.
+      Crash between the two = replay processes same events again.
+    why: |
+      Mind v5 projections feed the memory system. Duplicate processing
+      creates duplicate memories, corrupts salience scores.
+    solution: |
+      # Atomic projection update with checkpoint
+      async def project_event(event: Event):
+          async with db.transaction():
+              # Update projection
+              await db.execute(
+                  """
+                  INSERT INTO memories (...) VALUES (...)
+                  ON CONFLICT (memory_id) DO NOTHING
+                  """,
+                  event.payload
+              )
+
+              # Update checkpoint in SAME transaction
+              await db.execute(
+                  """
+                  UPDATE projection_checkpoints
+                  SET position = $1, updated_at = NOW()
+                  WHERE projection_name = $2
+                  """,
+                  event.sequence, "memory_projection"
+              )
+    symptoms:
+      - "Memories appear twice after restart"
+      - "Projection position ahead of actual state"
+    detection_pattern: 'await.*ack\(\)[\s\S]{0,50}(?!transaction)'
+    version_range: ">=1.0.0"
