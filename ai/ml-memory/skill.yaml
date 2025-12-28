@@ -4,6 +4,16 @@ version: 1.0.0
 layer: 1
 description: Memory systems specialist for hierarchical memory, consolidation, and outcome-based learning
 
+principles:
+  - "Memory is not storage - it's decision support"
+  - "Salience must be learned from outcomes, not hardcoded"
+  - "Forgetting is a feature, not a bug - systems must forget to function"
+  - "Episodic and semantic memories are fundamentally different"
+  - "Entity resolution is 80% of the work and 80% of the bugs"
+  - "Contradictions happen - have a resolution strategy"
+  - "Measure success by decision quality, not recall"
+  - "If your system never forgets, it remembers nothing useful"
+
 owns:
   - memory-hierarchy
   - memory-consolidation
@@ -20,6 +30,36 @@ pairs_with:
   - causal-scientist
   - privacy-guardian
   - performance-hunter
+
+does_not_own:
+  - vector-search → vector-specialist
+  - knowledge-graphs → graph-engineer
+  - workflow-orchestration → temporal-craftsman
+  - causal-discovery → causal-scientist
+  - privacy-controls → privacy-guardian
+  - embedding-models → vector-specialist
+
+stack:
+  memory-systems:
+    - zep
+    - graphiti
+    - mem0
+    - letta
+    - langchain-memory
+  consolidation:
+    - temporal
+    - prefect
+    - dagster
+  entity-resolution:
+    - dedupe
+    - splink
+    - entity-resolution-ml
+  storage:
+    - postgresql
+    - redis
+    - lancedb
+
+expertise_level: cutting-edge
 
 requires: []
 

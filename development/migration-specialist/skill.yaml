@@ -4,6 +4,16 @@ version: 1.0.0
 layer: 1
 description: Migration specialist for zero-downtime schema changes, data migrations, and backward-compatible evolution
 
+principles:
+  - "Zero downtime is achievable - but requires planning"
+  - "Backward compatibility first - old code must work with new schema"
+  - "Small steps beat big bangs - expand-contract pattern always"
+  - "Rollback is not optional - every migration needs a reverse"
+  - "Test on production data - staging is a lie"
+  - "Schema and code should be deployable independently"
+  - "Most migration failures are coordination failures"
+  - "Measure migration time on production-scale data"
+
 owns:
   - schema-migrations
   - data-migrations
@@ -21,6 +31,38 @@ pairs_with:
   - api-designer
   - test-architect
   - observability-sre
+
+does_not_own:
+  - query-optimization → postgres-wizard
+  - data-pipelines → data-engineer
+  - infrastructure-setup → infra-architect
+  - api-versioning → api-designer
+  - migration-testing → test-architect
+  - monitoring → observability-sre
+
+stack:
+  schema-migration:
+    - alembic
+    - flyway
+    - liquibase
+    - prisma-migrate
+    - drizzle-kit
+  feature-flags:
+    - launchdarkly
+    - unleash
+    - flipt
+    - growthbook
+  deployment:
+    - blue-green
+    - canary
+    - rolling
+    - argo-rollouts
+  tools:
+    - gh-ost
+    - pg_repack
+    - pt-online-schema-change
+
+expertise_level: advanced
 
 requires: []
 

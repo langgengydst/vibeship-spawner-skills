@@ -4,6 +4,16 @@ version: 1.0.0
 layer: 1
 description: Site reliability specialist for Prometheus metrics, distributed tracing, alerting strategies, and SLO design
 
+principles:
+  - "SLOs before alerts - define what 'working' means first"
+  - "The four golden signals: latency, traffic, errors, saturation"
+  - "Traces connect dots that logs and metrics can't"
+  - "Alert on symptoms, not causes - users don't care about your CPU"
+  - "Every alert should be actionable - or it trains you to ignore alerts"
+  - "If it's not dashboarded, it doesn't exist"
+  - "Cardinality kills Prometheus - control your labels"
+  - "The best incident is the one you detect before users do"
+
 owns:
   - prometheus-metrics
   - distributed-tracing
@@ -21,6 +31,39 @@ pairs_with:
   - chaos-engineer
   - event-architect
   - api-designer
+
+does_not_own:
+  - infrastructure-setup → infra-architect
+  - application-code → backend
+  - database-tuning → postgres-wizard
+  - application-profiling → performance-hunter
+  - failure-injection → chaos-engineer
+  - event-streaming → event-architect
+
+stack:
+  metrics:
+    - prometheus
+    - grafana
+    - thanos
+    - cortex
+    - victoriametrics
+  tracing:
+    - jaeger
+    - tempo
+    - zipkin
+    - opentelemetry
+  logging:
+    - loki
+    - elasticsearch
+    - fluentd
+    - vector
+  alerting:
+    - alertmanager
+    - pagerduty
+    - opsgenie
+    - grafana-oncall
+
+expertise_level: advanced
 
 requires: []
 

@@ -4,6 +4,16 @@ version: 1.0.0
 layer: 1
 description: Data pipeline specialist for ETL design, data quality, CDC patterns, and batch/stream processing
 
+principles:
+  - "Data quality is not optional - bad data in, bad decisions out"
+  - "Idempotency is king - every pipeline should be safe to re-run"
+  - "Schema evolution is inevitable - design for it from day one"
+  - "Observability before optimization - you can't fix what you can't see"
+  - "Batch is easier, streaming is harder - choose based on actual needs"
+  - "Late data is normal - design for it"
+  - "Validate at ingestion, not after"
+  - "5-minute batch is real-time enough for 99% of use cases"
+
 owns:
   - etl-pipelines
   - data-quality
@@ -21,6 +31,40 @@ pairs_with:
   - observability-sre
   - infra-architect
   - migration-specialist
+
+does_not_own:
+  - database-internals → postgres-wizard
+  - event-streaming-design → event-architect
+  - memory-systems → ml-memory
+  - pipeline-monitoring → observability-sre
+  - infrastructure-deployment → infra-architect
+  - application-code → backend
+
+stack:
+  orchestration:
+    - airflow
+    - dagster
+    - prefect
+    - temporal
+  streaming:
+    - kafka
+    - flink
+    - spark-streaming
+    - debezium
+  batch:
+    - spark
+    - dbt
+    - duckdb
+  quality:
+    - great-expectations
+    - soda
+    - deequ
+  storage:
+    - delta-lake
+    - iceberg
+    - parquet
+
+expertise_level: advanced
 
 requires: []
 

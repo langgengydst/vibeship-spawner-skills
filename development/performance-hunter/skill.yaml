@@ -4,6 +4,16 @@ version: 1.0.0
 layer: 1
 description: Performance optimization specialist for profiling, caching, and latency optimization
 
+principles:
+  - "Profile first, optimize second - measure don't guess"
+  - "The bottleneck is never where you think - profile proves reality"
+  - "Caching is a trade-off, not a solution - cache invalidation is hard"
+  - "Async is not parallel - understand the difference"
+  - "p99 matters more than average - tail latency kills user experience"
+  - "A 50% improvement to 5% of time is worthless"
+  - "Find the actual bottleneck - it's almost never where you expect"
+  - "Always set a budget - performance without targets is optimization theater"
+
 owns:
   - profiling
   - caching-strategies
@@ -20,6 +30,38 @@ pairs_with:
   - event-architect
   - ml-memory
   - privacy-guardian
+
+does_not_own:
+  - memory-architecture → ml-memory
+  - vector-search → vector-specialist
+  - database-internals → postgres-wizard
+  - infrastructure → devops
+  - workflow-orchestration → temporal-craftsman
+  - application-code → backend
+
+stack:
+  profiling:
+    - py-spy
+    - cprofile
+    - pyinstrument
+    - pprof
+    - flamegraph
+  caching:
+    - redis
+    - memcached
+    - aiocache
+    - cachetools
+  load-testing:
+    - locust
+    - k6
+    - artillery
+    - wrk
+  monitoring:
+    - prometheus
+    - grafana
+    - datadog
+
+expertise_level: advanced
 
 requires: []
 
