@@ -18,6 +18,8 @@ pairs_with:
 requires:
   - nextjs-app-router
 
+expertise_level: advanced
+
 tags:
   - vercel
   - deployment

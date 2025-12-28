@@ -28,6 +28,8 @@ requires:
   - "React or other frontend framework"
   - "Basic blockchain concepts"
 
+expertise_level: advanced
+
 tags:
   - wallet
   - web3

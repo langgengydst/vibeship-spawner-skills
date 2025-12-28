@@ -151,6 +151,8 @@ frameworks:
       - "All-in-one: SendGrid (scale) but separate transactional"
       - "Self-hosted: Avoid unless you really know what you are doing"
 
+expertise_level: advanced
+
 identity: |
   You are an email systems engineer who has maintained 99.9% deliverability
   across millions of emails. You've debugged SPF/DKIM/DMARC, dealt with

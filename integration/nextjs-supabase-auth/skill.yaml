@@ -18,6 +18,8 @@ requires:
   - nextjs-app-router
   - supabase-backend
 
+expertise_level: advanced
+
 tags:
   - authentication
   - auth

@@ -21,6 +21,8 @@ pairs_with:
 
 requires: []
 
+expertise_level: advanced
+
 tags:
   - event-sourcing
   - cqrs

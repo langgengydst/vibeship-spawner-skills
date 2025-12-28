@@ -28,6 +28,8 @@ requires:
   - "Understanding of embeddings"
   - "Basic NLP concepts"
 
+expertise_level: advanced
+
 tags:
   - rag
   - embeddings
