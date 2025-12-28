@@ -14,6 +14,18 @@ owns:
   - hallucination-mitigation
   - token-optimization
 
+stack:
+  providers:
+    - openai
+    - anthropic
+    - google-ai
+  frameworks:
+    - langchain
+    - llamaindex
+  patterns:
+    - rag
+    - fine-tuning
+    - prompt-engineering
 pairs_with:
   - vector-specialist
   - ml-memory

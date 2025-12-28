@@ -13,6 +13,18 @@ owns:
   - container-orchestration
   - infrastructure-security
 
+stack:
+  iac:
+    - terraform
+    - pulumi
+    - cdk
+  cloud:
+    - aws
+    - gcp
+    - azure
+  containers:
+    - kubernetes
+    - docker
 pairs_with:
   - observability-sre
   - postgres-wizard

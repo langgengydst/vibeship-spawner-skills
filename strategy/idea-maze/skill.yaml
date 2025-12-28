@@ -17,6 +17,16 @@ description: |
 
   This skill synthesizes PG's idea-finding wisdom into actionable guidance.
 
+stack:
+  frameworks:
+    - lean-startup
+    - jobs-to-be-done
+    - design-thinking
+  tools:
+    - miro
+    - notion
+    - figma
+
 triggers:
   keywords:
     - startup idea

@@ -14,6 +14,18 @@ owns:
   - quality-gates
   - ci-integration
 
+stack:
+  testing:
+    - jest
+    - vitest
+    - pytest
+  e2e:
+    - playwright
+    - cypress
+  patterns:
+    - tdd
+    - bdd
+    - property-based
 pairs_with:
   - api-designer
   - performance-hunter

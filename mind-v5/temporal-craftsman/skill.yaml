@@ -13,6 +13,17 @@ owns:
   - workflow-versioning
   - long-running-processes
 
+stack:
+  platforms:
+    - temporal
+  languages:
+    - typescript
+    - go
+    - python
+  patterns:
+    - workflow
+    - activity
+    - saga
 pairs_with:
   - event-architect
   - graph-engineer

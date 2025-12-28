@@ -25,6 +25,18 @@ triggers:
   - brand
   - go-to-market
 
+stack:
+  analytics:
+    - google-analytics
+    - mixpanel
+    - posthog
+  marketing:
+    - mailchimp
+    - hubspot
+  social:
+    - buffer
+    - hootsuite
+
 principles:
   - name: Positioning First
     description: |

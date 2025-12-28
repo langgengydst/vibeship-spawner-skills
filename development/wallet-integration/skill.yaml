@@ -17,6 +17,19 @@ owns:
   - "Wallet UX patterns"
   - "Multi-chain wallet support"
 
+stack:
+  wallets:
+    - metamask
+    - walletconnect
+    - coinbase-wallet
+  libraries:
+    - wagmi
+    - ethers
+    - viem
+  chains:
+    - ethereum
+    - polygon
+    - arbitrum
 pairs_with:
   - smart-contract-engineer  # Contract ABIs and interactions
   - defi-architect           # DeFi protocol integration

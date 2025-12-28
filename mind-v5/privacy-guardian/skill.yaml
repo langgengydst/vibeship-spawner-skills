@@ -13,6 +13,18 @@ owns:
   - audit-trails
   - data-retention
 
+stack:
+  frameworks:
+    - gdpr
+    - ccpa
+    - hipaa
+  tools:
+    - onetrust
+    - cookiebot
+  patterns:
+    - data-minimization
+    - consent-management
+    - pii-detection
 pairs_with:
   - ml-memory
   - vector-specialist

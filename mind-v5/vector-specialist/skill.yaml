@@ -14,6 +14,19 @@ owns:
   - reranking
   - quantization
 
+stack:
+  databases:
+    - pinecone
+    - weaviate
+    - qdrant
+    - pgvector
+  embeddings:
+    - openai
+    - cohere
+    - sentence-transformers
+  search:
+    - approximate-nearest-neighbor
+    - hybrid-search
 pairs_with:
   - event-architect
   - graph-engineer

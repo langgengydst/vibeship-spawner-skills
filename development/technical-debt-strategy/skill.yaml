@@ -33,6 +33,19 @@ triggers:
     - Planning rewrites
     - Communicating tech debt to leadership
 
+stack:
+  analysis:
+    - sonarqube
+    - codeclimate
+    - snyk
+  tracking:
+    - jira
+    - linear
+    - github-issues
+  metrics:
+    - dora-metrics
+    - lead-time
+
 principles:
   - name: Debt is a tool, not a sin
     description: |

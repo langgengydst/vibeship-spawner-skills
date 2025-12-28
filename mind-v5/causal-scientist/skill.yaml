@@ -13,6 +13,18 @@ owns:
   - confound-detection
   - dowhy-gcm
 
+stack:
+  languages:
+    - python
+    - r
+  libraries:
+    - dowhy
+    - causalml
+    - econml
+  methods:
+    - propensity-score
+    - instrumental-variables
+    - difference-in-differences
 pairs_with:
   - graph-engineer
   - ml-memory

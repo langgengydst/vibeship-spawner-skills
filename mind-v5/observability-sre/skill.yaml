@@ -14,6 +14,18 @@ owns:
   - capacity-planning
   - dashboards
 
+stack:
+  monitoring:
+    - prometheus
+    - grafana
+    - datadog
+  logging:
+    - elasticsearch
+    - loki
+    - splunk
+  tracing:
+    - jaeger
+    - opentelemetry
 pairs_with:
   - infra-architect
   - performance-hunter

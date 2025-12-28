@@ -37,6 +37,19 @@ triggers:
     - Improving onboarding
     - Building customer health dashboards
 
+stack:
+  tools:
+    - intercom
+    - zendesk
+    - hubspot
+  analytics:
+    - mixpanel
+    - amplitude
+  metrics:
+    - nps
+    - csat
+    - churn-rate
+
 principles:
   - name: Time to value is everything
     description: |

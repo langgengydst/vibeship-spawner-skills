@@ -10,6 +10,16 @@ owns:
   - auth-middleware
   - auth-callback
 
+stack:
+  frameworks:
+    - nextjs
+    - supabase
+  auth:
+    - supabase-auth
+    - ssr-auth
+  patterns:
+    - middleware-auth
+    - protected-routes
 pairs_with:
   - nextjs-app-router
   - supabase-backend

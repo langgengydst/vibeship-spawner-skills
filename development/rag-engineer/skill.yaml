@@ -17,6 +17,19 @@ owns:
   - "Context window optimization"
   - "Hybrid search (keyword + semantic)"
 
+stack:
+  frameworks:
+    - langchain
+    - llamaindex
+  vector-stores:
+    - pinecone
+    - weaviate
+    - qdrant
+    - pgvector
+  embeddings:
+    - openai
+    - cohere
+    - sentence-transformers
 pairs_with:
   - ai-agents-architect  # Agents use RAG for knowledge
   - prompt-engineer      # Prompts consume retrieved context

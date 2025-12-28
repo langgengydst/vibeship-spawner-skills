@@ -11,6 +11,17 @@ owns:
   - generics
   - type-inference
 
+stack:
+  languages:
+    - typescript
+  tools:
+    - tsc
+    - eslint
+    - zod
+  patterns:
+    - strict-mode
+    - branded-types
+    - discriminated-unions
 pairs_with:
   - nextjs-app-router
   - react-patterns

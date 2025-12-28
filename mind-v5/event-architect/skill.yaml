@@ -12,6 +12,18 @@ owns:
   - event-projections
   - event-schema-design
 
+stack:
+  messaging:
+    - kafka
+    - rabbitmq
+    - nats
+  patterns:
+    - event-sourcing
+    - cqrs
+    - saga
+  platforms:
+    - confluent
+    - aws-eventbridge
 pairs_with:
   - graph-engineer
   - vector-specialist

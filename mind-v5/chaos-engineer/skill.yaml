@@ -14,6 +14,19 @@ owns:
   - steady-state-definition
   - hypothesis-testing
 
+stack:
+  tools:
+    - litmus-chaos
+    - chaos-monkey
+    - gremlin
+    - chaos-mesh
+  platforms:
+    - kubernetes
+    - aws-fis
+  observability:
+    - prometheus
+    - grafana
+    - datadog
 pairs_with:
   - infra-architect
   - observability-sre

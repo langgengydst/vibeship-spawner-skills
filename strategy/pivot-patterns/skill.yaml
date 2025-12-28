@@ -15,6 +15,15 @@ description: |
   This skill covers pivot signals, types of pivots, preserving momentum during
   change, and communicating pivots to investors and team.
 
+stack:
+  frameworks:
+    - lean-startup
+    - customer-development
+  metrics:
+    - pmf-survey
+    - retention
+    - engagement
+
 triggers:
   keywords:
     - pivot

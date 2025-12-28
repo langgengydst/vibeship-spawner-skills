@@ -15,6 +15,18 @@ owns:
   - app-store-guidelines
   - ios-security
 
+stack:
+  languages:
+    - swift
+    - objective-c
+  frameworks:
+    - swiftui
+    - uikit
+    - combine
+  tools:
+    - xcode
+    - swift-package-manager
+    - cocoapods
 pairs_with:
   - react-native-specialist
   - ui-design

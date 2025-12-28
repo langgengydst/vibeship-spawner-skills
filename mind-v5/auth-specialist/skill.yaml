@@ -14,6 +14,19 @@ owns:
   - csrf-protection
   - auth-middleware
 
+stack:
+  protocols:
+    - oauth2
+    - oidc
+    - saml
+  providers:
+    - auth0
+    - clerk
+    - supabase-auth
+  patterns:
+    - jwt
+    - session
+    - mfa
 pairs_with:
   - security-engineer
   - api-designer

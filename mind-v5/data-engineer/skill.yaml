@@ -14,6 +14,18 @@ owns:
   - data-validation
   - pipeline-orchestration
 
+stack:
+  processing:
+    - spark
+    - dbt
+    - airflow
+  storage:
+    - snowflake
+    - bigquery
+    - redshift
+  streaming:
+    - kafka
+    - flink
 pairs_with:
   - postgres-wizard
   - event-architect

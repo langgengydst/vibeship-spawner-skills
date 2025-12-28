@@ -15,6 +15,16 @@ description: |
   This skill synthesizes PG's essays on founder productivity and decision-making
   into an operating system for founder effectiveness.
 
+stack:
+  tools:
+    - notion
+    - linear
+    - slack
+  frameworks:
+    - okrs
+    - weekly-review
+    - decision-journal
+
 triggers:
   keywords:
     - founder productivity

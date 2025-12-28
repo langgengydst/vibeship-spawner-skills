@@ -15,6 +15,15 @@ description: |
   This skill synthesizes PG's essays on founder character into actionable
   guidance for developing the traits that predict success.
 
+stack:
+  frameworks:
+    - stoicism
+    - first-principles
+  practices:
+    - journaling
+    - meditation
+    - deliberate-practice
+
 triggers:
   keywords:
     - founder traits

@@ -13,6 +13,18 @@ owns:
   - outcome-feedback
   - temporal-memory
 
+stack:
+  embeddings:
+    - openai
+    - sentence-transformers
+    - cohere
+  vector-stores:
+    - pinecone
+    - weaviate
+    - pgvector
+  frameworks:
+    - langchain
+    - mem0
 pairs_with:
   - vector-specialist
   - graph-engineer

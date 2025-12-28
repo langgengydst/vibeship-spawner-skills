@@ -14,6 +14,18 @@ owns:
   - error-handling
   - retry-logic
 
+stack:
+  languages:
+    - typescript
+    - python
+    - go
+  tools:
+    - openapi-generator
+    - swagger
+  patterns:
+    - retry-logic
+    - rate-limiting
+    - pagination
 pairs_with:
   - api-designer
   - python-craftsman

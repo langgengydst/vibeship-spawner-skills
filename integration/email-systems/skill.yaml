@@ -42,6 +42,18 @@ triggers:
     - "postmark"
     - "nodemailer"
 
+stack:
+  providers:
+    - resend
+    - sendgrid
+    - postmark
+  frameworks:
+    - react-email
+    - mjml
+  delivery:
+    - ses
+    - mailgun
+
 principles:
   - name: Transactional vs Marketing separation
     description: |

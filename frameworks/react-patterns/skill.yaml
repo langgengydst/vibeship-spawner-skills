@@ -11,6 +11,17 @@ owns:
   - react-context
   - react-performance
 
+stack:
+  frameworks:
+    - react
+  patterns:
+    - compound-components
+    - render-props
+    - custom-hooks
+  state:
+    - zustand
+    - jotai
+    - react-query
 pairs_with:
   - nextjs-app-router
   - typescript-strict

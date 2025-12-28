@@ -13,6 +13,19 @@ owns:
   - entity-resolution
   - graph-algorithms
 
+stack:
+  databases:
+    - neo4j
+    - dgraph
+    - neptune
+  languages:
+    - cypher
+    - gremlin
+    - sparql
+  algorithms:
+    - pagerank
+    - community-detection
+    - shortest-path
 pairs_with:
   - event-architect
   - vector-specialist

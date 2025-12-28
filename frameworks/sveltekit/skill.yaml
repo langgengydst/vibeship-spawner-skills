@@ -17,6 +17,17 @@ owns:
   - page-endpoints
   - layout-system
 
+stack:
+  frameworks:
+    - sveltekit
+    - svelte
+  features:
+    - server-routes
+    - form-actions
+    - load-functions
+  deployment:
+    - vercel
+    - cloudflare-pages
 pairs_with:
   - supabase-backend
   - tailwind-ui

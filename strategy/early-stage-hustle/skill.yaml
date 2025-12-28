@@ -15,6 +15,17 @@ description: |
   Paul Graham's "Do Things That Don't Scale" is the bible here. This skill
   synthesizes the hustle playbook that creates escape velocity.
 
+stack:
+  tools:
+    - notion
+    - linear
+    - slack
+  analytics:
+    - mixpanel
+    - posthog
+  payments:
+    - stripe
+
 triggers:
   keywords:
     - early stage

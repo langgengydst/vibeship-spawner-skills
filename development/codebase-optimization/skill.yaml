@@ -16,6 +16,18 @@ owns:
   - query-optimization
   - memory-management
 
+stack:
+  profilers:
+    - chrome-devtools
+    - node-clinic
+    - flamegraph
+  bundlers:
+    - webpack
+    - vite
+    - esbuild
+  analysis:
+    - lighthouse
+    - bundlesize
 pairs_with:
   - frontend
   - backend

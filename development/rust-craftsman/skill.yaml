@@ -16,6 +16,17 @@ owns:
   - zero-cost-abstractions
   - rust-ffi
 
+stack:
+  languages:
+    - rust
+  frameworks:
+    - tokio
+    - actix
+    - axum
+  tools:
+    - cargo
+    - clippy
+    - rustfmt
 pairs_with:
   - backend
   - devops

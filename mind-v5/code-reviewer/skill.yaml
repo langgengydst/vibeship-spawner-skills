@@ -14,6 +14,19 @@ owns:
   - code-style
   - best-practices
 
+stack:
+  platforms:
+    - github
+    - gitlab
+    - bitbucket
+  tools:
+    - coderabbit
+    - danger-js
+    - reviewbot
+  linters:
+    - eslint
+    - prettier
+    - ruff
 pairs_with:
   - test-architect
   - performance-hunter

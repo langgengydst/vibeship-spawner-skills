@@ -14,6 +14,18 @@ owns:
   - feature-flags
   - migration-testing
 
+stack:
+  databases:
+    - postgresql
+    - mysql
+    - mongodb
+  tools:
+    - flyway
+    - liquibase
+    - prisma-migrate
+  patterns:
+    - blue-green
+    - strangler-fig
 pairs_with:
   - postgres-wizard
   - data-engineer

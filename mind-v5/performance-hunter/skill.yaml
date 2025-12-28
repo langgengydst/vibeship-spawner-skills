@@ -13,6 +13,18 @@ owns:
   - memory-profiling
   - load-testing
 
+stack:
+  profilers:
+    - chrome-devtools
+    - clinic
+    - py-spy
+  apm:
+    - datadog
+    - newrelic
+    - sentry
+  benchmarks:
+    - k6
+    - artillery
 pairs_with:
   - vector-specialist
   - graph-engineer

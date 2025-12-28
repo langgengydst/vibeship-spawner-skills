@@ -14,6 +14,18 @@ owns:
   - connection-management
   - reconnection-strategies
 
+stack:
+  protocols:
+    - websocket
+    - webrtc
+    - sse
+  frameworks:
+    - socket.io
+    - pusher
+    - ably
+  databases:
+    - redis
+    - supabase-realtime
 pairs_with:
   - event-architect
   - redis-specialist

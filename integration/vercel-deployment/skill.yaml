@@ -11,6 +11,15 @@ owns:
   - serverless
   - environment-variables
 
+stack:
+  platform:
+    - vercel
+  features:
+    - edge-functions
+    - isr
+    - preview-deployments
+  cli:
+    - vercel-cli
 pairs_with:
   - nextjs-app-router
   - supabase-backend
