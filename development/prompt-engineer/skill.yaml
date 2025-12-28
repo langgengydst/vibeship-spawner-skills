@@ -5,6 +5,17 @@ id: prompt-engineer
 name: Prompt Engineer
 version: "1.0.0"
 layer: 2
+
+principles:
+  - "Prompts are code - version them, test them, review them"
+  - "Clear instructions beat clever tricks"
+  - "Examples are worth a thousand words of instruction"
+  - "Test with edge cases, not happy paths"
+  - "Measure before and after every change"
+  - "Shorter prompts that work beat longer prompts that might"
+  - "System prompts set the stage, user prompts drive action"
+  - "Constrain the output format - structure beats prose"
+
 description: |
   Expert in designing effective prompts for LLM-powered applications. Masters
   prompt structure, context management, output formatting, and prompt evaluation.
@@ -23,10 +34,37 @@ pairs_with:
   - backend              # API integration
   - product-manager      # Feature requirements
 
+
+stack:
+  providers:
+    - anthropic
+    - openai
+    - google-ai
+    - mistral
+  tools:
+    - promptfoo
+    - langsmith
+    - helicone
+    - promptlayer
+  frameworks:
+    - langchain
+    - dspy
+    - guidance
+    - outlines
+
+does_not_own:
+  - llm-architecture -> llm-architect
+  - agent-design -> ai-agents-architect
+  - rag-implementation -> rag-engineer
+  - api-integration -> backend
+  - product-decisions -> product-manager
+
 requires:
   - "LLM fundamentals"
   - "Understanding of tokenization"
   - "Basic programming"
+
+expertise_level: advanced
 
 tags:
   - prompts

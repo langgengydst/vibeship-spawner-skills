@@ -2,6 +2,17 @@ id: code-review
 name: Code Review
 version: 1.0.0
 layer: 1
+
+principles:
+  - "Review the code, not the coder - be constructive"
+  - "Every comment should teach something or be actionable"
+  - "Approval means I would maintain this code"
+  - "Nits are fine, but label them as nits"
+  - "Ask questions before making accusations"
+  - "Small PRs are easier to review and less risky"
+  - "Automate style checks - save humans for design"
+  - "The goal is working software, not perfect code"
+
 description: The art of reviewing code that improves both the codebase and the developer - sharing knowledge, maintaining standards, and building culture
 
 owns:
@@ -24,7 +35,32 @@ pairs_with:
   - codebase-optimization
   - devops
 
+
+stack:
+  platforms:
+    - github
+    - gitlab
+    - bitbucket
+    - azure-devops
+  tools:
+    - reviewbot
+    - danger-js
+    - coderabbit
+  linters:
+    - eslint
+    - prettier
+    - ruff
+
+does_not_own:
+  - code-implementation -> backend
+  - test-writing -> qa-engineering
+  - security-audit -> cybersecurity
+  - performance-tuning -> codebase-optimization
+  - architecture-decisions -> code-architecture-review
+
 requires: []
+
+expertise_level: advanced
 
 tags:
   - code-review
