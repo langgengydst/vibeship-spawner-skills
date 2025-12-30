@@ -84,7 +84,7 @@ cd ~/.spawner/skills && git pull
 | `finance` | Trading and fintech |
 | `mind` | Debugging and decision-making |
 | `specialized` | Biotech, space, climate, hardware |
-| `complete` | All 245 skills |
+| `complete` | All 273 skills |
 
 ## Directory Structure
 
