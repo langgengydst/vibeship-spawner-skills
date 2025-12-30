@@ -4,7 +4,8 @@
   "description": "Validation and utility scripts for spawner-skills",
   "scripts": {
     "validate": "node validate-skills.js",
-    "sync-count": "node sync-count.js"
+    "sync-count": "node sync-count.js",
+    "build:dist": "node build-dist.js"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"

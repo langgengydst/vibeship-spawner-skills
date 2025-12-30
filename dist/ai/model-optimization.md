@@ -1,0 +1,210 @@
+# Model Optimization
+
+> Use when reducing model size, improving inference speed, or deploying to edge devices - covers quantization, pruning, knowledge distillation, ONNX export, and TensorRT optimization
+
+**Category:** ai | **Version:** 1.0.0
+
+---
+
+## Patterns
+
+
+## Anti-Patterns
+
+
+## Sharp Edges (Gotchas)
+
+*Real production issues that cause outages and bugs.*
+
+### [CRITICAL] Calibration data doesn't represent real inference data
+
+**Why it happens:**
+Static quantization learns activation ranges from calibration data.
+If calibration data doesn't cover production distribution,
+clipping occurs on out-of-distribution inputs.
+
+
+**Solution:**
+```
+# Use production-representative data
+calibration_data = sample_production_logs(n=1000)
+
+# Include edge cases and outliers
+calibration_data += get_edge_case_samples(n=100)
+
+# Verify coverage
+for category in data_categories:
+    assert category in calibration_data
+
+```
+
+**Symptoms:**
+- Model works on test set, fails on production
+- Quantized model much worse than baseline
+- Accuracy drops for certain input patterns
+
+---
+
+### [HIGH] Quantization-aware training causes catastrophic forgetting
+
+**Why it happens:**
+QAT adds fake quantization operations that change gradients.
+If learning rate is too high or training too long,
+model can forget what it learned.
+
+
+**Solution:**
+```
+# Gentle QAT
+model_prepared = prepare_qat(model)
+
+# Much lower learning rate
+optimizer = Adam(model.parameters(), lr=1e-5)
+
+# Few epochs (3-5 typically enough)
+for epoch in range(3):
+    train_epoch(model_prepared)
+
+    # Early stop if accuracy drops
+    if accuracy < baseline - 0.02:
+        break
+
+```
+
+**Symptoms:**
+- QAT accuracy drops significantly
+- Model performs worse than PTQ
+- Loss spikes during QAT
+
+---
+
+### [HIGH] Forgot to specify dynamic axes during export
+
+**Why it happens:**
+torch.onnx.export defaults to static shapes.
+The exported model is traced with example input shapes,
+which become fixed without dynamic_axes parameter.
+
+
+**Solution:**
+```
+torch.onnx.export(
+    model, sample, "model.onnx",
+    input_names=['input'],
+    output_names=['output'],
+    dynamic_axes={
+        'input': {0: 'batch', 2: 'height', 3: 'width'},
+        'output': {0: 'batch'},
+    }
+)
+
+```
+
+**Symptoms:**
+- ONNX model only works with batch size 1
+- RuntimeError on different input shapes
+- Can't use dynamic batching in production
+
+---
+
+### [MEDIUM] Enabled FP16 but engine still runs in FP32
+
+**Why it happens:**
+TensorRT FP16 is opt-in per layer.
+Some ops don't have FP16 kernels.
+If calibration fails, falls back to FP32.
+
+
+**Solution:**
+```
+# Check build logs for precision
+config.profiling_verbosity = trt.ProfilingVerbosity.DETAILED
+
+# Force strict FP16 (may hurt accuracy)
+config.set_flag(trt.BuilderFlag.STRICT_TYPES)
+
+# Or use INT8 for better speedup
+config.set_flag(trt.BuilderFlag.INT8)
+config.int8_calibrator = calibrator
+
+```
+
+**Symptoms:**
+- No speedup from FP16 flag
+- Memory usage same as FP32
+- Build logs show FP32 layers
+
+---
+
+### [MEDIUM] Unstructured pruning doesn't give actual speedup
+
+**Why it happens:**
+Unstructured pruning creates sparse tensors.
+Most hardware/frameworks don't accelerate sparse ops.
+You need structured pruning or sparse-aware hardware.
+
+
+**Solution:**
+```
+# Option 1: Structured pruning (actual smaller model)
+prune.ln_structured(
+    layer, 'weight',
+    amount=0.3,
+    n=2, dim=0  # Remove entire channels
+)
+
+# Option 2: Use sparse-aware hardware/library
+# - NVIDIA Ampere+ sparse tensor cores
+# - Intel Neural Compressor
+# - DeepSparse (CPU)
+
+# Option 3: Convert to smaller dense model
+# Prune → Remove zero channels → Retrain
+
+```
+
+**Symptoms:**
+- 90% sparsity but same latency
+- Memory usage unchanged
+- GPU utilization same
+
+---
+
+## Collaboration
+
+### When to Hand Off
+
+| Trigger | Delegate To | Context |
+|---------|-------------|--------|
+| `train|fine.?tun|adapt` | llm-fine-tuning | Training before optimization |
+| `distributed|multi.*gpu|scale` | distributed-training | Distributed training setup |
+| `transformer|attention|layer.*design` | transformer-architecture | Architecture modifications |
+| `inference.*server|deploy.*prod|serve` | backend | Deployment infrastructure |
+
+### Receives Work From
+
+- **distributed-training**: Trained model to optimize
+- **llm-fine-tuning**: Fine-tuned model to deploy
+- **transformer-architecture**: Model design for optimization
+
+---
+
+## Get the Full Version
+
+This skill has **automated validations**, **detection patterns**, and **structured handoff triggers** that work with the Spawner orchestrator.
+
+```bash
+npx vibeship-spawner-skills install
+```
+
+Full skill path: `~/.spawner/skills/ai/model-optimization/`
+
+**Includes:**
+- `skill.yaml` - Structured skill definition
+- `sharp-edges.yaml` - Machine-parseable gotchas with detection patterns
+- `validations.yaml` - Automated code checks
+- `collaboration.yaml` - Handoff triggers for skill orchestration
+
+---
+
+*Generated by [VibeShip Spawner](https://github.com/vibeforge1111/vibeship-spawner-skills)*

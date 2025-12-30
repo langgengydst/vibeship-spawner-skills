@@ -1,0 +1,55 @@
+name: Build SKILL.md Distribution
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*/*/skill.yaml'
+      - '*/*/sharp-edges.yaml'
+      - '*/*/sharp-edges.md'
+      - '*/*/patterns.md'
+      - '*/*/anti-patterns.md'
+      - '*/*/decisions.md'
+      - '*/*/collaboration.yaml'
+      - '*/*/validations.yaml'
+      - 'scripts/build-dist.js'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          npm install
+
+      - name: Generate SKILL.md files
+        run: |
+          cd scripts
+          node build-dist.js
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet dist/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist/
+          git commit -m "Auto-generate SKILL.md distribution files"
+          git push
