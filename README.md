@@ -6,10 +6,10 @@
 
 ```bash
 # One-command install
-npx spawner-skills install
+npx vibeship-spawner-skills install
 
 # Update to latest
-npx spawner-skills update
+npx vibeship-spawner-skills update
 ```
 
 ### Alternative: Manual Clone
@@ -26,10 +26,10 @@ cd ~/.spawner/skills && git pull
 
 | Command | Description |
 |---------|-------------|
-| `npx spawner-skills install` | Install skills to ~/.spawner/skills |
-| `npx spawner-skills update` | Update to latest version |
-| `npx spawner-skills status` | Check installation status |
-| `npx spawner-skills list` | List installed categories |
+| `npx vibeship-spawner-skills install` | Install skills to ~/.spawner/skills |
+| `npx vibeship-spawner-skills update` | Update to latest version |
+| `npx vibeship-spawner-skills status` | Check installation status |
+| `npx vibeship-spawner-skills list` | List installed categories |
 
 ## How It Works
 

@@ -1,11 +1,11 @@
-# spawner-skills
+# vibeship-spawner-skills
 
 CLI installer for VibeShip Spawner skills - 245 specialist skills for AI-powered product building.
 
 ## Quick Install
 
 ```bash
-npx spawner-skills install
+npx vibeship-spawner-skills install
 ```
 
 This clones the skills repository to `~/.spawner/skills/`.
@@ -24,16 +24,16 @@ This clones the skills repository to `~/.spawner/skills/`.
 
 ```bash
 # First-time installation
-npx spawner-skills install
+npx vibeship-spawner-skills install
 
 # Update to latest skills
-npx spawner-skills update
+npx vibeship-spawner-skills update
 
 # Check if installed
-npx spawner-skills status
+npx vibeship-spawner-skills status
 
 # List all categories
-npx spawner-skills list
+npx vibeship-spawner-skills list
 ```
 
 ## After Installation
