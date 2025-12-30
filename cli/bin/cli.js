@@ -18,7 +18,25 @@ const COLORS = {
   magenta: '\x1b[35m',
   cyan: '\x1b[36m',
   red: '\x1b[31m',
+  dim: '\x1b[2m',
 };
+
+// Terminal hyperlink (OSC 8) - makes text clickable in supported terminals
+function hyperlink(url, text) {
+  // Check if terminal supports hyperlinks (most modern terminals do)
+  const supportsHyperlinks = process.env.TERM_PROGRAM || process.env.WT_SESSION || process.env.COLORTERM;
+  if (supportsHyperlinks) {
+    return `\x1b]8;;${url}\x1b\\${text}\x1b]8;;\x1b\\`;
+  }
+  return text;
+}
+
+// Convert file path to file:// URL
+function fileUrl(filePath) {
+  // Handle Windows paths
+  const normalizedPath = filePath.replace(/\\/g, '/');
+  return `file://${normalizedPath.startsWith('/') ? '' : '/'}${normalizedPath}`;
+}
 
 function log(msg, color = '') {
   console.log(`${color}${msg}${COLORS.reset}`);
@@ -91,16 +109,19 @@ ${COLORS.bright}Usage:${COLORS.reset}
   npx vibeship-spawner-skills <command>
 
 ${COLORS.bright}Commands:${COLORS.reset}
-  install     Install skills to ~/.spawner/skills
-  update      Update skills to latest version
-  status      Check installation status
-  list        List installed skill categories
-  help        Show this help message
+  install              Install skills to ~/.spawner/skills
+  update               Update skills to latest version
+  status               Check installation status
+  list                 List installed skill categories
+  list <category>      List all skills in a category
+  list --all           List all 273 skills
+  help                 Show this help message
 
 ${COLORS.bright}Examples:${COLORS.reset}
-  npx vibeship-spawner-skills install     # First-time installation
-  npx vibeship-spawner-skills update      # Pull latest skills
-  npx vibeship-spawner-skills status      # Check if installed
+  npx vibeship-spawner-skills install           # First-time installation
+  npx vibeship-spawner-skills update            # Pull latest skills
+  npx vibeship-spawner-skills list development  # Show all 57 dev skills
+  npx vibeship-spawner-skills list --all        # Show all 273 skills
 
 ${COLORS.bright}After Installation:${COLORS.reset}
   Skills are available at: ~/.spawner/skills/
@@ -244,17 +265,8 @@ function status() {
   console.log('');
 }
 
-function list() {
-  if (!skillsExist()) {
-    logError('Skills not installed. Run "npx vibeship-spawner-skills install" first.');
-    process.exit(1);
-  }
-
-  console.log('');
-  log('Installed Skill Categories', COLORS.bright);
-  console.log('─'.repeat(40));
-
-  const categories = fs.readdirSync(SKILLS_DIR)
+function getCategories() {
+  return fs.readdirSync(SKILLS_DIR)
     .filter(f => {
       const fullPath = path.join(SKILLS_DIR, f);
       return fs.statSync(fullPath).isDirectory() &&
@@ -263,22 +275,137 @@ function list() {
              f !== 'cli';
     })
     .sort();
+}
+
+function getSkillsInCategory(category) {
+  const categoryPath = path.join(SKILLS_DIR, category);
+  if (!fs.existsSync(categoryPath)) return [];
+
+  return fs.readdirSync(categoryPath)
+    .filter(f => {
+      const skillPath = path.join(categoryPath, f);
+      return fs.statSync(skillPath).isDirectory();
+    })
+    .sort();
+}
+
+function list(categoryArg, showAll) {
+  if (!skillsExist()) {
+    logError('Skills not installed. Run "npx vibeship-spawner-skills install" first.');
+    process.exit(1);
+  }
+
+  const categories = getCategories();
+
+  // Show clickable directory path
+  console.log('');
+  const clickablePath = hyperlink(fileUrl(SKILLS_DIR), SKILLS_DIR);
+  console.log(`${COLORS.dim}Location:${COLORS.reset} ${COLORS.cyan}${clickablePath}${COLORS.reset}`);
+  console.log('');
+
+  // List specific category
+  if (categoryArg && categoryArg !== '--all') {
+    if (!categories.includes(categoryArg)) {
+      logError(`Category "${categoryArg}" not found.`);
+      console.log('');
+      log('Available categories:', COLORS.bright);
+      console.log(categories.map(c => `  ${COLORS.cyan}${c}${COLORS.reset}`).join('\n'));
+      console.log('');
+      process.exit(1);
+    }
+
+    const skills = getSkillsInCategory(categoryArg);
+    const categoryPath = path.join(SKILLS_DIR, categoryArg);
+
+    log(`${categoryArg} (${skills.length} skills)`, COLORS.bright);
+    console.log('─'.repeat(50));
+
+    for (const skill of skills) {
+      const skillPath = path.join(categoryPath, skill);
+      const skillYaml = path.join(skillPath, 'skill.yaml');
+
+      // Try to get description from skill.yaml
+      let description = '';
+      if (fs.existsSync(skillYaml)) {
+        try {
+          const content = fs.readFileSync(skillYaml, 'utf8');
+          // Try single-line description first
+          let descMatch = content.match(/^description:\s*["']?([^|\n][^\n]*)["']?\s*$/m);
+          // If not found or it's a pipe (multiline), try to get the first line after description: |
+          if (!descMatch || descMatch[1].trim() === '|') {
+            const multilineMatch = content.match(/^description:\s*\|\s*\n\s+(.+)$/m);
+            if (multilineMatch) {
+              descMatch = multilineMatch;
+            }
+          }
+          if (descMatch && descMatch[1] && descMatch[1].trim() !== '|') {
+            description = descMatch[1].trim().substring(0, 50);
+            if (descMatch[1].length > 50) description += '...';
+          }
+        } catch {}
+      }
+
+      const clickableSkill = hyperlink(fileUrl(skillPath), skill);
+      if (description) {
+        console.log(`  ${COLORS.cyan}${clickableSkill}${COLORS.reset} ${COLORS.dim}- ${description}${COLORS.reset}`);
+      } else {
+        console.log(`  ${COLORS.cyan}${clickableSkill}${COLORS.reset}`);
+      }
+    }
+
+    console.log('');
+    logInfo(`Load with: Read ~/.spawner/skills/${categoryArg}/<skill>/skill.yaml`);
+    console.log('');
+    return;
+  }
+
+  // List all skills (--all flag)
+  if (showAll) {
+    log('All Skills', COLORS.bright);
+    console.log('─'.repeat(50));
+
+    let totalSkills = 0;
+
+    for (const category of categories) {
+      const skills = getSkillsInCategory(category);
+      totalSkills += skills.length;
+
+      console.log(`\n${COLORS.bright}${category}${COLORS.reset} (${skills.length})`);
+
+      for (const skill of skills) {
+        const skillPath = path.join(SKILLS_DIR, category, skill);
+        const clickableSkill = hyperlink(fileUrl(skillPath), skill);
+        console.log(`  ${COLORS.cyan}${clickableSkill}${COLORS.reset}`);
+      }
+    }
+
+    console.log('');
+    console.log('─'.repeat(50));
+    logSuccess(`Total: ${totalSkills} skills across ${categories.length} categories`);
+    console.log('');
+    return;
+  }
+
+  // Default: list categories only
+  log('Installed Skill Categories', COLORS.bright);
+  console.log('─'.repeat(50));
 
   let totalSkills = 0;
 
   for (const category of categories) {
-    const categoryPath = path.join(SKILLS_DIR, category);
-    const skills = fs.readdirSync(categoryPath).filter(f => {
-      const skillPath = path.join(categoryPath, f);
-      return fs.statSync(skillPath).isDirectory();
-    });
-
+    const skills = getSkillsInCategory(category);
     totalSkills += skills.length;
-    console.log(`${COLORS.cyan}${category}${COLORS.reset} (${skills.length} skills)`);
+
+    const categoryPath = path.join(SKILLS_DIR, category);
+    const clickableCategory = hyperlink(fileUrl(categoryPath), category);
+    console.log(`${COLORS.cyan}${clickableCategory}${COLORS.reset} (${skills.length} skills)`);
   }
 
-  console.log('─'.repeat(40));
+  console.log('─'.repeat(50));
   logSuccess(`Total: ${totalSkills} skills across ${categories.length} categories`);
+  console.log('');
+  logInfo(`List skills in a category: npx vibeship-spawner-skills list <category>`);
+  logInfo(`List all skills: npx vibeship-spawner-skills list --all`);
   console.log('');
 }
 
@@ -305,7 +432,9 @@ switch (command) {
   case 'list':
   case 'ls':
   case 'l':
-    list();
+    const listArg = args[1];
+    const showAll = args.includes('--all') || args.includes('-a');
+    list(listArg, showAll);
     break;
   case 'help':
   case 'h':
