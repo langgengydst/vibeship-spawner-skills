@@ -135,4 +135,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add or improve skills.
 
 ## License
 
-MIT
+Apache 2.0
