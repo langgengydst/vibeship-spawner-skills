@@ -37,16 +37,93 @@ function log(msg, color = '') {
 
 /**
  * Read and parse YAML file, returns null if doesn't exist
+ * Falls back to regex extraction for files with embedded template literals
  */
 function readYaml(filePath) {
   try {
     if (!fs.existsSync(filePath)) return null;
     const content = fs.readFileSync(filePath, 'utf8');
-    return yaml.load(content);
+
+    try {
+      return yaml.load(content);
+    } catch (yamlErr) {
+      // Fallback: extract key fields using regex for files with template literals
+      log(`  Fallback parsing ${path.basename(filePath)}...`, colors.dim);
+      return extractYamlFields(content);
+    }
   } catch (err) {
-    log(`  Warning: Failed to parse ${filePath}: ${err.message}`, colors.yellow);
+    log(`  Warning: Failed to read ${filePath}: ${err.message}`, colors.yellow);
     return null;
   }
+}
+
+/**
+ * Extract key YAML fields using regex when js-yaml fails
+ * Handles files with embedded backticks/template literals
+ */
+function extractYamlFields(content) {
+  const extracted = {};
+
+  // Extract simple string fields
+  const simpleFields = ['id', 'name', 'category', 'version', 'skill_id', 'difficulty'];
+  for (const field of simpleFields) {
+    const match = content.match(new RegExp(`^${field}:\\s*(.+)$`, 'm'));
+    if (match) {
+      extracted[field] = match[1].trim().replace(/^["']|["']$/g, '');
+    }
+  }
+
+  // Extract description (multiline)
+  const descMatch = content.match(/^description:\s*\|?\s*\n((?:[ ]{2,}.+\n?)+)/m);
+  if (descMatch) {
+    extracted.description = descMatch[1].replace(/^[ ]{2,}/gm, '').trim();
+  }
+
+  // Extract tags array
+  const tagsMatch = content.match(/^tags:\s*\n((?:\s+-\s+.+\n?)+)/m);
+  if (tagsMatch) {
+    extracted.tags = tagsMatch[1].match(/-\s+["']?([^"'\n]+)["']?/g)
+      ?.map(t => t.replace(/^-\s+["']?|["']?$/g, '').trim()) || [];
+  }
+
+  // Extract triggers array
+  const triggersMatch = content.match(/^triggers:\s*\n((?:\s+-\s+.+\n?)+)/m);
+  if (triggersMatch) {
+    extracted.triggers = triggersMatch[1].match(/-\s+["']?([^"'\n]+)["']?/g)
+      ?.map(t => t.replace(/^-\s+["']?|["']?$/g, '').trim()) || [];
+  }
+
+  // Extract provides array
+  const providesMatch = content.match(/^provides:\s*\n((?:\s+-\s+.+\n?)+)/m);
+  if (providesMatch) {
+    extracted.provides = providesMatch[1].match(/-\s+["']?([^"'\n]+)["']?/g)
+      ?.map(t => t.replace(/^-\s+["']?|["']?$/g, '').trim()) || [];
+  }
+
+  // Mark that patterns exist (don't try to parse the complex structure)
+  if (content.includes('patterns:')) {
+    extracted.patterns = [{ name: 'See full skill for patterns', description: 'Contains implementation patterns with code examples' }];
+  }
+
+  // Mark that anti_patterns exist
+  if (content.includes('anti_patterns:')) {
+    extracted.anti_patterns = [{ name: 'See full skill for anti-patterns', description: 'Contains anti-patterns with examples' }];
+  }
+
+  // Extract handoffs
+  const handoffsSection = content.match(/^handoffs:\s*\n((?:\s+-[\s\S]*?)(?=\n\w|\n*$))/m);
+  if (handoffsSection) {
+    extracted.handoffs = [{ to: 'various', when: 'See full skill' }];
+  }
+
+  // Extract references
+  const refsMatch = content.match(/^references:\s*\n((?:\s+-\s+.+\n?)+)/m);
+  if (refsMatch) {
+    extracted.references = refsMatch[1].match(/-\s+["']?([^"'\n]+)["']?/g)
+      ?.map(t => t.replace(/^-\s+["']?|["']?$/g, '').trim()) || [];
+  }
+
+  return Object.keys(extracted).length > 0 ? extracted : null;
 }
 
 /**

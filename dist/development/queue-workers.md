@@ -16,8 +16,6 @@ and async workflow orchestration.
 
 *Real production issues that cause outages and bugs.*
 
-*Sharp edges documented in full version.*
-
 ## Collaboration
 
 ### When to Hand Off

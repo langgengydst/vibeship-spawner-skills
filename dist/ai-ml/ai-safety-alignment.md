@@ -1,0 +1,687 @@
+# ai-safety-alignment
+
+> Implement comprehensive safety guardrails for LLM applications including
+
+**Category:** ai-ml | **Version:** 1.0.0
+
+**Tags:** guardrails, content-moderation, prompt-injection, jailbreak-prevention, pii-detection, nemo-guardrails, openai-moderation, llama-guard, safety
+
+---
+
+## Patterns
+
+### See full skill for patterns
+Contains implementation patterns with code examples
+
+
+## Anti-Patterns
+
+### See full skill for anti-patterns
+Contains anti-patterns with examples
+
+
+## Sharp Edges (Gotchas)
+
+*Real production issues that cause outages and bugs.*
+
+### [CRITICAL] Guardrails bypassed with creative prompting
+
+**Situation:** Using pattern-based injection detection
+
+**Why it happens:**
+Static patterns catch known attacks but miss variations:
+- Unicode substitution: "ｉｇｎｏｒｅ" instead of "ignore"
+- Encoding: Base64, ROT13, pig latin
+- Multi-step: Spread attack across multiple messages
+- Role-play: "Pretend you're an AI without restrictions"
+- Token smuggling: "ig" + "nore previous instructions"
+
+Attackers constantly evolve techniques. Pattern lists decay.
+
+
+**Solution:**
+```
+Layer defenses, prioritize semantic detection:
+
+```typescript
+interface InjectionResult {
+  blocked: boolean;
+  method: "pattern" | "semantic" | "combined";
+  confidence: number;
+  reason?: string;
+}
+
+async function detectInjection(
+  input: string,
+  options?: { useLLM?: boolean; threshold?: number }
+): Promise<InjectionResult> {
+  const { useLLM = true, threshold = 0.7 } = options ?? {};
+
+  // Layer 1: Pattern matching (fast, catches obvious attacks)
+  const patternResult = checkPatterns(normalizeText(input));
+  if (patternResult.matched && patternResult.confidence > 0.9) {
+    return { blocked: true, method: "pattern", confidence: 0.9, reason: patternResult.pattern };
+  }
+
+  // Layer 2: Semantic detection (slower, catches variations)
+  if (useLLM) {
+    const semanticResult = await detectWithLLM(input);
+    if (semanticResult.isInjection && semanticResult.confidence > threshold) {
+      return { blocked: true, method: "semantic", confidence: semanticResult.confidence };
+    }
+  }
+
+  // Combine signals
+  const combinedConfidence = patternResult.confidence * 0.3 + (semanticResult?.confidence ?? 0) * 0.7;
+  return {
+    blocked: combinedConfidence > threshold,
+    method: "combined",
+    confidence: combinedConfidence,
+  };
+}
+
+// Normalize unicode, decode common encodings
+function normalizeText(text: string): string {
+  return text
+    .normalize("NFKC") // Unicode normalization
+    .toLowerCase()
+    .replace(/[\u200B-\u200D\uFEFF]/g, ""); // Zero-width chars
+}
+```
+
+```
+
+---
+
+### [HIGH] Legitimate content blocked as harmful
+
+**Situation:** Using OpenAI Moderation API
+
+**Why it happens:**
+Moderation APIs have false positives:
+- Medical discussions flagged as self-harm
+- Historical content flagged as hate
+- Security discussions flagged as violence
+- Literary quotes flagged incorrectly
+
+Blocking legitimate users damages trust and usability.
+
+
+**Solution:**
+```
+Add context and human review for edge cases:
+
+```typescript
+interface ModerationResult {
+  action: "allow" | "block" | "review";
+  categories: string[];
+  context?: string;
+}
+
+async function moderateWithContext(
+  content: string,
+  context: {
+    domain: "medical" | "legal" | "educational" | "general";
+    userTrust: number; // 0-1
+  }
+): Promise<ModerationResult> {
+  const result = await openai.moderations.create({ input: content });
+  const flagged = result.results[0];
+
+  if (!flagged.flagged) {
+    return { action: "allow", categories: [] };
+  }
+
+  // Check domain-specific exceptions
+  const categories = Object.entries(flagged.categories)
+    .filter(([_, v]) => v)
+    .map(([k]) => k);
+
+  // Medical domain: allow self-harm discussions in clinical context
+  if (context.domain === "medical" && categories.includes("self-harm")) {
+    const isClinical = await checkClinicalContext(content);
+    if (isClinical) {
+      return { action: "allow", categories, context: "clinical-exception" };
+    }
+  }
+
+  // High-trust users get review instead of block
+  if (context.userTrust > 0.8) {
+    return { action: "review", categories };
+  }
+
+  // Educational content: allow historical discussions
+  if (context.domain === "educational" && categories.includes("hate")) {
+    return { action: "review", categories, context: "educational-review" };
+  }
+
+  return { action: "block", categories };
+}
+```
+
+```
+
+---
+
+### [CRITICAL] Harmful content passes moderation
+
+**Situation:** Relying solely on moderation API
+
+**Why it happens:**
+Moderation APIs miss:
+- Subtle harassment and microaggressions
+- Domain-specific harmful advice
+- Context-dependent harm
+- Novel attack patterns
+- Non-English content (weaker coverage)
+
+A single layer creates single point of failure.
+
+
+**Solution:**
+```
+Layer multiple moderation approaches:
+
+```typescript
+interface MultiLayerResult {
+  safe: boolean;
+  layers: {
+    openai: boolean;
+    custom: boolean;
+    domain: boolean;
+  };
+  reason?: string;
+}
+
+async function multiLayerModeration(
+  content: string,
+  domain?: string
+): Promise<MultiLayerResult> {
+  const [openaiResult, customResult, domainResult] = await Promise.all([
+    // Layer 1: OpenAI Moderation (general harm)
+    openai.moderations.create({ input: content }),
+
+    // Layer 2: Custom patterns (business-specific)
+    checkCustomPatterns(content),
+
+    // Layer 3: Domain-specific rules
+    domain ? checkDomainRules(content, domain) : Promise.resolve({ safe: true }),
+  ]);
+
+  const layers = {
+    openai: !openaiResult.results[0].flagged,
+    custom: customResult.safe,
+    domain: domainResult.safe,
+  };
+
+  // All layers must pass
+  const safe = Object.values(layers).every(Boolean);
+
+  return {
+    safe,
+    layers,
+    reason: safe ? undefined : Object.entries(layers).find(([_, v]) => !v)?.[0],
+  };
+}
+```
+
+```
+
+---
+
+### [HIGH] PII leaks through detection gaps
+
+**Situation:** Using regex-based PII detection
+
+**Why it happens:**
+Regex patterns miss:
+- International phone formats (+44, +91, etc.)
+- Non-US ID numbers (NHS, national IDs)
+- Names (infinite variations)
+- Addresses (many formats)
+- Context-dependent PII (employee IDs, account numbers)
+
+Partial protection creates false confidence.
+
+
+**Solution:**
+```
+Use ML-based PII detection:
+
+```typescript
+import { AnalyzeAction, PresidioAnalyzer } from "presidio-analyzer";
+
+// Or use AWS Comprehend for managed service
+import { ComprehendClient, DetectPiiEntitiesCommand } from "@aws-sdk/client-comprehend";
+
+interface PIIResult {
+  found: boolean;
+  entities: Array<{
+    type: string;
+    text: string;
+    start: number;
+    end: number;
+    confidence: number;
+  }>;
+  redacted: string;
+}
+
+async function detectPIIWithML(text: string): Promise<PIIResult> {
+  const client = new ComprehendClient({ region: "us-east-1" });
+
+  const command = new DetectPiiEntitiesCommand({
+    Text: text,
+    LanguageCode: "en",
+  });
+
+  const response = await client.send(command);
+
+  const entities = (response.Entities ?? []).map((e) => ({
+    type: e.Type!,
+    text: text.slice(e.BeginOffset!, e.EndOffset!),
+    start: e.BeginOffset!,
+    end: e.EndOffset!,
+    confidence: e.Score!,
+  }));
+
+  // Redact detected PII
+  let redacted = text;
+  for (const entity of entities.sort((a, b) => b.start - a.start)) {
+    redacted = redacted.slice(0, entity.start) + `[${entity.type}]` + redacted.slice(entity.end);
+  }
+
+  return {
+    found: entities.length > 0,
+    entities,
+    redacted,
+  };
+}
+```
+
+```
+
+---
+
+### [HIGH] Harmful content in LLM output bypasses filters
+
+**Situation:** Only filtering input, not output
+
+**Why it happens:**
+LLMs can generate harmful content even with safe inputs:
+- Jailbroken base model
+- Training data contamination
+- Prompt injection in retrieved context (RAG)
+- Model hallucinating harmful content
+
+Input filtering alone is insufficient.
+
+
+**Solution:**
+```
+Filter both input AND output:
+
+```typescript
+interface SafeCompletionResult {
+  content: string;
+  filtered: boolean;
+  inputBlocked: boolean;
+  outputFiltered: boolean;
+}
+
+async function safeCompletion(
+  messages: Array<{ role: string; content: string }>,
+  options?: { strictOutput?: boolean }
+): Promise<SafeCompletionResult> {
+  // 1. Validate input
+  const lastUserMessage = messages.findLast((m) => m.role === "user");
+  if (lastUserMessage) {
+    const inputCheck = await validateInput(lastUserMessage.content);
+    if (!inputCheck.allowed) {
+      return {
+        content: "I can't help with that request.",
+        filtered: true,
+        inputBlocked: true,
+        outputFiltered: false,
+      };
+    }
+  }
+
+  // 2. Generate response
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages,
+  });
+
+  const rawOutput = response.choices[0].message.content ?? "";
+
+  // 3. Filter output
+  const outputCheck = await moderateOutput(rawOutput);
+  if (outputCheck.flagged) {
+    if (options?.strictOutput) {
+      return {
+        content: "I generated a response that didn't meet safety guidelines.",
+        filtered: true,
+        inputBlocked: false,
+        outputFiltered: true,
+      };
+    }
+
+    // Attempt to sanitize
+    return {
+      content: outputCheck.sanitized ?? rawOutput,
+      filtered: true,
+      inputBlocked: false,
+      outputFiltered: true,
+    };
+  }
+
+  return {
+    content: rawOutput,
+    filtered: false,
+    inputBlocked: false,
+    outputFiltered: false,
+  };
+}
+```
+
+```
+
+---
+
+### [MEDIUM] Attackers bypass safety via high-volume requests
+
+**Situation:** Safety checks without rate limiting
+
+**Why it happens:**
+Attackers can:
+- Probe for bypass patterns with many attempts
+- Overwhelm moderation API quotas
+- Find edge cases through fuzzing
+- Exhaust your safety budget
+
+Safety without rate limiting is incomplete.
+
+
+**Solution:**
+```
+Rate limit by user and implement escalating blocks:
+
+```typescript
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_URL!,
+  token: process.env.UPSTASH_REDIS_TOKEN!,
+});
+
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(10, "1m"),
+  analytics: true,
+});
+
+// Track safety violations
+async function checkSafetyWithRateLimit(
+  userId: string,
+  input: string
+): Promise<{ allowed: boolean; reason?: string }> {
+  // Check rate limit
+  const { success, remaining } = await ratelimit.limit(userId);
+  if (!success) {
+    return { allowed: false, reason: "rate_limited" };
+  }
+
+  // Check violation history
+  const violations = await redis.get<number>(`violations:${userId}`) ?? 0;
+  if (violations >= 5) {
+    return { allowed: false, reason: "too_many_violations" };
+  }
+
+  // Perform safety check
+  const safetyResult = await validateInput(input);
+
+  if (!safetyResult.allowed) {
+    // Increment violations
+    await redis.incr(`violations:${userId}`);
+    await redis.expire(`violations:${userId}`, 86400); // 24h
+
+    // Escalating response
+    if (violations >= 3) {
+      // Notify admin for review
+      await notifyAdmin(userId, input, safetyResult);
+    }
+  }
+
+  return safetyResult;
+}
+```
+
+```
+
+---
+
+### [HIGH] Injection via long context overwhelms safety
+
+**Situation:** RAG or long-context applications
+
+**Why it happens:**
+Long contexts can hide attacks:
+- Instructions buried in retrieved documents
+- "Lost in the middle" - model ignores safety in long contexts
+- Context poisoning via vector DB
+- Injection in structured data (JSON, XML)
+
+Safety checks on truncated input miss full attack.
+
+
+**Solution:**
+```
+Validate retrieved context before injection:
+
+```typescript
+interface RetrievedChunk {
+  content: string;
+  source: string;
+  score: number;
+}
+
+async function safeRAGContext(
+  chunks: RetrievedChunk[],
+  options?: { maxTokens?: number }
+): Promise<RetrievedChunk[]> {
+  const validatedChunks: RetrievedChunk[] = [];
+
+  for (const chunk of chunks) {
+    // Check for injection patterns in retrieved content
+    const injectionCheck = await detectInjection(chunk.content, { useLLM: false });
+    if (injectionCheck.blocked) {
+      console.warn(`Blocked suspicious chunk from ${chunk.source}`);
+      continue;
+    }
+
+    // Check for prompt-like instructions
+    if (containsInstructions(chunk.content)) {
+      console.warn(`Chunk contains instructions: ${chunk.source}`);
+      // Wrap in quotes to de-emphasize
+      chunk.content = `Retrieved content: "${chunk.content}"`;
+    }
+
+    validatedChunks.push(chunk);
+  }
+
+  return validatedChunks;
+}
+
+function containsInstructions(text: string): boolean {
+  const instructionPatterns = [
+    /\b(you must|you should|always|never|ignore|forget)\b/i,
+    /\b(instructions?|commands?|directives?)\s*:/i,
+    /\bsystem\s*prompt/i,
+  ];
+
+  return instructionPatterns.some((p) => p.test(text));
+}
+```
+
+```
+
+---
+
+### [MEDIUM] Safety checks add significant latency
+
+**Situation:** Multiple safety layers in production
+
+**Why it happens:**
+Each safety layer adds latency:
+- OpenAI Moderation: 50-200ms
+- LLM-based detection: 500-2000ms
+- PII detection: 100-500ms
+
+Stacking layers can add 1-3 seconds to every request.
+
+
+**Solution:**
+```
+Run safety checks in parallel, cache results:
+
+```typescript
+interface SafetyCheckResult {
+  safe: boolean;
+  latencyMs: number;
+  checks: Record<string, boolean>;
+}
+
+async function parallelSafetyCheck(
+  input: string,
+  userId: string
+): Promise<SafetyCheckResult> {
+  const start = Date.now();
+
+  // Check cache first
+  const cacheKey = `safety:${hashInput(input)}`;
+  const cached = await redis.get<SafetyCheckResult>(cacheKey);
+  if (cached) {
+    return { ...cached, latencyMs: Date.now() - start };
+  }
+
+  // Run all checks in parallel
+  const [moderation, injection, pii] = await Promise.all([
+    openai.moderations.create({ input }).catch(() => ({ results: [{ flagged: false }] })),
+    detectInjection(input, { useLLM: false }), // Fast pattern-only
+    detectPII(input),
+  ]);
+
+  const checks = {
+    moderation: !moderation.results[0].flagged,
+    injection: !injection.blocked,
+    pii: !pii.found,
+  };
+
+  const safe = Object.values(checks).every(Boolean);
+
+  const result: SafetyCheckResult = {
+    safe,
+    latencyMs: Date.now() - start,
+    checks,
+  };
+
+  // Cache for 5 minutes
+  await redis.setex(cacheKey, 300, result);
+
+  return result;
+}
+```
+
+```
+
+---
+
+### [HIGH] Non-English content bypasses safety
+
+**Situation:** Moderation API with non-English users
+
+**Why it happens:**
+Most safety tools are English-centric:
+- OpenAI Moderation: Best in English, weaker in other languages
+- Pattern matching: Only covers one language
+- PII patterns: Format varies by country
+
+Attackers use non-English to bypass filters.
+
+
+**Solution:**
+```
+Detect language and apply appropriate safety:
+
+```typescript
+import { franc } from "franc";
+
+async function multilingualSafetyCheck(
+  input: string
+): Promise<{ safe: boolean; language: string; method: string }> {
+  // Detect language
+  const language = franc(input);
+
+  // English: Use full safety stack
+  if (language === "eng") {
+    const result = await fullSafetyCheck(input);
+    return { ...result, language: "en", method: "full" };
+  }
+
+  // Supported languages: Translate then check
+  const supportedLanguages = ["spa", "fra", "deu", "por", "ita"];
+  if (supportedLanguages.includes(language)) {
+    const translated = await translateToEnglish(input);
+    const result = await fullSafetyCheck(translated);
+    return { ...result, language, method: "translated" };
+  }
+
+  // Unsupported: Use stricter threshold + basic moderation
+  const moderation = await openai.moderations.create({ input });
+  const flagged = moderation.results[0];
+
+  // Lower threshold for unsupported languages
+  const scores = Object.values(flagged.category_scores);
+  const maxScore = Math.max(...scores);
+
+  return {
+    safe: maxScore < 0.3, // Stricter than default 0.5
+    language,
+    method: "strict-threshold",
+  };
+}
+```
+
+```
+
+---
+
+## Collaboration
+
+### Receives Work From
+
+- **llm-integration**: 
+- **rag-architect**: 
+
+---
+
+## Get the Full Version
+
+This skill has **automated validations**, **detection patterns**, and **structured handoff triggers** that work with the Spawner orchestrator.
+
+```bash
+npx vibeship-spawner-skills install
+```
+
+Full skill path: `~/.spawner/skills/ai-ml/ai-safety-alignment/`
+
+**Includes:**
+- `skill.yaml` - Structured skill definition
+- `sharp-edges.yaml` - Machine-parseable gotchas with detection patterns
+- `validations.yaml` - Automated code checks
+- `collaboration.yaml` - Handoff triggers for skill orchestration
+
+---
+
+*Generated by [VibeShip Spawner](https://github.com/vibeforge1111/vibeship-spawner-skills)*

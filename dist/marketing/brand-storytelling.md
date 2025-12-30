@@ -645,6 +645,8 @@ MAKE IT EXPLICIT:
 
 ---
 
+## Collaboration
+
 ### Works Well With
 
 - video-scriptwriting
