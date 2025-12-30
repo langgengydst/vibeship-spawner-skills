@@ -1,6 +1,6 @@
 # Spawner Skills
 
-**270+ skills** for Claude Code. Zero cost, works offline.
+**273+ skills** for Claude Code. Zero cost, works offline.
 
 ## Quick Start
 

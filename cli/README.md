@@ -1,6 +1,6 @@
 # vibeship-spawner-skills
 
-CLI installer for VibeShip Spawner skills - 270+ specialist skills for AI-powered product building.
+CLI installer for VibeShip Spawner skills - 273+ specialist skills for AI-powered product building.
 
 ## Quick Install
 

@@ -1,219 +1,354 @@
 # Getting Started with Spawner Skills
 
-You just installed 270+ specialist skills for Claude. Here's how to use them.
-
-## What You Installed
-
 ```
-~/.spawner/skills/
-├── development/      # Backend, frontend, API, auth, testing
-├── ai/               # LLM, embeddings, RAG, fine-tuning
-├── agents/           # Autonomous agents, browser automation
-├── data/             # PostgreSQL, Redis, vectors
-├── marketing/        # AI video, copywriting, SEO
-└── ... (24 categories total)
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│   ⚡ VIBESHIP SPAWNER SKILLS                                    │
+│   270+ Specialist Skills for AI-Powered Product Building        │
+│                                                                 │
+│   You're about to give Claude superpowers.                      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
-
-Each skill contains:
-- `skill.yaml` - Core knowledge, patterns, anti-patterns
-- `sharp-edges.yaml` - Gotchas and common mistakes
-- `validations.yaml` - Code checks to catch issues
-- `collaboration.yaml` - When to hand off to other skills
 
 ---
 
-## Quick Start (2 minutes)
-
-### Step 1: Load a Skill in Claude
-
-Tell Claude to read a skill:
+## What You Just Installed
 
 ```
-Read: ~/.spawner/skills/development/backend/skill.yaml
-Read: ~/.spawner/skills/development/backend/sharp-edges.yaml
+~/.spawner/skills/
+│
+├── development/          # 57 skills
+│   ├── backend/          # APIs, servers, Node.js
+│   ├── frontend/         # React, UI components
+│   ├── auth-specialist/  # OAuth, JWT, sessions
+│   └── ...
+│
+├── ai/                   # 12 skills
+│   ├── llm-architect/    # LLM integration patterns
+│   ├── rag-specialist/   # Retrieval-augmented generation
+│   └── ...
+│
+├── agents/               # 10 skills
+│   ├── autonomous-agents/
+│   └── multi-agent-orchestration/
+│
+└── ... (24 categories, 270+ total skills)
 ```
 
-Claude now has backend expertise loaded. Ask it to build something:
+---
+
+## How to Spawn a Skill
+
+### Step 1: Tell Claude to Load the Skill
+
+Copy and paste this into Claude:
 
 ```
-Build me a REST API for a todo app with PostgreSQL
+Read these files and become a backend specialist:
+~/.spawner/skills/development/backend/skill.yaml
+~/.spawner/skills/development/backend/sharp-edges.yaml
 ```
 
-### Step 2: Load Multiple Skills for Complex Tasks
+### Step 2: Verify It's Working
 
-For a full-stack feature, load multiple skills:
+After Claude reads the files, it should respond with something like:
 
 ```
-Read: ~/.spawner/skills/development/backend/skill.yaml
-Read: ~/.spawner/skills/development/frontend/skill.yaml
-Read: ~/.spawner/skills/data/postgres-wizard/skill.yaml
-Read: ~/.spawner/skills/development/auth-specialist/skill.yaml
+┌─────────────────────────────────────────────────────────────────┐
+│  ✓ SKILL LOADED: Backend Specialist                            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  I now have expertise in:                                       │
+│  • REST API design patterns                                     │
+│  • Node.js/Express/Fastify                                      │
+│  • Database integration                                         │
+│  • Authentication flows                                         │
+│  • Error handling patterns                                      │
+│                                                                 │
+│  Sharp edges I'm watching for:                                  │
+│  • N+1 query problems                                           │
+│  • Missing input validation                                     │
+│  • Insecure direct object references                            │
+│                                                                 │
+│  Ready to build. What do you want to create?                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-Now Claude has expertise in backend, frontend, database, AND auth.
+**If Claude doesn't show this visual confirmation**, tell it:
+
+```
+After loading a skill, always show a visual confirmation box like this:
+
+┌─────────────────────────────────────────────────────────────────┐
+│  ✓ SKILL LOADED: [Skill Name]                                  │
+├─────────────────────────────────────────────────────────────────┤
+│  I now have expertise in: [list key capabilities]               │
+│  Sharp edges I'm watching for: [list gotchas]                   │
+│  Ready to build.                                                │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Quick Spawn Commands
+
+Copy-paste these to spawn common skills:
+
+### Backend API Development
+```
+Read and become a backend specialist. Show a visual confirmation when loaded:
+~/.spawner/skills/development/backend/skill.yaml
+~/.spawner/skills/development/backend/sharp-edges.yaml
+```
+
+### Frontend UI Development
+```
+Read and become a frontend specialist. Show a visual confirmation when loaded:
+~/.spawner/skills/development/frontend/skill.yaml
+~/.spawner/skills/development/frontend/sharp-edges.yaml
+```
+
+### Full-Stack SaaS
+```
+Read these skills and become a full-stack SaaS expert. Show what you're now capable of:
+~/.spawner/skills/development/backend/skill.yaml
+~/.spawner/skills/development/frontend/skill.yaml
+~/.spawner/skills/data/postgres-wizard/skill.yaml
+~/.spawner/skills/integration/stripe-billing/skill.yaml
+~/.spawner/skills/development/auth-specialist/skill.yaml
+```
+
+### AI Agent Building
+```
+Read these skills and become an AI agent architect. Show what you're now capable of:
+~/.spawner/skills/agents/autonomous-agents/skill.yaml
+~/.spawner/skills/agents/multi-agent-orchestration/skill.yaml
+~/.spawner/skills/ai/llm-architect/skill.yaml
+```
+
+---
+
+## Confirming It Works
+
+### Test 1: Ask About Sharp Edges
+
+After spawning a skill, ask:
+
+```
+What sharp edges should I watch out for with this stack?
+```
+
+If the skill loaded correctly, Claude will list specific gotchas from the sharp-edges.yaml file.
+
+### Test 2: Ask for a Pattern
+
+```
+Show me the recommended pattern for [relevant task]
+```
+
+Claude should show patterns from the skill's best practices, not generic advice.
+
+### Test 3: Build Something
+
+```
+Build me a [small example relevant to the skill]
+```
+
+Watch for:
+- Does Claude follow the skill's patterns?
+- Does it avoid the sharp edges?
+- Does it mention skill-specific considerations?
+
+---
+
+## Visual Status Check
+
+Ask Claude anytime:
+
+```
+Show me which skills are currently active
+```
+
+Claude should display:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  ACTIVE SKILLS                                                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ✓ Backend Specialist     (development/backend)                 │
+│  ✓ PostgreSQL Wizard      (data/postgres-wizard)                │
+│  ✓ Auth Specialist        (development/auth-specialist)         │
+│                                                                 │
+│  3 skills loaded | Session started 10 mins ago                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## Common Workflows
 
-### Building a SaaS App
+### Building a SaaS Product
 
 ```
-# Load essentials
-Read: ~/.spawner/skills/development/backend/skill.yaml
-Read: ~/.spawner/skills/development/frontend/skill.yaml
-Read: ~/.spawner/skills/data/postgres-wizard/skill.yaml
-Read: ~/.spawner/skills/integration/stripe-billing/skill.yaml
-Read: ~/.spawner/skills/development/auth-specialist/skill.yaml
-
-# Now build
-"Build a SaaS with user auth, Stripe billing, and a dashboard"
+┌─────────────────────────────────────────────────────────────────┐
+│  WORKFLOW: SaaS Product                                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Step 1: Spawn the skills                                       │
+│  ────────────────────────                                       │
+│  Read and become a full-stack SaaS expert:                      │
+│  ~/.spawner/skills/development/backend/skill.yaml               │
+│  ~/.spawner/skills/development/frontend/skill.yaml              │
+│  ~/.spawner/skills/data/postgres-wizard/skill.yaml              │
+│  ~/.spawner/skills/integration/stripe-billing/skill.yaml        │
+│  ~/.spawner/skills/development/auth-specialist/skill.yaml       │
+│                                                                 │
+│  Step 2: Plan                                                   │
+│  ────────────────────────                                       │
+│  "Plan a SaaS for [your idea]. Show the architecture."          │
+│                                                                 │
+│  Step 3: Build                                                  │
+│  ────────────────────────                                       │
+│  "Build the [component]. Follow the skill patterns."            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ### Building AI Agents
 
 ```
-# Load agent skills
-Read: ~/.spawner/skills/agents/autonomous-agents/skill.yaml
-Read: ~/.spawner/skills/agents/multi-agent-orchestration/skill.yaml
-Read: ~/.spawner/skills/ai/llm-architect/skill.yaml
-
-# Now build
-"Build an agent that researches topics and writes reports"
-```
-
-### Marketing with AI
-
-```
-# Load marketing skills
-Read: ~/.spawner/skills/marketing/ai-video-ads/skill.yaml
-Read: ~/.spawner/skills/marketing/ai-copywriting/skill.yaml
-Read: ~/.spawner/skills/marketing/seo-specialist/skill.yaml
-
-# Now work
-"Create a video ad script for my productivity app"
-```
-
----
-
-## Using with Spawner MCP (Advanced)
-
-If you're using the Spawner MCP server, you get additional features:
-
-### Skill Packs
-Load curated skill sets with one command:
-
-```
-spawner_skills({ action: "pack", pack: "essentials" })   # Core 19 skills
-spawner_skills({ action: "pack", pack: "agents" })       # AI agent skills
-spawner_skills({ action: "pack", pack: "marketing-ai" }) # AI marketing
-spawner_skills({ action: "pack", pack: "enterprise" })   # Compliance, security
-```
-
-### Search Skills
-Find the right skill for your task:
-
-```
-spawner_skills({ query: "payment processing" })
-spawner_skills({ query: "authentication oauth" })
-spawner_skills({ query: "kubernetes deployment" })
-```
-
-### Validation
-Run code checks from skill validations:
-
-```
-spawner_validate({ code: "your code here" })
-```
-
----
-
-## Best Practices
-
-### 1. Load Skills Before Asking
-Always load relevant skills BEFORE making your request:
-
-```
-# Good
-Read: ~/.spawner/skills/development/backend/skill.yaml
-"Build me an API"
-
-# Less effective
-"Build me an API"  # Claude uses general knowledge, not specialist skill
-```
-
-### 2. Load Sharp Edges for Production Code
-Sharp edges contain gotchas that prevent common bugs:
-
-```
-Read: ~/.spawner/skills/development/backend/skill.yaml
-Read: ~/.spawner/skills/development/backend/sharp-edges.yaml  # Add this!
-```
-
-### 3. Match Skills to Task Complexity
-- Simple task → 1-2 skills
-- Feature → 3-5 skills
-- Full project → Use skill packs
-
-### 4. Check Collaboration Files
-Skills know when to hand off to other skills:
-
-```
-Read: ~/.spawner/skills/development/backend/collaboration.yaml
-# Shows: "Hand off to auth-specialist for authentication"
+┌─────────────────────────────────────────────────────────────────┐
+│  WORKFLOW: AI Agent                                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Step 1: Spawn the skills                                       │
+│  ────────────────────────                                       │
+│  Read and become an AI agent architect:                         │
+│  ~/.spawner/skills/agents/autonomous-agents/skill.yaml          │
+│  ~/.spawner/skills/agents/multi-agent-orchestration/skill.yaml  │
+│  ~/.spawner/skills/ai/llm-architect/skill.yaml                  │
+│                                                                 │
+│  Step 2: Design                                                 │
+│  ────────────────────────                                       │
+│  "Design an agent that [your goal]. Show the architecture."     │
+│                                                                 │
+│  Step 3: Build                                                  │
+│  ────────────────────────                                       │
+│  "Build the agent. Use the patterns from the skills."           │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Skill Categories
 
-| Category | Skills | Examples |
-|----------|--------|----------|
-| development | 57 | backend, frontend, api-designer, auth, testing |
-| marketing | 33 | ai-video-ads, copywriting, seo, content |
-| ai | 12 | llm-architect, embeddings, rag, fine-tuning |
-| agents | 10 | autonomous-agents, browser-automation |
-| data | 8 | postgres-wizard, redis, vectors, graphs |
-| frameworks | 6 | nextjs, supabase, sveltekit, react |
-| integrations | 14 | stripe, aws, discord, slack, twilio |
-| enterprise | 6 | compliance, security, governance |
-| finance | 6 | algo-trading, defi, derivatives |
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  SKILL CATEGORIES                                               │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  development     57 skills    Backend, frontend, auth, testing  │
+│  marketing       33 skills    AI video, copy, SEO, content      │
+│  strategy        15 skills    Growth, product, founder skills   │
+│  integrations    14 skills    AWS, Stripe, Discord, Slack       │
+│  ai-ml           12 skills    Code gen, image, safety           │
+│  ai              12 skills    LLM, embeddings, RAG              │
+│  agents          10 skills    Autonomous, multi-agent           │
+│  mind            10 skills    Debugging, decision-making        │
+│  data             8 skills    Postgres, Redis, vectors          │
+│  hardware         6 skills    Embedded, FPGA, robotics          │
+│  frameworks       6 skills    Next.js, Supabase, Svelte         │
+│  finance          6 skills    Trading, DeFi, derivatives        │
+│  enterprise       6 skills    Compliance, governance            │
+│  biotech          6 skills    Genomics, drug discovery          │
+│  + 10 more categories                                           │
+│                                                                 │
+│  Total: 270+ skills                                             │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-See full directory: `~/.spawner/skills/`
+---
+
+## Troubleshooting
+
+### "Claude doesn't seem different after loading the skill"
+
+1. Make sure Claude actually read the files (check for any errors)
+2. Ask explicitly: "What patterns from the backend skill should we use?"
+3. Try: "Apply the sharp edges from your loaded skills to this code"
+
+### "I'm not sure which skill to use"
+
+List all skills:
+```bash
+npx vibeship-spawner-skills list
+```
+
+Or ask Claude:
+```
+I want to build [your goal]. Which skills from ~/.spawner/skills/ should I load?
+```
+
+### "How do I know skills are working?"
+
+Ask Claude to show its active skills and demonstrate knowledge from them:
+```
+List your active skills and give me one specific insight from each
+```
 
 ---
 
 ## Updating Skills
 
-New skills are added regularly. Update with:
+New skills are added regularly:
 
 ```bash
 npx vibeship-spawner-skills update
 ```
 
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  ✓ UPDATE COMPLETE                                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Skills updated: 273 → 278                                      │
+│  New skills: 5                                                  │
+│                                                                 │
+│  • ai/vision-specialist                                         │
+│  • agents/browser-use                                           │
+│  • development/graphql-expert                                   │
+│  • marketing/ai-podcasts                                        │
+│  • integrations/vercel-v0                                       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
-## Need Help?
+## Quick Reference Card
 
-- **List all categories:** `npx vibeship-spawner-skills list`
-- **Check status:** `npx vibeship-spawner-skills status`
-- **Full docs:** https://github.com/vibeforge1111/vibeship-spawner-skills
-
----
-
-## Quick Reference
-
-```bash
-# Install
-npx vibeship-spawner-skills install
-
-# Update
-npx vibeship-spawner-skills update
-
-# Load skill in Claude
-Read: ~/.spawner/skills/[category]/[skill]/skill.yaml
-
-# Load with sharp edges (recommended for production)
-Read: ~/.spawner/skills/[category]/[skill]/skill.yaml
-Read: ~/.spawner/skills/[category]/[skill]/sharp-edges.yaml
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  SPAWNER SKILLS - QUICK REFERENCE                               │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  INSTALL         npx vibeship-spawner-skills install            │
+│  UPDATE          npx vibeship-spawner-skills update             │
+│  LIST            npx vibeship-spawner-skills list               │
+│  STATUS          npx vibeship-spawner-skills status             │
+│                                                                 │
+│  SPAWN A SKILL   "Read: ~/.spawner/skills/[cat]/[skill]/*.yaml" │
+│  CHECK ACTIVE    "Show me which skills are currently active"    │
+│  TEST SKILL      "What sharp edges should I watch out for?"     │
+│                                                                 │
+│  DOCS            ~/.spawner/skills/GETTING_STARTED.md           │
+│  GITHUB          github.com/vibeforge1111/vibeship-spawner-skills│
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
