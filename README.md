@@ -5,12 +5,31 @@
 ## Quick Start
 
 ```bash
+# One-command install
+npx spawner-skills install
+
+# Update to latest
+npx spawner-skills update
+```
+
+### Alternative: Manual Clone
+
+```bash
 # Clone to your home directory
 git clone https://github.com/vibeforge1111/vibeship-spawner-skills ~/.spawner/skills
 
 # Update skills
 cd ~/.spawner/skills && git pull
 ```
+
+### CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `npx spawner-skills install` | Install skills to ~/.spawner/skills |
+| `npx spawner-skills update` | Update to latest version |
+| `npx spawner-skills status` | Check installation status |
+| `npx spawner-skills list` | List installed categories |
 
 ## How It Works
 
