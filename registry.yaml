@@ -3,9 +3,9 @@
 
 version: "3.0.0"
 updated: "2025-12-31"
-total_skills: 439
+total_skills: 450
 
-# Categories in this repo (33 total)
+# Categories in this repo (34 total)
 categories:
   # Core Development (145 skills)
   - backend          # 21 skills - Backend, APIs, infrastructure
@@ -36,6 +36,9 @@ categories:
 
   # Education (7 skills)
   - education        # 7 skills - Online courses, learning design, AI tutoring
+
+  # Maker (11 skills)
+  - maker            # 11 skills - Viral tools, bots, extensions, SaaS, digital products
 
   # Design & Creative (35 skills)
   - design           # 12 skills - UI/UX, branding
@@ -213,6 +216,25 @@ packs:
       - education/education-platforms
       - education/ai-for-learning
       - education/student-success
+
+  # ============================================================================
+  # MAKER - Build products that ship and make money
+  # ============================================================================
+  maker:
+    name: "Maker Tools"
+    description: "Build viral websites, bots, extensions, SaaS products, and digital products that actually ship."
+    skills:
+      - maker/viral-generator-builder
+      - maker/scroll-experience
+      - maker/interactive-portfolio
+      - maker/3d-web-experience
+      - maker/telegram-bot-builder
+      - maker/telegram-mini-app
+      - maker/micro-saas-launcher
+      - maker/browser-extension-builder
+      - maker/ai-wrapper-product
+      - maker/notion-template-business
+      - maker/personal-tool-builder
 
   # ============================================================================
   # FRAMEWORKS - Framework-specific skills
@@ -420,7 +442,7 @@ packs:
   # ============================================================================
   complete:
     name: "Complete Collection"
-    description: "All 439 skills. For power users."
+    description: "All 450 skills. For power users."
     includes_all: true
 
 # Install paths (cross-platform)
