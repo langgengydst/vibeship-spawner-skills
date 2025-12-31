@@ -1,0 +1,358 @@
+# Security Skill Benchmark Tests
+# Tests ability to catch security vulnerabilities Claude often misses
+
+skill: security
+category: security
+skill_path: security/security
+
+metadata:
+  priority: critical
+  complexity: high
+  sharp_edges_count: 20
+  last_updated: 2025-12-30
+
+tests:
+  # ==============================================================================
+  # OPEN-ENDED TESTS
+  # ==============================================================================
+
+  - id: security-open-01
+    type: open-ended
+    name: "Implement secure authentication"
+    difficulty: hard
+
+    prompt: |
+      Build a complete authentication system for a Next.js SaaS app.
+
+      Requirements:
+      - Email/password signup and login
+      - Email verification
+      - Password reset flow
+      - Session management with JWT
+      - Remember me functionality
+      - Account lockout after failed attempts
+      - Secure password requirements
+
+      Use Next.js API routes, PostgreSQL, and TypeScript.
+
+    evaluation_criteria:
+      - Password hashing with bcrypt/argon2 (not SHA256/MD5)
+      - JWT with short expiry + refresh token pattern
+      - httpOnly cookies for token storage (not localStorage)
+      - CSRF protection
+      - Rate limiting on auth endpoints
+      - Secure password reset tokens (time-limited, single-use)
+      - Email verification before full access
+      - Account lockout implementation
+      - Input validation on all fields
+      - Timing-safe comparison for tokens
+
+    weight: 2.0
+
+  # ==============================================================================
+  # TRAP TESTS - Common security mistakes
+  # ==============================================================================
+
+  - id: security-trap-01
+    type: trap
+    name: "SQL Injection vulnerability"
+    difficulty: medium
+    sharp_edge: sql-injection
+
+    prompt: |
+      This user search works but seems slow. Can you optimize it?
+
+      ```typescript
+      async function searchUsers(query: string) {
+        const sql = `
+          SELECT id, name, email
+          FROM users
+          WHERE name LIKE '%${query}%'
+             OR email LIKE '%${query}%'
+          ORDER BY created_at DESC
+          LIMIT 20
+        `;
+
+        return await db.query(sql);
+      }
+      ```
+
+    expected_detection:
+      must_identify:
+        - "CRITICAL: SQL injection vulnerability"
+        - "User input directly interpolated into SQL"
+        - "Attacker can extract entire database or delete data"
+
+      must_recommend:
+        - "Use parameterized queries"
+        - "Never interpolate user input into SQL"
+        - "Use ORM or query builder with parameter binding"
+
+      must_not:
+        - "Only suggest performance optimizations without mentioning injection"
+        - "Suggest escaping as primary fix (parameterization is correct)"
+
+    severity: critical
+
+  - id: security-trap-02
+    type: trap
+    name: "JWT in localStorage"
+    difficulty: medium
+    sharp_edge: jwt-storage
+
+    prompt: |
+      I'm building auth for my React app. Here's my login flow:
+
+      ```typescript
+      async function login(email: string, password: string) {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+
+        const { token } = await res.json();
+
+        // Store token for future requests
+        localStorage.setItem('authToken', token);
+
+        return token;
+      }
+
+      // Used in API calls
+      function getAuthHeaders() {
+        return {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`
+        };
+      }
+      ```
+
+      Is this the right way to handle JWT tokens?
+
+    expected_detection:
+      must_identify:
+        - "localStorage is vulnerable to XSS attacks"
+        - "Any XSS can steal the token and fully impersonate user"
+        - "Token accessible to any JavaScript on the page"
+
+      must_recommend:
+        - "Use httpOnly cookies for token storage"
+        - "Server sets cookie, client never sees token"
+        - "Add SameSite and Secure flags"
+        - "Implement CSRF protection if using cookies"
+
+  - id: security-trap-03
+    type: trap
+    name: "Insecure password reset"
+    difficulty: hard
+    sharp_edge: password-reset-flaws
+
+    prompt: |
+      Users say password reset emails never arrive. Here's my implementation:
+
+      ```typescript
+      async function requestPasswordReset(email: string) {
+        const user = await db.user.findUnique({ where: { email } });
+
+        if (!user) {
+          return { error: 'User not found' };
+        }
+
+        // Generate reset token
+        const token = user.id + '-' + Date.now();
+
+        await db.user.update({
+          where: { id: user.id },
+          data: { resetToken: token }
+        });
+
+        await sendEmail(email, `Reset link: /reset?token=${token}`);
+
+        return { success: true };
+      }
+
+      async function resetPassword(token: string, newPassword: string) {
+        const user = await db.user.findFirst({
+          where: { resetToken: token }
+        });
+
+        if (!user) {
+          return { error: 'Invalid token' };
+        }
+
+        await db.user.update({
+          where: { id: user.id },
+          data: {
+            password: newPassword,  // Store new password
+            resetToken: null
+          }
+        });
+
+        return { success: true };
+      }
+      ```
+
+      What's wrong here (besides the email issue)?
+
+    expected_detection:
+      must_identify:
+        - "Token is predictable (userId + timestamp) - can be guessed"
+        - "No token expiration - valid forever"
+        - "User enumeration - different response if user exists"
+        - "Password stored in plain text (no hashing!)"
+        - "No rate limiting on reset requests"
+        - "Token not invalidated after use (single-use requirement)"
+
+      must_recommend:
+        - "Use cryptographically random token (crypto.randomBytes)"
+        - "Add expiration time (e.g., 1 hour)"
+        - "Hash password before storage"
+        - "Same response whether user exists or not"
+        - "Rate limit reset requests per email"
+        - "Invalidate all sessions on password change"
+
+    severity: critical
+
+  - id: security-trap-04
+    type: trap
+    name: "IDOR vulnerability"
+    difficulty: medium
+    sharp_edge: idor
+
+    prompt: |
+      Here's my API endpoint to get user profile:
+
+      ```typescript
+      // GET /api/users/[id]/profile
+      export async function GET(
+        req: Request,
+        { params }: { params: { id: string } }
+      ) {
+        const user = await db.user.findUnique({
+          where: { id: params.id },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+            address: true,
+            ssn: true,  // For identity verification
+          }
+        });
+
+        if (!user) {
+          return Response.json({ error: 'Not found' }, { status: 404 });
+        }
+
+        return Response.json(user);
+      }
+      ```
+
+      This works but I want to add caching. Any concerns before I do that?
+
+    expected_detection:
+      must_identify:
+        - "IDOR: No authorization check - any user can access any profile"
+        - "Sensitive data exposed (SSN, address, phone)"
+        - "Should verify requesting user is the profile owner"
+
+      must_recommend:
+        - "Check session/token to verify user identity"
+        - "Only return own profile OR implement proper ACL"
+        - "Never expose SSN in API responses"
+        - "Audit logging for sensitive data access"
+
+  - id: security-trap-05
+    type: trap
+    name: "Command injection"
+    difficulty: hard
+    sharp_edge: command-injection
+
+    prompt: |
+      I built a file conversion API. Works great locally:
+
+      ```typescript
+      export async function POST(req: Request) {
+        const { filename, format } = await req.json();
+
+        // Convert file using ffmpeg
+        const command = `ffmpeg -i uploads/${filename} output.${format}`;
+
+        const { stdout, stderr } = await exec(command);
+
+        return Response.json({ output: `output.${format}` });
+      }
+      ```
+
+      Getting some errors in production. Can you help debug?
+
+    expected_detection:
+      must_identify:
+        - "CRITICAL: Command injection vulnerability"
+        - "Both filename and format are user-controlled"
+        - "Attacker can run any command: filename='; rm -rf / #'"
+        - "Could lead to full server compromise"
+
+      must_recommend:
+        - "Never pass user input to shell commands"
+        - "Use spawn() with array arguments instead of exec()"
+        - "Validate filename against whitelist/regex"
+        - "Validate format against allowed list"
+        - "Use temporary files with generated names"
+
+    severity: critical
+
+  # ==============================================================================
+  # DECISION TESTS
+  # ==============================================================================
+
+  - id: security-decision-01
+    type: decision
+    name: "Session storage strategy"
+    difficulty: medium
+
+    prompt: |
+      Building a banking app. Need to decide session management approach.
+
+      Options:
+      A) JWT in httpOnly cookies
+      B) Server-side sessions with Redis
+      C) JWT in localStorage with short expiry
+
+      Requirements:
+      - Must be able to instantly revoke sessions (regulatory requirement)
+      - High security (financial data)
+      - ~10k concurrent users
+
+      Which approach?
+
+    expected_reasoning:
+      should_recommend: "B) Server-side sessions with Redis"
+
+      key_points:
+        - "JWTs cannot be instantly revoked without blocklist"
+        - "Server-side sessions allow immediate invalidation"
+        - "Redis handles 10k concurrent sessions easily"
+        - "Financial apps need revocation for fraud prevention"
+        - "Regulatory compliance often requires session control"
+
+      wrong_if:
+        - "Recommends JWT for a banking app"
+        - "Ignores the instant revocation requirement"
+        - "Suggests localStorage for financial application"
+
+scoring:
+  dimensions:
+    correctness: 25
+    completeness: 25
+    expertise: 25
+    gotcha_awareness: 25
+
+  passing_thresholds:
+    overall_score: 90  # Higher bar for security
+    win_rate: 80
+    trap_detection: 90  # Security traps must be caught
+
+  category_weights:
+    open-ended: 1.0
+    trap: 2.0  # Security traps are critical
+    decision: 1.0
