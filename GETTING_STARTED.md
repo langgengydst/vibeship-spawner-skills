@@ -4,9 +4,11 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                                 │
 │   ⚡ VIBESHIP SPAWNER SKILLS                                    │
-│   270+ Specialist Skills for AI-Powered Product Building        │
+│   462 Specialist Skills for AI-Powered Product Building         │
 │                                                                 │
 │   You're about to give Claude superpowers.                      │
+│                                                                 │
+│   https://spawner.vibeship.co/skills                            │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -33,7 +35,12 @@
 │   ├── autonomous-agents/
 │   └── multi-agent-orchestration/
 │
-└── ... (24 categories, 270+ total skills)
+├── maker/               # 11 skills
+│   ├── viral-generator-builder/
+│   ├── telegram-bot-builder/
+│   └── micro-saas-launcher/
+│
+└── ... (35 categories, 462 total skills)
 ```
 
 ---
@@ -249,26 +256,30 @@ Claude should display:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  SKILL CATEGORIES                                               │
+│  SKILL CATEGORIES (35 total)                                    │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  development     57 skills    Backend, frontend, auth, testing  │
-│  marketing       33 skills    AI video, copy, SEO, content      │
-│  strategy        15 skills    Growth, product, founder skills   │
-│  integrations    14 skills    AWS, Stripe, Discord, Slack       │
-│  ai-ml           12 skills    Code gen, image, safety           │
-│  ai              12 skills    LLM, embeddings, RAG              │
-│  agents          10 skills    Autonomous, multi-agent           │
+│  game-dev        51 skills    Unity, Godot, Phaser, multiplayer │
+│  marketing       36 skills    AI video, copy, SEO, content      │
+│  integrations    25 skills    AWS, Stripe, Discord, Slack       │
+│  ai              24 skills    LLM, embeddings, RAG, fine-tuning │
+│  strategy        24 skills    Growth, product, competitive      │
+│  ai-agents       23 skills    Autonomous, multi-agent, RAG      │
+│  creative        23 skills    Memes, viral hooks, gamification  │
+│  devops          22 skills    CI/CD, Docker, K8s, observability │
+│  backend         21 skills    APIs, microservices, caching      │
+│  blockchain      20 skills    Smart contracts, DeFi, NFTs       │
+│  security        13 skills    Auth, OWASP, compliance           │
+│  ai-tools        12 skills    Code gen, image, multimodal       │
+│  design          12 skills    UI, UX, branding, landing pages   │
+│  frameworks      12 skills    Next.js, React, Svelte, Supabase  │
+│  community       11 skills    Discord, Telegram, DevRel         │
+│  data            11 skills    Postgres, Redis, vectors, graphs  │
+│  maker           11 skills    Viral tools, bots, SaaS, Telegram │
 │  mind            10 skills    Debugging, decision-making        │
-│  data             8 skills    Postgres, Redis, vectors          │
-│  hardware         6 skills    Embedded, FPGA, robotics          │
-│  frameworks       6 skills    Next.js, Supabase, Svelte         │
-│  finance          6 skills    Trading, DeFi, derivatives        │
-│  enterprise       6 skills    Compliance, governance            │
-│  biotech          6 skills    Genomics, drug discovery          │
-│  + 10 more categories                                           │
+│  + 17 more categories                                           │
 │                                                                 │
-│  Total: 270+ skills                                             │
+│  Total: 462 skills | Browse: spawner.vibeship.co/skills         │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -317,14 +328,13 @@ npx github:vibeforge1111/vibeship-spawner-skills update
 │  ✓ UPDATE COMPLETE                                              │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  Skills updated: 273 → 278                                      │
-│  New skills: 5                                                  │
+│  Skills updated: 462 → 470                                      │
+│  New skills: 8                                                  │
 │                                                                 │
-│  • ai/vision-specialist                                         │
-│  • agents/browser-use                                           │
-│  • development/graphql-expert                                   │
-│  • marketing/ai-podcasts                                        │
-│  • integrations/vercel-v0                                       │
+│  • maker/telegram-mini-app                                      │
+│  • maker/micro-saas-launcher                                    │
+│  • ai-agents/computer-use-agents                                │
+│  • game-dev/procedural-generation                               │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
