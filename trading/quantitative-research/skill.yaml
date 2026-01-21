@@ -64,11 +64,11 @@ owns:
   - Regime detection
 
 delegates:
-  - "risk management" -> risk-management-trading
-  - "execution/slippage" -> execution-algorithms
-  - "chart patterns" -> technical-analysis
-  - "sentiment data" -> sentiment-analysis-trading
-  - "portfolio allocation" -> portfolio-optimization
+  - "risk management -> risk-management-trading"
+  - "execution/slippage -> execution-algorithms"
+  - "chart patterns -> technical-analysis"
+  - "sentiment data -> sentiment-analysis-trading"
+  - "portfolio allocation -> portfolio-optimization"
 
 patterns:
   - name: Proper Backtest Framework

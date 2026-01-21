@@ -447,7 +447,7 @@ anti_patterns:
       Use text-transform: uppercase sparingly, with increased letter-spacing (0.05-0.1em).
 
   - name: Justified Text on Web
-    description: Using text-align: justify without proper hyphenation
+    description: "Using text-align: justify without proper hyphenation"
     why: Creates rivers of white space. Uneven word spacing. Hyphenation support is poor.
     instead: |
       /* Usually bad on web */
@@ -542,11 +542,11 @@ quick_wins:
     description: "font-family: system-ui, sans-serif; - zero loading time, always readable"
     impact: performance, reliability
 
-  - title: Add font-display: swap to all @font-face rules
+  - title: "Add font-display: swap to all @font-face rules"
     description: Eliminates invisible text during font loading
     impact: performance, user experience
 
-  - title: Limit line length with max-width: 65ch
+  - title: "Limit line length with max-width: 65ch"
     description: Instantly improves readability of any prose content
     impact: readability, user experience
 

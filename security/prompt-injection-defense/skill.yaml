@@ -81,7 +81,7 @@ triggers:
 
 history:
   - version: "2022"
-    milestone: "Ignore previous instructions" attacks discovered
+    milestone: '"Ignore previous instructions" attacks discovered'
     impact: First public awareness of prompt injection risks
   - version: "2023"
     milestone: Indirect prompt injection via external content

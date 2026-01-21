@@ -62,10 +62,10 @@ owns:
   - Fill rate analysis
 
 delegates:
-  - "alpha generation" -> quantitative-research
-  - "risk sizing" -> risk-management-trading
-  - "entry levels" -> technical-analysis
-  - "market sentiment" -> sentiment-analysis-trading
+  - "alpha generation -> quantitative-research"
+  - "risk sizing -> risk-management-trading"
+  - "entry levels -> technical-analysis"
+  - "market sentiment -> sentiment-analysis-trading"
 
 patterns:
   - name: TWAP (Time-Weighted Average Price)

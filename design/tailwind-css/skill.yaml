@@ -566,7 +566,7 @@ anti_patterns:
         }
       }
 
-  - name: @apply Everything
+  - name: "@apply Everything"
     description: Overusing @apply for component styles
     why: |
       @apply defeats the purpose of Tailwind. You're back to naming things

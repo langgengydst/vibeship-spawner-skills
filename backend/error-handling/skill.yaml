@@ -2682,7 +2682,8 @@ framework_variations:
       });
 
   # Graceful Shutdown Error Handling
-  - id: graceful_shutdown
+  graceful_shutdown:
+    id: graceful_shutdown
     title: "Error Handling During Application Shutdown"
     description: "Patterns for gracefully handling errors during shutdown sequences"
     content: |

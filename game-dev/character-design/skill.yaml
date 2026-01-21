@@ -631,7 +631,7 @@ anti_patterns:
       Design at the PRIMARY game camera distance, then verify at smallest
       (icon) and largest (close-up) appearances. Adjust as needed for each.
 
-  - name: "Cool" Over Communication
+  - name: '"Cool" Over Communication'
     description: Prioritizing looking awesome over clear visual storytelling
     why: Character looks edgy but players can't tell friend from foe, role from role
     instead: |

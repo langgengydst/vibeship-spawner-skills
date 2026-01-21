@@ -70,14 +70,14 @@ patterns:
       ### 1. Lifecycle Stages
 
       ```
-           ┌─────┐
-          /       \  PEAK
-         /         \
-        /    ↑      \    ↓
-       /  RISING     \  FALLING
-      /               \
-     └─────────────────────┘
-      EMERGING        DEAD/IRONIC
+            ┌─────┐
+           /       \  PEAK
+          /         \
+         /    ↑      \    ↓
+        /  RISING     \  FALLING
+       /               \
+      └─────────────────────┘
+       EMERGING        DEAD/IRONIC
 
       Stage affects strategy.
       ```

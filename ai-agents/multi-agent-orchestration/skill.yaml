@@ -359,7 +359,7 @@ Categories:
 - general: Account questions, feature info, how-to questions
 - escalate: Complaints, urgent issues, requests for human agent
 
-Respond with JSON: { "category": "...", "confidence": 0.0-1.0, "reasoning": "..." }`
+                              Respond with JSON: { "category": "...", "confidence": 0.0-1.0, "reasoning": "..." }`
                   }, {
                       role: 'user',
                       content: message

@@ -293,7 +293,7 @@ anti_patterns:
       Be weird, not mean.
 
   - name: Inauthentic Weirdness
-    description: "How do you do fellow kids" energy
+    description: '"How do you do fellow kids" energy'
     why_bad: |
       Immediately detected.
       Worse than not trying.

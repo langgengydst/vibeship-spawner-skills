@@ -393,7 +393,7 @@ anti_patterns:
       Reduces replayability when all moments are predictable.
     signs:
       - Every encounter feels identical
-      - "Randomness" is actually scripted sequences
+      - '"Randomness" is actually scripted sequences'
       - Streamers complain it's repetitive
     better_approach: >
       Design systems, not moments. Let emergence create clips.
@@ -409,7 +409,7 @@ anti_patterns:
     signs:
       - Solo play is boring/broken
       - Game requires external audience to be fun
-      - "This is only fun to watch" reviews
+      - '"This is only fun to watch" reviews'
     better_approach: >
       Core loop fun for everyone. Streaming features are additions,
       not replacements for good game design.

@@ -12,6 +12,9 @@ export interface Skill {
   identity?: any;
   patterns?: any[];
   anti_patterns?: any[];
+  sharp_edges?: any[];
+  validations?: any[];
+  collaboration?: any;
 }
 
 export class SkillManager {
@@ -54,6 +57,48 @@ export class SkillManager {
 
         const id = data.id || (parts.length >= 2 ? parts[parts.length - 2] : 'unknown');
 
+        // Load sibling files
+        const skillDir = path.dirname(fullPath);
+        let sharpEdges = undefined;
+        let validations = undefined;
+        let collaboration = undefined;
+
+        try {
+            const sharpEdgesPath = path.join(skillDir, 'sharp-edges.yaml');
+            if (fs.existsSync(sharpEdgesPath)) {
+                const seContent = fs.readFileSync(sharpEdgesPath, 'utf-8');
+                const seData = yaml.load(seContent) as any;
+                if (seData && seData.sharp_edges) {
+                    sharpEdges = seData.sharp_edges;
+                }
+            }
+        } catch (e) {
+            console.warn(`Warning: Failed to load sharp-edges.yaml for ${id}`, e);
+        }
+
+        try {
+            const validationsPath = path.join(skillDir, 'validations.yaml');
+            if (fs.existsSync(validationsPath)) {
+                const vContent = fs.readFileSync(validationsPath, 'utf-8');
+                const vData = yaml.load(vContent) as any;
+                if (vData && vData.validations) {
+                    validations = vData.validations;
+                }
+            }
+        } catch (e) {
+            console.warn(`Warning: Failed to load validations.yaml for ${id}`, e);
+        }
+
+        try {
+            const collabPath = path.join(skillDir, 'collaboration.yaml');
+            if (fs.existsSync(collabPath)) {
+                const cContent = fs.readFileSync(collabPath, 'utf-8');
+                collaboration = yaml.load(cContent) as any;
+            }
+        } catch (e) {
+            console.warn(`Warning: Failed to load collaboration.yaml for ${id}`, e);
+        }
+
         this.skills.push({
             id: id,
             name: data.name || id,
@@ -62,7 +107,10 @@ export class SkillManager {
             path: fullPath,
             identity: data.identity,
             patterns: data.patterns,
-            anti_patterns: data.anti_patterns
+            anti_patterns: data.anti_patterns,
+            sharp_edges: sharpEdges,
+            validations: validations,
+            collaboration: collaboration
         });
       } catch (e) {
         console.error(`Error loading skill from ${file}:`, e);

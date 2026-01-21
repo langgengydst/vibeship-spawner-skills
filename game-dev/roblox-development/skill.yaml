@@ -63,10 +63,10 @@ owns:
   - Roblox UI systems
 
 delegates:
-  - "general game design" -> game-design
-  - "3D modeling" -> 3d-modeling
-  - "sound design" -> sound-design
-  - "marketing" -> game-marketing
+  - "general game design -> game-design"
+  - "3D modeling -> 3d-modeling"
+  - "sound design -> sound-design"
+  - "marketing -> game-marketing"
 
 patterns:
   - name: Server-Client Architecture

@@ -671,9 +671,9 @@ Personalization Notes:
 
       // Personalized chat with memory
       async function personalizedChat(
-        userMessage: string,
-        context: UserContext,
-        ragContext?: PersonalizedRAGContext
+            userMessage: string,
+            context: UserContext,
+            ragContext?: PersonalizedRAGContext
       ): Promise<string> {
         const systemPrompt = buildPersonalizedSystemPrompt(context);
 

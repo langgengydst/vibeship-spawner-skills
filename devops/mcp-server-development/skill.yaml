@@ -413,7 +413,7 @@ anti_patterns:
   - name: Silent Failures
     description: Returning success when operations fail
     why: AI continues with bad state, makes worse decisions
-    instead: Return isError: true with clear error message and suggestions.
+    instead: "Return isError: true with clear error message and suggestions."
 
   - name: Sync-Only Operations
     description: Blocking on long-running operations

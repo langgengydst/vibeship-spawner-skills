@@ -390,7 +390,7 @@ patterns:
 
 anti_patterns:
   - name: Vague Prompts
-    description: "Make it look good" or "create a form"
+    description: '"Make it look good" or "create a form"'
     why_bad: |
       v0 guesses at requirements.
       Output needs more iteration.

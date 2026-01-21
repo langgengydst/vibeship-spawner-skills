@@ -164,38 +164,38 @@ patterns:
 
         // Python script for SDV
         const pythonScript = `
-import json
-import sys
-from sdv.single_table import GaussianCopulaSynthesizer, CTGANSynthesizer, TVAESynthesizer
-from sdv.metadata import SingleTableMetadata
-import pandas as pd
+      import json
+      import sys
+      from sdv.single_table import GaussianCopulaSynthesizer, CTGANSynthesizer, TVAESynthesizer
+      from sdv.metadata import SingleTableMetadata
+      import pandas as pd
 
-# Load data
-with open('${inputPath}', 'r') as f:
-    data = json.load(f)
+      # Load data
+      with open('${inputPath}', 'r') as f:
+          data = json.load(f)
 
-df = pd.DataFrame(data)
+      df = pd.DataFrame(data)
 
-# Detect metadata
-metadata = SingleTableMetadata()
-metadata.detect_from_dataframe(df)
+      # Detect metadata
+      metadata = SingleTableMetadata()
+      metadata.detect_from_dataframe(df)
 
-# Choose synthesizer
-synthesizer_map = {
-    'gaussian_copula': GaussianCopulaSynthesizer,
-    'ctgan': CTGANSynthesizer,
-    'tvae': TVAESynthesizer,
-}
+      # Choose synthesizer
+      synthesizer_map = {
+          'gaussian_copula': GaussianCopulaSynthesizer,
+          'ctgan': CTGANSynthesizer,
+          'tvae': TVAESynthesizer,
+      }
 
-Synthesizer = synthesizer_map['${config.synthesizer}']
-synthesizer = Synthesizer(metadata)
+      Synthesizer = synthesizer_map['${config.synthesizer}']
+      synthesizer = Synthesizer(metadata)
 
-# Fit and sample
-synthesizer.fit(df)
-synthetic = synthesizer.sample(${config.sampleSize})
+      # Fit and sample
+      synthesizer.fit(df)
+      synthetic = synthesizer.sample(${config.sampleSize})
 
-# Save output
-synthetic.to_json('${outputPath}', orient='records')
+      # Save output
+      synthetic.to_json('${outputPath}', orient='records')
         `;
 
         // Run Python script
@@ -224,19 +224,19 @@ synthetic.to_json('${outputPath}', orient='records')
         synthetic: unknown[]
       ): Promise<QualityMetrics> {
         const pythonScript = `
-import json
-from sdv.evaluation.single_table import evaluate_quality
-import pandas as pd
+      import json
+      from sdv.evaluation.single_table import evaluate_quality
+      import pandas as pd
 
-real_df = pd.DataFrame(${JSON.stringify(real)})
-synthetic_df = pd.DataFrame(${JSON.stringify(synthetic)})
+      real_df = pd.DataFrame(${JSON.stringify(real)})
+      synthetic_df = pd.DataFrame(${JSON.stringify(synthetic)})
 
-report = evaluate_quality(real_df, synthetic_df)
-print(json.dumps({
-    'columnShapes': report.get_property('Column Shapes'),
-    'columnPairTrends': report.get_property('Column Pair Trends'),
-    'overallScore': report.get_score()
-}))
+      report = evaluate_quality(real_df, synthetic_df)
+      print(json.dumps({
+          'columnShapes': report.get_property('Column Shapes'),
+          'columnPairTrends': report.get_property('Column Pair Trends'),
+          'overallScore': report.get_score()
+      }))
         `;
 
         // Execute and parse

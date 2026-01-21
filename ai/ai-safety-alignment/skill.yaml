@@ -252,10 +252,10 @@ User input: "${input.slice(0, 1000)}"
 
 Respond with JSON only:
 {
-  "is_injection": true/false,
-  "confidence": 0.0-1.0,
-  "reason": "brief explanation"
-}`,
+        "is_injection": true/false,
+        "confidence": 0.0-1.0,
+        "reason": "brief explanation"
+      }`,
             },
           ],
         });

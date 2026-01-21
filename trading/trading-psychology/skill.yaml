@@ -65,10 +65,10 @@ owns:
   - Pre-trade and post-trade routines
 
 delegates:
-  - "strategy validation" -> quantitative-research
-  - "risk management" -> risk-management-trading
-  - "technical signals" -> technical-analysis
-  - "execution" -> execution-algorithms
+  - "strategy validation -> quantitative-research"
+  - "risk management -> risk-management-trading"
+  - "technical signals -> technical-analysis"
+  - "execution -> execution-algorithms"
 
 patterns:
   - name: Emotional State Awareness

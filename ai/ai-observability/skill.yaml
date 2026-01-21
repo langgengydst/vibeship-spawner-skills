@@ -381,10 +381,10 @@ patterns:
         const prompt = `You are evaluating whether an answer is faithful to the provided context.
 
 Context:
-${sample.contexts.join("\n\n")}
+\${sample.contexts.join("\\n\\n")}
 
-Question: ${sample.question}
-Answer: ${sample.answer}
+Question: \${sample.question}
+        Answer: \${sample.answer}
 
 Task:
 1. List each claim made in the answer.

@@ -376,7 +376,7 @@ Add new insights that complement, not duplicate, existing contributions.`
                   `${topic}.${this.id}`,
                   response.content,
                   this.id,
-                  { confidence: 0.8 }
+                              { confidence: 0.8 }
               );
           }
 

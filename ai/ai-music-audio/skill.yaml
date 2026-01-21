@@ -365,8 +365,8 @@ import sys
 import json
 
 def watermark_audio(input_path, output_path, message=None):
-    # Load model
-    model = AudioSeal.load_generator("audioseal_wm_16bits")
+            # Load model
+            model = AudioSeal.load_generator("audioseal_wm_16bits")
 
     # Load audio
     audio, sr = torchaudio.load(input_path)

@@ -62,10 +62,10 @@ owns:
   - Positioning analysis
 
 delegates:
-  - "statistical validation" -> quantitative-research
-  - "risk management" -> risk-management-trading
-  - "execution timing" -> execution-algorithms
-  - "chart analysis" -> technical-analysis
+  - "statistical validation -> quantitative-research"
+  - "risk management -> risk-management-trading"
+  - "execution timing -> execution-algorithms"
+  - "chart analysis -> technical-analysis"
 
 patterns:
   - name: Social Media Sentiment Pipeline
