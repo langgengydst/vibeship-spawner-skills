@@ -259,8 +259,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'fetch\s*\(\s*["\']https?://'
-      - 'axios\.[a-z]+\s*\(\s*["\']https?://'
+      - 'fetch\s*\(\s*["'']https?://'
+      - 'axios\.[a-z]+\s*\(\s*["'']https?://'
       - "http[s]?://api\\."
       - "http[s]?://.*\\.com/"
     message: "Test calls external API. May be flaky and slow."

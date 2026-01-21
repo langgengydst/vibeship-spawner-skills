@@ -57,7 +57,7 @@ sharp_edges:
       - "localStorage.getItem('token')"
       - XSS leads to account takeover
       - Tokens visible in DevTools > Application
-    detection_pattern: 'localStorage\\.(set|get)Item.*token|localStorage.*jwt'
+    detection_pattern: 'localStorage\.(set|get)Item.*token|localStorage.*jwt'
 
   - id: no-password-hashing
     summary: Storing passwords in plaintext or with weak hashing
@@ -109,7 +109,7 @@ sharp_edges:
       - Passwords visible in database
       - MD5/SHA in password code
       - "Forgot password" emails contain actual password
-    detection_pattern: 'md5\\(|sha1\\(|sha256\\(.*password|password.*=.*password'
+    detection_pattern: 'md5\(|sha1\(|sha256\(.*password|password.*=.*password'
 
   - id: no-oauth-state-validation
     summary: OAuth flow without state parameter allows CSRF attacks
@@ -161,7 +161,7 @@ sharp_edges:
       - OAuth callback without state check
       - State parameter not in auth URL
       - Account takeover via OAuth linking
-    detection_pattern: 'oauth.*callback(?![\\s\\S]{0,200}state)|authorize\\?(?![\\s\\S]{0,100}state=)'
+    detection_pattern: 'oauth.*callback(?![\s\S]{0,200}state)|authorize\?(?![\s\S]{0,100}state=)'
 
   - id: session-fixation
     summary: Not regenerating session ID after login allows session fixation
@@ -204,7 +204,7 @@ sharp_edges:
       - Login without session.regenerate()
       - Same session ID before and after login
       - Shared session attacks
-    detection_pattern: 'session\\.userId\\s*=(?![\\s\\S]{0,100}regenerate)'
+    detection_pattern: 'session\.userId\s*=(?![\s\S]{0,100}regenerate)'
 
   # --- HIGH: Will cause security issues ---
 
@@ -249,7 +249,7 @@ sharp_edges:
       - Hardcoded "secret" or "password" for JWT
       - Short JWT secret
       - Secret in git repository
-    detection_pattern: "jwt\\.sign\\([^)]+['\"]\\w{1,20}['\"]|secret.*=.*['\"]\\w{1,20}['\"]"
+    detection_pattern: "jwt\.sign\([^)]+['\"]\w{1,20}['\"]|secret.*=.*['\"]\w{1,20}['\"]"
 
   - id: no-refresh-token-rotation
     summary: Refresh tokens that can be reused indefinitely
@@ -301,7 +301,7 @@ sharp_edges:
       - Refresh tokens work multiple times
       - No token_use tracking
       - Can't detect stolen tokens
-    detection_pattern: 'refreshToken(?![\\s\\S]{0,300}rotate|revoke|used)'
+    detection_pattern: 'refreshToken(?![\s\S]{0,300}rotate|revoke|used)'
 
   - id: timing-attack-password
     summary: Password comparison that leaks timing information
@@ -453,7 +453,7 @@ sharp_edges:
       - "123456" accepted as password
       - No password strength indicator
       - Breaches expose many simple passwords
-    detection_pattern: 'password\\.length.*>.*[1-7]\\b|minLength.*[1-7]\\b'
+    detection_pattern: 'password\.length.*>.*[1-7]\b|minLength.*[1-7]\b'
 
   - id: session-no-expiry
     summary: Sessions that never expire keep users logged in forever
@@ -503,7 +503,7 @@ sharp_edges:
       - No session expiry logic
       - Users stay logged in for weeks
       - No "remember me" vs "session only" option
-    detection_pattern: 'session(?![\\s\\S]{0,200}expire|timeout|maxAge)'
+    detection_pattern: 'session(?![\s\S]{0,200}expire|timeout|maxAge)'
 
 # Config
 config:

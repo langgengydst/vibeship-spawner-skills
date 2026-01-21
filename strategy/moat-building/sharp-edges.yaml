@@ -41,7 +41,7 @@ sharp_edges:
       - High growth but high churn
       - Users join but don't connect
       - Single-player usage patterns
-      - "Viral" in pitch but no lock-in
+      - '"Viral" in pitch but no lock-in
     detection_pattern: "viral|network effects|sharing|invite"
 
   - id: data-moat-delusion

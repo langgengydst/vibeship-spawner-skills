@@ -11,8 +11,8 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'allow\s+(read|write)\s*:\s*if\s+true\s*;'
-      - 'allow\s+(read|write)\s*:\s*if\s+true$'
+      - 'allow\\s+(read|write)\\s*:\\s*if\\s+true\\s*;'
+      - 'allow\\s+(read|write)\\s*:\\s*if\\s+true$'
     message: "Security rules allow all access - your database is public"
     fix_action: "Replace with proper authentication checks"
     applies_to:
@@ -25,7 +25,7 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'from\s+["\']firebase-admin'
+      - 'from\\s+["'']firebase-admin'
       - "require\\s*\\(\\s*['\"]firebase-admin"
       - 'import.*firebase-admin'
     message: "Admin SDK should never be used in client-side code"
@@ -45,9 +45,9 @@ validations:
     severity: error
     type: regex
     pattern:
-      - '"type"\s*:\s*"service_account"'
+      - '"type"\\s*:\\s*"service_account"'
       - 'private_key.*-----BEGIN'
-      - 'client_email.*@.*\.iam\.gserviceaccount\.com'
+      - 'client_email.*@.*\\.iam\\.gserviceaccount\\.com'
     message: "Service account credentials found in code - critical security risk"
     fix_action: "Remove credentials, use environment variables or secret manager"
     applies_to:
@@ -61,8 +61,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'onSnapshot\s*\(\s*collection\s*\([^)]+\)\s*,'
-      - 'onSnapshot\s*\(\s*db\.collection\s*\([^)]+\)\s*,'
+      - 'onSnapshot\\s*\\(\\s*collection\\s*\\([^)]+\\)\\s*,'
+      - 'onSnapshot\\s*\\(\\s*db\\.collection\\s*\\([^)]+\\)\\s*,'
     message: "Listener on collection without query filters - may cause high read costs"
     fix_action: "Add where() and limit() clauses to scope the listener"
     applies_to:
@@ -76,8 +76,8 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'getDocs\s*\(\s*collection\s*\('
-      - 'getDocs\s*\(\s*query\s*\([^)]*\)\s*\)(?!.*limit)'
+      - 'getDocs\\s*\\(\\s*collection\\s*\\('
+      - 'getDocs\\s*\\(\\s*query\\s*\\([^)]*\\)\\s*\\)(?!.*limit)'
     message: "Query without limit - may read more documents than needed"
     fix_action: "Add limit() to prevent reading entire collection"
     applies_to:
@@ -91,9 +91,9 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'for\s*\([^)]*\)\s*\{[^}]*await\s+getDoc'
-      - 'forEach\s*\([^)]*\)\s*\{[^}]*await\s+getDoc'
-      - '\.map\s*\(\s*async[^)]*=>[^}]*getDoc'
+      - 'for\\s*\\([^)]*\\)\\s*\\{[^}]*await\\s+getDoc'
+      - 'forEach\\s*\\([^)]*\\)\\s*\\{[^}]*await\\s+getDoc'
+      - '\\.map\\s*\\(\\s*async[^)]*=>[^}]*getDoc'
     message: "Sequential document reads - use Promise.all for parallel reads"
     fix_action: "Collect document refs, then Promise.all(refs.map(ref => getDoc(ref)))"
     applies_to:
@@ -108,8 +108,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'onSnapshot\s*\([^)]+\)(?!.*unsubscribe)'
-      - 'onSnapshot\s*\([^)]+\)\s*;(?!.*return\s*\(\s*\)\s*=>)'
+      - 'onSnapshot\\s*\\([^)]+\\)(?!.*unsubscribe)'
+      - 'onSnapshot\\s*\\([^)]+\\)\\s*;(?!.*return\\s*\\(\\s*\\)\\s*=>)'
     message: "onSnapshot listener may not be properly cleaned up"
     fix_action: "Store unsubscribe function and call it on component unmount"
     applies_to:
@@ -123,9 +123,9 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'createdAt\s*:\s*new\s+Date\s*\('
-      - 'updatedAt\s*:\s*new\s+Date\s*\('
-      - 'timestamp\s*:\s*Date\.now\s*\('
+      - 'createdAt\\s*:\\s*new\\s+Date\\s*\\('
+      - 'updatedAt\\s*:\\s*new\\s+Date\\s*\\('
+      - 'timestamp\\s*:\\s*Date\\.now\\s*\\('
     message: "Use serverTimestamp() or Timestamp.fromDate() instead of Date"
     fix_action: "import { serverTimestamp } from 'firebase/firestore' and use serverTimestamp()"
     applies_to:
@@ -139,7 +139,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'from\s+["\']firebase/compat'
+      - 'from\\s+["'']firebase/compat'
       - "require\\s*\\(\\s*['\"]firebase/compat"
       - 'firebase\\.firestore\\(\\)'
       - 'firebase\\.auth\\(\\)'
@@ -168,8 +168,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'onRequest\s*\([^)]*,\s*async\s*\([^)]*\)\s*=>\s*\{(?!.*verifyIdToken)'
-      - 'https\.onRequest\s*\([^)]*\{(?!.*verifyIdToken)'
+      - 'onRequest\\s*\\([^)]*,\\s*async\\s*\\([^)]*\\)\\s*=>\\s*\\{(?!.*verifyIdToken)'
+      - 'https\\.onRequest\\s*\\([^)]*\\{(?!.*verifyIdToken)'
     message: "HTTP function may not verify authentication"
     fix_action: "Add token verification with getAuth().verifyIdToken(token)"
     applies_to:
@@ -182,7 +182,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'allow\s+(read|write|create|update|delete)\s*:\s*if(?!.*request\.auth)'
+      - 'allow\\s+(read|write|create|update|delete)\\s*:\\s*if(?!.*request\\.auth)'
     message: "Security rule doesn't check request.auth - may allow unauthenticated access"
     fix_action: "Add request.auth != null or request.auth.uid == userId checks"
     applies_to:
@@ -194,7 +194,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'allow\s+(create|update)\s*:\s*if\s+request\.auth\s*!=\s*null\s*;'
+      - 'allow\\s+(create|update)\\s*:\\s*if\\s+request\\.auth\\s*!=\\s*null\\s*;'
     message: "Write rule allows any data - consider validating request.resource.data"
     fix_action: "Add data validation like request.resource.data.keys().hasAll(['field1', 'field2'])"
     applies_to:
@@ -205,19 +205,19 @@ code_smells:
   - id: mixed-sync-async
     name: Mixing synchronous and async Firestore operations
     description: "Using .then() and async/await inconsistently"
-    pattern: 'getDoc.*\.then.*await'
+    pattern: 'getDoc.*\\.then.*await'
     suggestion: "Use async/await consistently throughout your Firebase code"
 
   - id: callback-hell
     name: Nested Firestore callbacks
     description: "Deeply nested .then() chains with Firestore operations"
-    pattern: '\.then\s*\([^)]*\)\s*\{[^}]*\.then'
+    pattern: '\\.then\\s*\\([^)]*\\)\\s*\\{[^}]*\\.then'
     suggestion: "Refactor to async/await for cleaner code"
 
   - id: no-error-handling
     name: Firestore operations without error handling
     description: "Missing try/catch or .catch() on Firestore operations"
-    pattern: 'await\s+(getDoc|setDoc|updateDoc|deleteDoc)\s*\([^)]+\)(?!.*catch)'
+    pattern: 'await\\s+(getDoc|setDoc|updateDoc|deleteDoc)\\s*\\([^)]+\\)(?!.*catch)'
     suggestion: "Wrap Firestore operations in try/catch blocks"
 
 best_practices:

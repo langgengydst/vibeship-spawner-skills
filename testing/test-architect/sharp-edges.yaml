@@ -33,7 +33,7 @@ sharp_edges:
     symptoms:
       - Tests pass in isolation, fail in suite
       - Random test failures in CI
-      - "Unique constraint violation" in test logs
+      - '"Unique constraint violation" in test logs
     detection_pattern: 'fixture.*scope.*session|shared.*database|@pytest.fixture.*scope'
 
   - id: async-test-not-awaited

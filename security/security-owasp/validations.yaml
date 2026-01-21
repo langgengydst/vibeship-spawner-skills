@@ -11,7 +11,7 @@ validations:
     severity: critical
     type: regex
     pattern:
-      - 'query\\s*\\(\\s*[`\'"].*\\$\\{'
+      - 'query\\s*\\(\\s*[`\'"].*\\$\{'
       - 'query\\s*\\(\\s*[`\'"].*\\+\\s*'
       - 'WHERE.*=.*[\'"]\\s*\\+\\s*'
       - 'exec\\s*\\(.*\\+.*\\)'
@@ -26,9 +26,9 @@ validations:
     severity: critical
     type: regex
     pattern:
-      - 'exec\\s*\\(.*\\$\\{'
-      - 'execSync\\s*\\(.*\\$\\{'
-      - 'spawn\\s*\\([^,]+\\+|spawn\\s*\\([^,]+\\$\\{'
+      - 'exec\\s*\\(.*\\$\{'
+      - 'execSync\\s*\\(.*\\$\{'
+      - 'spawn\\s*\\([^,]+\\+|spawn\\s*\\([^,]+\\$\{'
       - 'eval\\s*\\('
     message: "Potential command injection - avoid user input in commands"
     fix_action: "Use execFile with array args, or validate/escape input strictly"

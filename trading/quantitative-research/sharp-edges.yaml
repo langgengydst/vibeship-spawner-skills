@@ -57,7 +57,7 @@ sharp_edges:
           return warnings
       ```
     references:
-      - "Backtesting" by Lopez de Prado
+      - '"Backtesting" by Lopez de Prado
 
   - id: overfitting-certainty
     severity: CRITICAL

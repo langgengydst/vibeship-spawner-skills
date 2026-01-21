@@ -277,7 +277,7 @@ edges:
       # Design for limits from day one—they will be hit
     symptoms:
       - Workflows failing intermittently
-      - "429 Too Many Requests" errors
+      - '"429 Too Many Requests" errors'
       - Requests timing out
       - Inconsistent completion times
       - Manual intervention required
@@ -817,8 +817,8 @@ edges:
       - Feeling of spam
       - Unsubscribes increase
     detection_pattern:
-      config: "same.*content.*all.*channels"
-      code: "publish.*to.*\\[.*,.*,.*\\]"
+      config: 'same.*content.*all.*channels'
+      code: 'publish.*to.*\\[.*,.*,.*\\]'
 
   - id: loss-of-human-oversight
     summary: Automation running without human monitoring
@@ -1208,8 +1208,8 @@ edges:
       - Manual intervention always required
       - Team loses trust in automation
     detection_pattern:
-      code: "api\\..*\\(.*\\)"
-      config: "no.*retry|no.*fallback"
+      code: 'api\\..*\\(.*\\)'
+      config: 'no.*retry|no.*fallback'
 
   - id: metric-blindness
     summary: Running workflows without tracking performance
@@ -1583,7 +1583,7 @@ edges:
     symptoms:
       - Team can't write without AI
       - Loss of creative confidence
-      - "Let AI do it" as default
+      - '"Let AI do it" as default'
       - Skills atrophying
       - Dependence on automation
     detection_pattern:

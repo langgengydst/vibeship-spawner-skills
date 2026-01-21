@@ -148,7 +148,7 @@ sharp_edges:
     description: Overconfidence after wins leads to oversized losses
     symptoms:
       - Big winning week followed by bigger losing week
-      - "I can't lose" feeling
+      - '"I can''t lose" feeling
       - Position sizes growing
     detection_pattern: "winning.*streak|on.*fire|can't.*lose|hot.*hand"
     solution: |

@@ -45,8 +45,8 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'jest\\.mock\\([\'"]\\.\\.?/'
-      - 'vi\\.mock\\([\'"]\\.\\.?/'
+      - 'jest\\.mock\\([''"]\\.\\.?/'
+      - 'vi\\.mock\\([''"]\\.\\.?/'
     message: "Consider if you're mocking too much internal code"
     fix_action: "Mock boundaries (external APIs) not internal code"
     applies_to:

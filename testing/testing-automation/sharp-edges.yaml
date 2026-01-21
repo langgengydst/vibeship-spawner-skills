@@ -47,7 +47,7 @@ sharp_edges:
     symptoms:
       - Test passes locally, fails in CI
       - setTimeout/sleep in test code
-      - "Just re-run it" as common response
+      - '"Just re-run it" as common response
       - Inconsistent test results
     detection_pattern: 'setTimeout|sleep|waitForTimeout|new Promise.*setTimeout'
 

@@ -6,7 +6,7 @@ skill_id: firebase
 
 sharp_edges:
   - id: security-rules-allow-all
-    summary: "allow read, write: if true" exposes your entire database
+    summary: '"allow read, write: if true" exposes your entire database'
     severity: critical
     situation: |
       You're prototyping fast, so you set security rules to allow everything.
@@ -50,7 +50,7 @@ sharp_edges:
       - Unknown users in your database
       - Data appears deleted or modified
       - Complaints about leaked data
-    detection_pattern: 'allow\s+(read|write)[^;]*:\s*if\s+true'
+    detection_pattern: 'allow\\s+(read|write)[^;]*:\\s*if\\s+true'
 
   - id: firestore-query-cost-explosion
     summary: Listeners on large collections cause massive read costs
@@ -100,7 +100,7 @@ sharp_edges:
       - Unexpectedly high Firebase bill
       - Console shows millions of reads
       - App slows down with data growth
-    detection_pattern: 'onSnapshot\s*\(\s*collection\s*\([^)]+\)\s*,'
+    detection_pattern: 'onSnapshot\\s*\\(\\s*collection\\s*\\([^)]+\\)\\s*,'
 
   - id: no-unsubscribe-memory-leak
     summary: Firestore listeners without cleanup leak memory and cost money
@@ -148,7 +148,7 @@ sharp_edges:
       - Memory usage grows over time
       - Duplicate data updates
       - Reads continue after navigating away
-    detection_pattern: 'onSnapshot\s*\([^)]+\)(?!.*unsubscribe)'
+    detection_pattern: 'onSnapshot\\s*\\([^)]+\\)(?!.*unsubscribe)'
 
   - id: admin-sdk-in-client
     summary: Firebase Admin SDK credentials exposed in client code
@@ -194,7 +194,7 @@ sharp_edges:
       - Service account JSON in client bundle
       - firebase-admin in client dependencies
       - Full database access without rules
-    detection_pattern: 'firebase-admin|credential.*cert\s*\('
+    detection_pattern: 'firebase-admin|credential.*cert\\s*\\('
 
   - id: no-auth-verification-functions
     summary: Cloud Functions don't verify authentication
@@ -252,7 +252,7 @@ sharp_edges:
       - Function accessible without login
       - Unknown users triggering functions
       - Abuse of function endpoints
-    detection_pattern: 'onRequest\s*\([^)]*\)[^{]*\{(?!.*verifyIdToken)'
+    detection_pattern: 'onRequest\\s*\\([^)]*\\)[^{]*\\{(?!.*verifyIdToken)'
 
   - id: firestore-relational-thinking
     summary: Designing Firestore like a relational database
@@ -414,7 +414,7 @@ sharp_edges:
       - Date queries return wrong results
       - Timezone inconsistencies
       - orderBy on dates doesn't work
-    detection_pattern: 'new Date\s*\(\s*\)|Date\.now\s*\(\s*\)'
+    detection_pattern: 'new Date\\s*\\(\\s*\\)|Date\\.now\\s*\\(\\s*\\)'
 
   - id: popup-blocked-no-fallback
     summary: Popup auth fails silently when blocked

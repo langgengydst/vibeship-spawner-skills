@@ -48,7 +48,7 @@ sharp_edges:
       - "I got different result" comments
       - Low share rates
       - Confusion in comments
-    detection_pattern: "Math.random|different result|changed|not the same"
+    detection_pattern: "Math\\.random|different result|changed|not the same"
 
   - id: mobile-unfriendly-results
     summary: Results don't work on mobile

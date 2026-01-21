@@ -100,7 +100,7 @@ sharp_edges:
       - String concatenation in queries
       - User input in table/column names
       - Raw SQL without parameters
-    detection_pattern: '`SELECT.*\\$\\{|`INSERT.*\\$\\{|`UPDATE.*\\$\\{|`DELETE.*\\$\\{'
+    detection_pattern: '`SELECT.*\\$\{|`INSERT.*\\$\{|`UPDATE.*\\$\{|`DELETE.*\\$\{'
 
   - id: password-plain-text-storage
     summary: Passwords stored in plain text or reversible encryption
@@ -623,4 +623,3 @@ sharp_edges:
       - Same session before/after login
       - Predictable session IDs
     detection_pattern: 'session\\.userId.*=(?!.*regenerate)'
-

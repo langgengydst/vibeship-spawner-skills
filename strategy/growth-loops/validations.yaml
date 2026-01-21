@@ -25,7 +25,7 @@ validations:
     type: conceptual
     check: "Loop metrics should measure conversions, not just activities"
     indicators:
-      - "invites sent" without "invites accepted"
+      - '"invites sent" without "invites accepted"
       - "shares" without "share conversions"
       - "referral links" without "referral signups"
     message: "Loop metrics focus on activity rather than conversion."

@@ -42,7 +42,7 @@ sharp_edges:
       )
     symptoms:
       - Plain text instead of JSON
-      - "I'll help you with that..." responses
+      - '"I''ll help you with that..." responses
       - JSON parsing errors
     detection_pattern: 'response_format.*json_object'
 

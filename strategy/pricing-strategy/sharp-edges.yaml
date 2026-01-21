@@ -243,7 +243,7 @@ sharp_edges:
          - Strategic market entry
     symptoms:
       - Low conversion in specific countries
-      - "Too expensive" from specific regions
+      - '"Too expensive" from specific regions
       - Tax compliance concerns
       - Payment failures in some countries
     detection_pattern: "international|global|localization|currency|PPP"

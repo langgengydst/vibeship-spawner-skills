@@ -426,7 +426,7 @@ sharp_edges:
 
       If it's not in the blocking list, don't block the merge.
     symptoms:
-      - "I prefer" as blocking comment
+      - '"I prefer" as blocking comment
       - Style-only rejections
       - Working code blocked
       - No standards cited

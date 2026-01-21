@@ -38,7 +38,7 @@ sharp_edges:
       - Scaling ad spend without profitability
       - No organic traction before ads
       - Message not validated
-      - "We just need more volume" mentality
+      - '"We just need more volume" mentality'
     detection_pattern: null
 
   - id: brand-before-traction

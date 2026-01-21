@@ -6,7 +6,7 @@ validations:
     name: Missing Event Tracking for AI Content
     severity: error
     type: regex
-    pattern: 'gtag\(|analytics\.track\(|mixpanel\.track\('
+    pattern: 'gtag\\(|analytics\\.track\\(|mixpanel\\.track\\('
     message: "No event tracking detected for analytics implementation"
     fix_action: "Add event tracking for AI content interactions (view, engage, convert) using your analytics platform"
     applies_to:
@@ -19,7 +19,7 @@ validations:
     name: Analytics Events Missing AI Content Metadata
     severity: warning
     type: regex
-    pattern: 'track\(["\']ai_content|event\(["\']ai_content|push\(\{.*ai_content'
+    pattern: 'track\\(["'']ai_content|event\\(["'']ai_content|push\\(\\{.*ai_content'
     message: "Analytics tracking exists but doesn't include AI content metadata (model, variant, prompt_id)"
     fix_action: "Add AI-specific metadata to analytics events: { ai_content: true, model: 'gpt-4', variant_id: 'v3', prompt_id: 'prompt-123' }"
     applies_to:
@@ -46,7 +46,7 @@ validations:
     name: Missing Conversion Event Tracking
     severity: error
     type: regex
-    pattern: 'track\(["\']conversion|event\(["\']purchase|event\(["\']signup|event\(["\']lead'
+    pattern: 'track\\(["'']conversion|event\\(["'']purchase|event\\(["'']signup|event\\(["'']lead'
     message: "No conversion event tracking detected - cannot measure AI content ROI"
     fix_action: "Implement conversion tracking: analytics.track('conversion', { content_type: 'ai', variant_id: 'v3', value: 99.99 })"
     applies_to:
@@ -59,7 +59,7 @@ validations:
     name: Analytics Tracking Without User Consent Check
     severity: error
     type: regex
-    pattern: '(?<!if\s*\([^\)]*consent[^\)]*\)\s*{?\s*)(?:gtag|analytics\.track|mixpanel\.track|fbq)\('
+    pattern: '(?<!if\\s*\\([^\\)]*consent[^\\)]*\\)\\s*{?\\s*)(?:gtag|analytics\\.track|mixpanel\\.track|fbq)\\('
     message: "Analytics tracking called without checking user consent first - GDPR/CCPA violation"
     fix_action: "Check user consent before tracking: if (hasConsent()) { analytics.track(...) }"
     applies_to:
@@ -72,7 +72,7 @@ validations:
     name: Potential PII in Analytics Events
     severity: critical
     type: regex
-    pattern: 'track\([^)]*(?:email|phone|ssn|credit_card|password|address)[^)]*\)'
+    pattern: 'track\\([^)]*(?:email|phone|ssn|credit_card|password|address)[^)]*\\)'
     message: "Potential PII (email, phone, etc.) being sent to analytics - privacy violation"
     fix_action: "Remove PII from analytics events or anonymize/hash before sending"
     applies_to:
@@ -85,7 +85,7 @@ validations:
     name: Missing Multi-Touch Attribution Configuration
     severity: warning
     type: regex
-    pattern: 'attribution|multi.touch|first.touch|last.touch|position.based'
+    pattern: 'attribution|multi\\.touch|first\\.touch|last\\.touch|position\\.based'
     message: "No attribution model configuration found - likely using last-touch by default"
     fix_action: "Configure multi-touch attribution model in analytics setup (position-based or data-driven recommended)"
     applies_to:
@@ -98,7 +98,7 @@ validations:
     name: No Quality Score Metric Defined
     severity: warning
     type: regex
-    pattern: 'quality.score|qualityScore|content_quality'
+    pattern: 'quality\\.score|qualityScore|content_quality'
     message: "No quality score metric found - cannot track AI content quality over time"
     fix_action: "Define and track quality score: composite of engagement (30%) + conversion (40%) + brand (30%)"
     applies_to:
@@ -112,7 +112,7 @@ validations:
     name: Missing A/B Test Variant Tracking
     severity: error
     type: regex
-    pattern: 'variant|variation|experiment|ab.test'
+    pattern: 'variant|variation|experiment|ab\\.test'
     message: "No A/B test variant tracking detected - cannot measure AI variation performance"
     fix_action: "Track A/B test variants: analytics.track('page_view', { variant_id: 'variant_a', experiment_id: 'ai-headline-test' })"
     applies_to:
@@ -125,7 +125,7 @@ validations:
     name: Synchronous Analytics Calls Blocking Render
     severity: warning
     type: regex
-    pattern: '(?<!async\s+)(?<!await\s+)(?:gtag|analytics\.track|mixpanel\.track)\([^)]*\)(?!\.then|\.catch)'
+    pattern: '(?<!async\\s+)(?<!await\\s+)(?:gtag|analytics\\.track|mixpanel\\.track)\\([^)]*\\)(?!\\.then|\\.catch)'
     message: "Analytics tracking calls are synchronous - may block page render and hurt performance"
     fix_action: "Make analytics calls async or use requestIdleCallback to avoid blocking render"
     applies_to:
@@ -151,7 +151,7 @@ validations:
     name: Dashboard Missing Date Range Selector
     severity: warning
     type: regex
-    pattern: 'date.range|dateRange|startDate.*endDate|DateRangePicker'
+    pattern: 'date\\.range|dateRange|startDate.*endDate|DateRangePicker'
     message: "Analytics dashboard missing date range selector - users cannot adjust time window"
     fix_action: "Add date range selector component to allow users to filter metrics by time period"
     applies_to:
@@ -164,7 +164,7 @@ validations:
     name: Analytics Tracking Without Error Handling
     severity: warning
     type: regex
-    pattern: '(?:gtag|analytics\.track|mixpanel\.track)\([^)]+\)(?!\.catch|,\s*\{[^}]*onError)'
+    pattern: '(?:gtag|analytics\\.track|mixpanel\\.track)\\([^)]+\)(?!\\.catch|,\\s*\\{[^}]*onError)'
     message: "Analytics tracking calls have no error handling - failures will go unnoticed"
     fix_action: "Add error handling: analytics.track(...).catch(err => console.error('Analytics error:', err))"
     applies_to:
@@ -177,7 +177,7 @@ validations:
     name: Analytics Configuration Hardcoded Instead of Environment Variable
     severity: warning
     type: regex
-    pattern: '(?:gtag|mixpanel|amplitude).*["\'][A-Z0-9]{20,}["\']'
+    pattern: '(?:gtag|mixpanel|amplitude).*["''][A-Z0-9]{20,}["'']'
     message: "Analytics API keys/IDs appear to be hardcoded - should use environment variables"
     fix_action: "Move analytics keys to environment variables: process.env.NEXT_PUBLIC_GA_ID"
     applies_to:
@@ -190,7 +190,7 @@ validations:
     name: No ROI Calculation Implementation
     severity: error
     type: regex
-    pattern: 'roi|return.on.investment|revenue.*cost|cost.*revenue'
+    pattern: 'roi|return\\.on\\.investment|revenue.*cost|cost.*revenue'
     message: "No ROI calculation found - cannot measure AI content return on investment"
     fix_action: "Implement ROI calculation: roi = (revenue - cost) / cost, track revenue and cost for AI content"
     applies_to:
@@ -205,7 +205,7 @@ validations:
     name: No Cost Tracking for AI Content
     severity: warning
     type: regex
-    pattern: 'ai.cost|content.cost|creation.cost|api.cost'
+    pattern: 'ai\\.cost|content\\.cost|creation\\.cost|api\\.cost'
     message: "No cost tracking detected - cannot calculate cost-per-conversion or ROI"
     fix_action: "Track AI content costs: { ai_tool_cost: 0.05, human_time_cost: 25, total_cost: 25.05 }"
     applies_to:
@@ -218,7 +218,7 @@ validations:
     name: AI Model Version Not Tracked in Analytics
     severity: warning
     type: regex
-    pattern: 'model.version|modelVersion|model_version|ai_model'
+    pattern: 'model\\.version|modelVersion|model_version|ai_model'
     message: "AI model version not tracked - cannot detect model drift or compare model performance"
     fix_action: "Track model version with all AI content: { model: 'gpt-4', model_version: '0613', timestamp: Date.now() }"
     applies_to:
@@ -231,7 +231,7 @@ validations:
     name: Incomplete Engagement Metrics Tracking
     severity: warning
     type: regex
-    pattern: 'time.on.page|scroll.depth|bounce.rate|exit.rate'
+    pattern: 'time\\.on\\.page|scroll\\.depth|bounce\\.rate|exit\\.rate'
     message: "Engagement metrics appear incomplete - missing one or more key metrics (time, scroll, bounce)"
     fix_action: "Track complete engagement metrics: time_on_page, scroll_depth, bounce_rate, click_depth"
     applies_to:
@@ -244,7 +244,7 @@ validations:
     name: Missing Segmentation Configuration
     severity: info
     type: regex
-    pattern: 'segment|audience|cohort|user.type|traffic.source'
+    pattern: 'segment|audience|cohort|user\\.type|traffic\\.source'
     message: "No segmentation configuration found - cannot analyze AI content performance by segment"
     fix_action: "Add segmentation: track user_type, traffic_source, device_type, geography for segment analysis"
     applies_to:
@@ -257,7 +257,7 @@ validations:
     name: A/B Test Results Without Statistical Significance Check
     severity: error
     type: regex
-    pattern: 'p.value|statistical.significance|confidence.interval|sample.size'
+    pattern: 'p\\.value|statistical\\.significance|confidence\\.interval|sample\\.size'
     message: "A/B test implementation missing statistical significance check - may ship false positives"
     fix_action: "Implement statistical significance test: use chi-square test or t-test, require p < 0.05 before declaring winner"
     applies_to:

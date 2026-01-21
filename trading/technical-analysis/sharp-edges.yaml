@@ -31,7 +31,7 @@ sharp_edges:
       3. Size positions for the failure rate, not success rate
       4. Backtest on your own data, don't trust screenshots
     references:
-      - "Encyclopedia of Chart Patterns" - Thomas Bulkowski
+      - '"Encyclopedia of Chart Patterns" - Thomas Bulkowski
 
   - id: indicator-lag-trap
     severity: CRITICAL

@@ -363,7 +363,7 @@ cross_domain_insights:
       - Three-act structure (setup, confrontation, resolution)
       - Character arc requirements
       - Scene-level goals and obstacles
-      - "Show don't tell" as religion
+      - '"Show don''t tell" as religion'
       Apply screenplay discipline to brand stories.
     applies_when: "Structuring any brand narrative"
 
@@ -421,7 +421,7 @@ cross_domain_insights:
     insight: |
       Researchers uncover hidden narratives:
       - Jobs-to-be-done framework reveals motivation
-      - "Five whys" digs past surface explanations
+      - '"Five whys" digs past surface explanations'
       - Silence is where truth emerges
       - Observe behavior, not just stated preferences
       Apply research rigor to story discovery.
@@ -631,7 +631,7 @@ ecosystem_integration:
     - metric: Story authenticity score
       tools: ["Custom survey", "Hotjar", "User testing"]
       what_to_track:
-        - "Does this feel authentic?" (1-5 scale)
+        - '"Does this feel authentic?" (1-5 scale)'
         - Qualitative feedback on believability
         - Comparison to competitor stories
 

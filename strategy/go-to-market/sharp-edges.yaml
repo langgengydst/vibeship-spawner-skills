@@ -264,7 +264,7 @@ sharp_edges:
          - Capital to wait for payback
     symptoms:
       - Deals stalling at security review
-      - "Do you have..." questions you can't answer
+      - '"Do you have..." questions you can''t answer
       - Enterprise AE but no enterprise product
       - Lost deals to compliance gaps
     detection_pattern: "enterprise|Fortune 500|SOC 2|SSO|enterprise sales"

@@ -162,7 +162,7 @@ sharp_edges:
       - "Same key for years"
       - "Key appears in logs or error messages"
       - "No key rotation plan"
-    detection_pattern: 'ENCRYPTION_KEY.*=|Fernet\\(b["\']|aes.*key.*='
+    detection_pattern: 'ENCRYPTION_KEY.*=|Fernet\(b["\']|aes.*key.*='
     version_range: ">=1.0.0"
 
   - id: pii-in-embeddings
@@ -228,7 +228,7 @@ sharp_edges:
       - "Semantic search returns exact content matches"
       - "Embedding inversion attacks succeed"
       - "No PII check before embedding"
-    detection_pattern: 'embed\\(.*content|embed.*memory\\.content'
+    detection_pattern: 'embed\(.*content|embed.*memory\.content'
     version_range: ">=1.0.0"
 
   - id: audit-log-forgery

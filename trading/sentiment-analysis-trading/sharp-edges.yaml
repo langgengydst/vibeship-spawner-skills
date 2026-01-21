@@ -173,7 +173,7 @@ sharp_edges:
     title: On-Chain Data Doesn't Mean What You Think
     description: Blockchain data is transparent but easily misinterpreted
     symptoms:
-      - "Whale accumulation" trades fail
+      - '"Whale accumulation" trades fail
       - Exchange flows don't predict price
       - On-chain signals are consistently wrong
     detection_pattern: "on.*chain|whale|exchange.*flow|wallet"

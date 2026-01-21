@@ -26,10 +26,10 @@ validations:
     severity: error
     type: regex
     pattern:
-      - '`SELECT.*\\$\\{'
-      - '`INSERT.*\\$\\{'
-      - '`UPDATE.*\\$\\{'
-      - '`DELETE.*\\$\\{'
+      - '`SELECT.*\\$\{'
+      - '`INSERT.*\\$\{'
+      - '`UPDATE.*\\$\{'
+      - '`DELETE.*\\$\{'
       - '"SELECT.*" \\+ '
       - '"INSERT.*" \\+ '
       - '"UPDATE.*" \\+ '
@@ -211,7 +211,7 @@ validations:
       - 'exec\\s*\\(.*\\$\\{.*\\}'
       - 'execSync.*\\$\\{.*\\}'
       - 'spawn.*\\$\\{.*\\}'
-      - 'child_process.*\\$\\{'
+      - 'child_process.*\\$\{'
       - 'subprocess\\..*\\(.*f"'
       - 'os\\.system\\('
     message: "User input in shell command. Command injection vulnerability."
@@ -242,7 +242,7 @@ validations:
     pattern:
       - 'redirect\\(.*req\\.'
       - 'location\\s*=.*req\\.'
-      - 'window\\.location.*\\$\\{'
+      - 'window\\.location.*\\$\{'
       - 'res\\.redirect\\(.*query\\.'
     message: "Redirect URL from user input. Open redirect vulnerability."
     fix_action: "Validate redirect URL against allowlist of domains"
@@ -341,4 +341,3 @@ validations:
       - "**/*.ts"
       - "**/*.js"
       - "**/*.py"
-

@@ -314,6 +314,6 @@ ecosystem:
     - name: connect-mongo
       purpose: "MongoDB session store"
 
-    - name: @auth/prisma-adapter
+    - name: "@auth/prisma-adapter"
       purpose: "Prisma adapter for Auth.js"
 

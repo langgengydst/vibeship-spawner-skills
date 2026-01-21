@@ -44,7 +44,7 @@ validations:
     name: Hardcoded LLM API Key
     severity: critical
     type: regex
-    pattern: '(?:ANTHROPIC_API_KEY|OPENAI_API_KEY|api[_-]?key)\s*[:=]\s*["\'][a-zA-Z0-9_-]{20,}["\']'
+    pattern: '(?:ANTHROPIC_API_KEY|OPENAI_API_KEY|api[_-]?key)\s*[:=]\s*["''][a-zA-Z0-9_-]{20,}["'']'
     message: "Hardcoded API key detected. Use environment variables."
     fix_action: "Use process.env.ANTHROPIC_API_KEY or secrets manager"
     applies_to:

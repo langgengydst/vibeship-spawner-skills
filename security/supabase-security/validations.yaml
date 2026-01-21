@@ -9,7 +9,7 @@ validations:
     pattern:
       - "NEXT_PUBLIC.*SERVICE.*ROLE"
       - "NEXT_PUBLIC.*service.*role"
-      - "process\.env\.NEXT_PUBLIC.*SERVICE"
+      - "process\\.env\\.NEXT_PUBLIC.*SERVICE"
     message: Service role key must never be exposed to client
     fix_action: Remove NEXT_PUBLIC_ prefix, use only in server code
     applies_to:
@@ -35,8 +35,8 @@ validations:
     severity: high
     type: regex
     pattern:
-      - "using\s*\(\s*true\s*\)"
-      - "with check\s*\(\s*true\s*\)"
+      - "using\\s*\\(\\s*true\\s*\\)"
+      - "with check\\s*\\(\\s*true\\s*\\)"
     message: Policies with (true) allow all access
     fix_action: Add proper auth.uid() checks
     applies_to:
@@ -47,7 +47,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "create policy(?\!.*auth\.uid).*using"
+      - "create policy(?!.*auth\\.uid).*using"
     message: Consider adding auth.uid() check to policy
     fix_action: Verify policy properly restricts access
     applies_to:
@@ -59,7 +59,7 @@ validations:
     type: regex
     pattern:
       - "public.*=.*true"
-      - "public:\s*true"
+      - "public:\\s*true"
     message: Public buckets expose all files
     fix_action: Use private bucket with RLS policies
     applies_to:

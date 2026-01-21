@@ -252,7 +252,7 @@ sharp_edges:
       - Tests pass, production fails
       - Refactoring doesn't break tests (when it should)
       - Mocks need constant updating
-    detection_pattern: 'jest\\.mock\\([\'"]\\.\\.?/'
+    detection_pattern: 'jest\\.mock\\([''"]\\.\\.?/'
 
   - id: snapshot-abuse
     summary: Using snapshots for everything

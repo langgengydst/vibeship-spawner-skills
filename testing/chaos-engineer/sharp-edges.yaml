@@ -34,7 +34,7 @@ sharp_edges:
          # Verify kill switch works
          curl -X POST /chaos/abort
     symptoms:
-      - "Simple experiment" caused major outage
+      - '"Simple experiment" caused major outage
       - Unrelated services affected
       - Experiment couldn't be stopped quickly
     detection_pattern: 'blast.*radius|scope|affected.*percent|PODS_AFFECTED'

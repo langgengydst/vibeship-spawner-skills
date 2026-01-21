@@ -8,7 +8,7 @@ validations:
     type: regex
     pattern:
       - 'def test_[^(]+\([^)]*\):[^}]+(?<!assert)$'
-      - 'it\(["\'][^"\']+["\'],\s*\(\)\s*=>\s*\{[^}]+\}\)(?!.*expect)'
+      - 'it\(["''][^"'']+["''],\s*\(\)\s*=>\s*\{[^}]+\}\)(?!.*expect)'
     message: "Test function without assertion. Test always passes."
     fix_action: "Add assert or expect statement to verify behavior"
     applies_to:
