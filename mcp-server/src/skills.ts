@@ -70,14 +70,33 @@ export class SkillManager {
     }
   }
 
-  async searchSkills(query: string, category?: string): Promise<Skill[]> {
+  async listSkills(category?: string): Promise<Partial<Skill>[]> {
+    if (this.skills.length === 0) {
+        await this.loadSkills();
+    }
+
+    let filtered = this.skills;
+    if (category) {
+        filtered = this.skills.filter(s => s.category === category);
+    }
+
+    // Return lightweight metadata only
+    return filtered.map(s => ({
+        id: s.id,
+        name: s.name,
+        category: s.category,
+        description: s.description ? s.description.substring(0, 200) + (s.description.length > 200 ? '...' : '') : ''
+    }));
+  }
+
+  async searchSkills(query: string, category?: string): Promise<Partial<Skill>[]> {
     if (this.skills.length === 0) {
         await this.loadSkills();
     }
 
     const lowerQuery = query.toLowerCase();
     
-    return this.skills.filter(skill => {
+    const results = this.skills.filter(skill => {
         if (category && skill.category !== category) return false;
         
         return (
@@ -86,6 +105,14 @@ export class SkillManager {
             (skill.description && skill.description.toLowerCase().includes(lowerQuery))
         );
     });
+
+    // Return metadata only for search as well
+    return results.map(s => ({
+        id: s.id,
+        name: s.name,
+        category: s.category,
+        description: s.description ? s.description.substring(0, 200) + (s.description.length > 200 ? '...' : '') : ''
+    }));
   }
   
   async getSkillById(id: string): Promise<Skill | undefined> {

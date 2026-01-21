@@ -23,6 +23,8 @@ const __dirname = dirname(__filename);
 
 // Initialize Managers (Global State - Shared across connections)
 const repoRoot = path.resolve(__dirname, "../../");
+console.log(`[Setup] Loading skills from repository root: ${repoRoot}`);
+
 const skillManager = new SkillManager(repoRoot);
 const validationManager = new ValidationManager(repoRoot);
 const memoryManager = new MemoryManager();
@@ -30,8 +32,38 @@ const sharpEdgeManager = new SharpEdgeManager(repoRoot);
 const unstickManager = new UnstickManager(skillManager);
 const orchestrator = new Orchestrator();
 
-// Store active sessions: sessionId -> { server, transport }
-const sessions = new Map<string, { server: Server, transport: StreamableHTTPServerTransport }>();
+// Session Management
+interface Session {
+    server: Server;
+    transport: StreamableHTTPServerTransport;
+    lastActive: number;
+}
+
+// Store active sessions: sessionId -> Session
+const sessions = new Map<string, Session>();
+
+// Configuration
+const SESSION_TIMEOUT_MS = 60 * 60 * 1000; // 1 hour idle timeout
+const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // Check every 5 minutes
+
+// Periodic cleanup of idle sessions
+setInterval(() => {
+    const now = Date.now();
+    for (const [id, session] of sessions.entries()) {
+        if (now - session.lastActive > SESSION_TIMEOUT_MS) {
+            console.log(`Cleaning up idle session: ${id}`);
+            try {
+                // Attempt to close transport gracefully
+                session.transport.close().catch(err => 
+                    console.error(`Error closing transport for session ${id}:`, err)
+                );
+            } catch (e) {
+                console.error(`Error closing session ${id}:`, e);
+            }
+            sessions.delete(id);
+        }
+    }
+}, CLEANUP_INTERVAL_MS);
 
 // Factory function to create a new Server instance for a client
 function createServer() {
@@ -51,8 +83,21 @@ function createServer() {
     return {
       tools: [
         {
-          name: "spawner_skills",
-          description: "Find and retrieve skill definitions from the local registry.",
+          name: "spawner_list_skills",
+          description: "List available skills (metadata only) with optional category filter.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              category: {
+                type: "string",
+                description: "Optional category to filter by",
+              },
+            },
+          },
+        },
+        {
+          name: "spawner_search_skills",
+          description: "Search for skills by keyword (returns metadata only).",
           inputSchema: {
             type: "object",
             properties: {
@@ -66,6 +111,20 @@ function createServer() {
               },
             },
             required: ["query"],
+          },
+        },
+        {
+          name: "spawner_load_skill",
+          description: "Load the full content of a specific skill by ID.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string",
+                description: "The unique ID of the skill to load",
+              },
+            },
+            required: ["id"],
           },
         },
         {
@@ -165,28 +224,76 @@ function createServer() {
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
 
-    if (name === "spawner_skills") {
+    if (name === "spawner_list_skills") {
+        const category = args?.category ? String(args.category) : undefined;
+        try {
+            const skills = await skillManager.listSkills(category);
+            return {
+                content: [{ type: "text", text: JSON.stringify(skills, null, 2) }]
+            };
+        } catch (error) {
+            return {
+                content: [{ type: "text", text: `Error listing skills: ${error}` }],
+                isError: true
+            }
+        }
+    }
+
+    if (name === "spawner_search_skills") {
       const query = String(args?.query);
       const category = args?.category ? String(args.category) : undefined;
       
       try {
           const skills = await skillManager.searchSkills(query, category);
           return {
-            content: [
-              {
-                type: "text",
-                text: JSON.stringify(skills, null, 2),
-              },
-            ],
+            content: [{ type: "text", text: JSON.stringify(skills, null, 2) }]
           };
       } catch (error) {
           return {
-              content: [
-                  {
-                      type: "text",
-                      text: `Error searching skills: ${error}`
-                  }
-              ],
+              content: [{ type: "text", text: `Error searching skills: ${error}` }],
+              isError: true
+          }
+      }
+    }
+
+    if (name === "spawner_load_skill") {
+        const id = String(args?.id);
+        try {
+            const skill = await skillManager.getSkillById(id);
+            if (!skill) {
+                return {
+                    content: [{ type: "text", text: `Skill not found: ${id}` }],
+                    isError: true
+                }
+            }
+            return {
+                content: [{ type: "text", text: JSON.stringify(skill, null, 2) }]
+            };
+        } catch (error) {
+            return {
+                content: [{ type: "text", text: `Error loading skill: ${error}` }],
+                isError: true
+            }
+        }
+    }
+
+    // Legacy support for spawner_skills (mapped to search)
+    if (name === "spawner_skills") {
+      const query = args?.query ? String(args.query) : "";
+      const category = args?.category ? String(args.category) : undefined;
+      
+      try {
+          // If query is empty, treat as list
+          const skills = query 
+            ? await skillManager.searchSkills(query, category)
+            : await skillManager.listSkills(category);
+            
+          return {
+            content: [{ type: "text", text: JSON.stringify(skills, null, 2) }]
+          };
+      } catch (error) {
+          return {
+              content: [{ type: "text", text: `Error searching skills: ${error}` }],
               isError: true
           }
       }
@@ -330,6 +437,7 @@ async function runServer() {
     if (sessionId && sessions.has(sessionId)) {
         // Existing session
         const session = sessions.get(sessionId)!;
+        session.lastActive = Date.now(); // Update activity timestamp
         await session.transport.handleRequest(req, res, req.body);
     } else {
         // New session (or invalid ID, treat as new)
@@ -344,7 +452,11 @@ async function runServer() {
         } as any); // Type cast might be needed depending on exact SDK version options
         
         await server.connect(transport);
-        sessions.set(newSessionId, { server, transport });
+        sessions.set(newSessionId, { 
+            server, 
+            transport,
+            lastActive: Date.now() 
+        });
         
         // Handle the initial request
         await transport.handleRequest(req, res, req.body);
