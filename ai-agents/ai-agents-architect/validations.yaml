@@ -39,8 +39,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'description\s*[=:]\s*["\'][^"\']{1,30}["\']'
-      - 'tool_description\s*[=:]\s*["\'][^"\']{1,30}["\']'
+      - 'description\s*[=:]\s*["''][^"'']{1,30}["'']'
+      - 'tool_description\s*[=:]\s*["''][^"'']{1,30}["'']'
     message: "Tool description may be too short for agent to understand."
     fix_action: "Add detailed description with when to use and examples"
     applies_to:

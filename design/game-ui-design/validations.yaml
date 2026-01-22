@@ -30,7 +30,7 @@ validations:
     name: Font Size Too Small
     severity: error
     type: regex
-    pattern: 'font-?[Ss]ize[:\s=]+["\']?([0-9]|1[0-3])(px|pt|rem)?["\']?'
+    pattern: "font-?[Ss]ize[:\\s=]+['\"]?([0-9]|1[0-3])(px|pt|rem)?['\"]?"
     message: "Font size under 14px. Too small for game UI, especially on TVs and handhelds."
     fix_action: "Use minimum 14px for secondary text, 16-18px for body, 24px+ for important info"
     applies_to:
@@ -54,7 +54,7 @@ validations:
     name: Hardcoded Button Prompt
     severity: error
     type: regex
-    pattern: '["\'](Press|Hit|Tap|Push)\s+(A|B|X|Y|Start|Select|Space|Enter|LB|RB|LT|RT|L1|R1|L2|R2)["\']'
+    pattern: "['\"](Press|Hit|Tap|Push)\\s+(A|B|X|Y|Start|Select|Space|Enter|LB|RB|LT|RT|L1|R1|L2|R2)['\"]"
     message: "Hardcoded button prompt. Won't adapt to controller type or key rebinding."
     fix_action: "Use input action names and dynamically resolve to current binding/controller glyphs"
     applies_to:
@@ -76,7 +76,7 @@ validations:
     name: Touch Target Too Small
     severity: error
     type: regex
-    pattern: '(width|height|size)[:\s=]+["\']?([0-3][0-9]|[0-9])(px|dp|pt)?["\']?(?!\d)'
+    pattern: "(width|height|size)[:\\s=]+['\"]?([0-3][0-9]|[0-9])(px|dp|pt)?['\"]?(?!\\d)"
     message: "Element smaller than 44px. Too small for reliable touch or controller selection."
     fix_action: "Minimum touch target: 44x44pt (Apple), 48x48dp (Google). Expand hit area if visual must be smaller."
     applies_to:
@@ -120,7 +120,7 @@ validations:
     name: HUD Text Without Shadow/Outline
     severity: warning
     type: regex
-    pattern: 'class.*["\'].*hud.*["\'][^}]*(?!text-shadow|outline|stroke)'
+    pattern: "class.*['\"].*hud.*['\"][^}]*(?!text-shadow|outline|stroke)"
     message: "HUD text element without shadow or outline. May be unreadable on varied backgrounds."
     fix_action: "Add 2px contrasting outline or drop shadow to all HUD text"
     applies_to:
@@ -147,7 +147,7 @@ validations:
     name: Long Animation Duration
     severity: warning
     type: regex
-    pattern: 'animation-?[Dd]uration[:\s=]+["\']?([5-9][0-9]{2}|[1-9][0-9]{3,})(ms)?["\']?|animation-?[Dd]uration[:\s=]+["\']?([1-9])(s)["\']?'
+    pattern: "animation-?[Dd]uration[:\\s=]+['\"]?([5-9][0-9]{2}|[1-9][0-9]{3,})(ms)?['\"]?|animation-?[Dd]uration[:\\s=]+['\"]?([1-9])(s)['\"]?"
     message: "Animation longer than 500ms. May cause motion discomfort for sensitive players."
     fix_action: "Keep UI animations under 300ms. Provide reduced motion option in settings."
     applies_to:
@@ -186,7 +186,7 @@ validations:
     name: Excessive Z-Index
     severity: warning
     type: regex
-    pattern: 'z-?[Ii]ndex[:\s=]+["\']?[0-9]{4,}["\']?'
+    pattern: "z-?[Ii]ndex[:\\s=]+['\"]?[0-9]{4,}['\"]?"
     message: "Z-index over 1000. Indicates layering system problems."
     fix_action: "Establish z-index scale: dropdowns 100, modals 200, tooltips 300, notifications 400"
     applies_to:
@@ -228,7 +228,7 @@ validations:
     name: Missing Hover State
     severity: warning
     type: regex
-    pattern: '<[Bb]utton[^>]*className=["\'][^"\']*["\'][^>]*>(?![^<]*:hover)'
+    pattern: "<[Bb]utton[^>]*className=['\"][^'\\\"]*['\"][^>]*>(?![^<]*:hover)"
     message: "Button without hover state indication. May confuse players about interactivity."
     fix_action: "Add hover state with visual change (background, border, scale)"
     applies_to:
@@ -308,7 +308,7 @@ validations:
     name: Static Button Text Instead of Localized
     severity: info
     type: regex
-    pattern: '>["\']?(OK|Cancel|Yes|No|Continue|Back|Exit|Quit|Save|Load)["\']?<'
+    pattern: ">['\"]?(OK|Cancel|Yes|No|Continue|Back|Exit|Quit|Save|Load)['\"]?<"
     message: "Static button text. Consider localization support."
     fix_action: "Use localization keys: GetLocalizedString(\"ui_ok\") or equivalent"
     applies_to:

@@ -11,8 +11,8 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'app\\.(get|post)\\([\'"].*/(get|create|update|delete|fetch)'
-      - 'router\\.(get|post)\\([\'"].*/(get|create|update|delete|fetch)'
+      - 'app\\.(get|post)\\([,]*["'']\\.*/(get|create|update|delete|fetch)'
+      - 'router\\.(get|post)\\([,]*["'']\\.*/(get|create|update|delete|fetch)'
     message: "URLs should use nouns, not verbs"
     fix_action: "Use HTTP method + noun: POST /users instead of POST /createUser"
     applies_to:
@@ -95,7 +95,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'app\\.post\\([\'"]/(auth|login|register)'
+      - 'app\\.post\\(["'']/(auth|login|register)'
     message: "Sensitive endpoints should have rate limiting"
     fix_action: "Add rate limiter middleware"
     applies_to:

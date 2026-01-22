@@ -228,7 +228,7 @@ sharp_edges:
     symptoms:
       - Works in tests, fails production
       - International names failing
-      - "Weird" characters breaking
+      - '"Weird" characters breaking'
       - Empty matches
     detection_pattern: "unicode|special character|doesn't match|encoding"
 

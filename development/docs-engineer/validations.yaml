@@ -31,9 +31,9 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'api_key\s*=\s*["\']sk-[^"\']+["\']'
-      - 'password\s*=\s*["\'][^"\']{8,}["\']'
-      - 'token\s*=\s*["\'][A-Za-z0-9]{20,}["\']'
+      - 'api_key\s*=\s*["'']sk-[^"'']+["'']'
+      - 'password\s*=\s*["''][^"'']{8,}["'']'
+      - 'token\s*=\s*["''][A-Za-z0-9]{20,}["'']'
     message: "Documentation contains what looks like a real secret."
     fix_action: "Use placeholder or env var: api_key = os.environ['API_KEY']"
     applies_to:
@@ -144,7 +144,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'def [a-z][^_].*\):\s*\n\s+[^"\']'
+      - 'def [a-z][^_].*\):\s*\n\s+[^"'']'
       - 'export function [a-z].*\{(?!.*\*|.*//)'
     message: "Public function without docstring or comment."
     fix_action: "Add documentation explaining purpose and usage"

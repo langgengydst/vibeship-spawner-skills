@@ -67,7 +67,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'context\s*=\s*["\']\\s*["\']\\.join'
+      - 'context\s*=\s*["'']\\s*["'']\\.join'
       - '\\n\\.join\(.*chunks\)'
       - 'all_chunks|all_documents'
     message: "Stuffing all context may exceed window or confuse LLM."
@@ -84,7 +84,7 @@ validations:
     pattern:
       - 'text-embedding-ada-002'
       - 'all-MiniLM-L6-v2'
-      - 'embedding_model\s*=\s*["\'][^"\']+["\']'
+      - 'embedding_model\s*=\s*["''][^"'']+["'']'
     message: "Hardcoded embedding model - consider making configurable."
     fix_action: "Make embedding model configurable for evaluation"
     applies_to:

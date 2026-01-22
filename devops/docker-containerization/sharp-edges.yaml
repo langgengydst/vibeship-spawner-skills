@@ -247,7 +247,7 @@ sharp_edges:
   - id: build-context-explosion
     summary: Build context is gigabytes - builds take forever to start
     severity: medium
-    situation: "Sending build context to Docker daemon" takes minutes, uploading gigabytes
+    situation: '"Sending build context to Docker daemon" takes minutes, uploading gigabytes'
     why: |
       Build in project root with node_modules (500MB), .git (200MB), build artifacts,
       logs, everything. Docker uploads entire context before building. No .dockerignore
@@ -300,7 +300,7 @@ sharp_edges:
   - id: zombie-processes
     summary: Container accumulates zombie processes, eventually hits PID limit
     severity: medium
-    situation: Container runs for days, then starts failing with "fork: Resource temporarily unavailable"
+    situation: "Container runs for days, then starts failing with \"fork: Resource temporarily unavailable\""
     why: |
       Application spawns child processes but doesn't wait() on them. When children exit,
       they become zombies. Init process (PID 1) should reap orphaned zombies, but your

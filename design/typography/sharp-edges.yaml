@@ -116,14 +116,14 @@ sharp_edges:
       - User reports of "wrong font"
       - QA finds issues on Safari 10
       - Fallback system fonts appearing
-    detection_pattern: 'format\(["\']woff2-variations["\']\)(?![^}]*format\(["\']woff2["\']\))'
+    detection_pattern: "format\\(['\"]woff2-variations['\"]\\)(?![^}]*format\\(['\"]woff2['\"]\\))"
 
   - id: cls-from-late-fonts
     summary: Cumulative Layout Shift from fonts loading after initial paint
     severity: critical
     situation: |
       Font loads after content renders. Fallback font has different metrics (x-height, width).
-      Text reflows, buttons resize, entire layout shifts. Google's CLS threshold exceeded.
+      Text reflows, buttons resize, entire layout shifts. Google CLS threshold exceeded.
     why: |
       CLS > 0.1 fails Core Web Vitals. Google uses CLS as a ranking factor.
       Users clicking get wrong target. Content jumps frustrate readers.
@@ -387,7 +387,7 @@ sharp_edges:
     summary: Missing out on kerning, ligatures, and other OpenType features
     severity: medium
     situation: |
-      Using premium fonts that include beautiful OpenType features, but they're
+      Using premium fonts' that include beautiful OpenType features, but they're
       disabled by default. "fi" doesn't ligate. Numbers aren't tabular in tables.
     why: |
       Type designers include features like ligatures, small caps, and tabular figures
@@ -427,7 +427,7 @@ sharp_edges:
 
       # Tools to explore: wakamaifondue.com shows all available features
     symptoms:
-      - "fi" and "fl" not connecting in premium fonts
+      - '"fi" and "fl" not connecting in premium fonts'
       - Numbers misaligning in tables
       - Headlines with awkward letter spacing
       - Not getting value from expensive fonts
@@ -442,14 +442,14 @@ sharp_edges:
     why: |
       macOS uses sub-pixel antialiasing that makes fonts appear slightly heavier.
       Windows uses ClearType with different hinting. The same font genuinely looks
-      different. What's readable on Mac may be too thin on Windows.
+      different. What''s readable on Mac may be too thin on Windows.
     solution: |
       # Choose fonts that work cross-platform
 
       Safe choices (render well everywhere):
       - Inter (designed for screens)
-      - Roboto (Google's cross-platform testing)
-      - Source Sans Pro (Adobe's screen optimization)
+      - Roboto (Google cross-platform testing)
+      - Source Sans Pro (Adobe screen optimization)
       - system-ui (native to each platform)
 
       # Test on actual Windows machine (not just Mac)
@@ -487,19 +487,19 @@ symptom_index:
     edge_ids: [variable-font-browser-support]
 
 red_flags:
-  - pattern: '@font-face\s*\{[^}]*\}'
+  - pattern: "@font-face\\s*\\{[^}]*\\}"
     check_for: font-display
     message: "@font-face without font-display will cause invisible text"
     severity: critical
 
-  - pattern: 'font-size:\s*1[0-4]px'
+  - pattern: "font-size:\\s*1[0-4]px"
     message: "Font size below 16px may fail accessibility requirements"
     severity: high
 
-  - pattern: 'line-height:\s*1(\.[0-3])?[;\s}]'
+  - pattern: "line-height:\\s*1(\\.[0-3])?[;\\s}]"
     message: "Line height below 1.4 makes body text hard to read"
     severity: high
 
-  - pattern: 'fonts\.googleapis\.com(?!.*display=)'
+  - pattern: "fonts\\.googleapis\\.com(?!.*display=)"
     message: "Google Fonts without display=swap causes FOIT"
     severity: critical

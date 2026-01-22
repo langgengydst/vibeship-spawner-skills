@@ -138,7 +138,7 @@ sharp_edges:
          ]);
     symptoms:
       - Slow app startup
-      - "6MB limit exceeded" errors on Android
+      - '"6MB limit exceeded" errors on Android'
       - UI freezes on storage operations
     detection_pattern: 'AsyncStorage\.setItem.*JSON\.stringify.*large'
 
@@ -208,7 +208,7 @@ sharp_edges:
            }
          }
     symptoms:
-      - "Native module not found" errors
+      - '"Native module not found" errors'
       - Library works in simulator but not Expo Go
       - Need features not in Expo Go
     detection_pattern: 'requireNativeComponent|NativeModules\.'

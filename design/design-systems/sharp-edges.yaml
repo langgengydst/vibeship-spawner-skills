@@ -10,7 +10,7 @@ sharp_edges:
     symptoms:
       - Theme switch doesn't change all colors
       - Some components ignore theme
-      - "color-blue" exists alongside "blue-primary"
+      - '"color-blue" exists alongside "blue-primary"'
       - Multiple tokens for same semantic purpose
     detection_pattern: "token|--color|--spacing|variable"
     solution: |
@@ -238,7 +238,7 @@ sharp_edges:
     symptoms:
       - Components look different in different parts of the app
       - Theme overrides don't work consistently
-      - "Important" declarations everywhere
+      - '"Important" declarations everywhere'
       - Nested dark/light themes behave strangely
     detection_pattern: "theme|inherit|nested|!important|specificity"
     solution: |
@@ -345,7 +345,7 @@ sharp_edges:
     symptoms:
       - Components with 20+ props
       - Prop combinations that conflict
-      - "How do I make it do X?" questions constantly
+      - '"How do I make it do X?" questions constantly'
       - Documentation longer than the component
     detection_pattern: "props|interface|variant|option|config"
     solution: |
@@ -463,7 +463,7 @@ sharp_edges:
       - Designers and developers argue about "correct" values
       - Screenshots from Figma don't match production
       - Token values differ between design and code
-      - "The spacing looks off" conversations
+      - '"The spacing looks off" conversations'
     detection_pattern: "figma|design.*file|token.*sync|style.*dictionary"
     solution: |
       Preventing Figma-Code Drift:

@@ -328,11 +328,11 @@ sharp_edges:
                   messages: [{
                       role: 'system',
                       content: `You are preparing to hand off work to another agent.
-Summarize:
-1. What you were asked to do
-2. What you completed
-3. What still needs to be done
-4. Any important context the next agent needs`
+                      Summarize:
+                      1. What you were asked to do
+                      2. What you completed
+                      3. What still needs to be done
+                      4. Any important context the next agent needs`
                   }, {
                       role: 'user',
                       content: `Current state: ${JSON.stringify(currentState)}

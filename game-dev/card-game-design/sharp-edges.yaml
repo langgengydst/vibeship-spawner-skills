@@ -208,7 +208,7 @@ sharp_edges:
       - "Solitude (free with pitch) - extremely powerful"
 
   - id: card-scaling-stat-bonus
-    summary: "For each" stat bonuses can create infinitely large creatures
+    summary: '"For each" stat bonuses can create infinitely large creatures'
     severity: high
     situation: |
       You design a creature with +1/+1 for each of something (cards in hand,
@@ -396,7 +396,7 @@ sharp_edges:
       - "Oko (green creature transformation) - not in green's pie, was broken"
 
   - id: card-enters-tapped-matters
-    summary: "Enters tapped" lands create feel-bad tempo loss
+    summary: '"Enters tapped" lands create feel-bad tempo loss'
     severity: medium
     situation: |
       You design lands that enter tapped to balance their effects.
@@ -416,7 +416,7 @@ sharp_edges:
     symptoms:
       - Aggro decks unplayable due to tapped lands
       - Control mirrors decided by land sequencing
-      - "Lucky land" draws deciding games
+      - '"Lucky land" draws deciding games'
     detection_pattern: 'enters the battlefield tapped|comes into play tapped|etb tapped'
     version_range: "all"
     examples:
@@ -514,6 +514,6 @@ sharp_edges:
     detection_pattern: null
     version_range: "all"
     examples:
-      - "Target creature gets +2/+2" - standard, works as expected
-      - "Choose a creature. It gets +2/+2" - bypasses hexproof
-      - "Creature gets +2/+2" - affects all creatures? Unclear!
+      - '"Target creature gets +2/+2" - standard, works as expected'
+      - '"Choose a creature. It gets +2/+2" - bypasses hexproof'
+      - '"Creature gets +2/+2" - affects all creatures? Unclear!'

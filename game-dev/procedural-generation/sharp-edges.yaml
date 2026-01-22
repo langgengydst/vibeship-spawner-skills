@@ -272,7 +272,7 @@ sharp_edges:
       10x10 test map generates instantly. 1000x1000 production map freezes
       browser for 30 seconds. Players quit during loading.
     symptoms:
-      - "Script taking too long" browser warnings
+      - '"Script taking too long" browser warnings'
       - Loading screen hangs
       - Memory exhaustion crashes
       - Works on dev machine, fails on player hardware
@@ -519,7 +519,7 @@ sharp_edges:
       - Generation hangs indefinitely
       - Partially completed maps
       - Certain seeds always fail
-      - "null" tiles in output
+      - '"null" tiles in output'
     detection_pattern: "wfc|wave.*function|collapse|entropy"
     why_happens: |
       1. Constraint propagation creates unsatisfiable states
@@ -1147,7 +1147,7 @@ sharp_edges:
       differences cause trees to be in different places.
     symptoms:
       - Players see trees in different positions
-      - "I'm stuck in a wall" but host sees open space
+      - '"I''m stuck in a wall" but host sees open space'
       - Combat desync (enemy positions differ)
       - Save game shows different world on reload
     detection_pattern: "multiplayer|sync|network|host.*client"
@@ -1368,7 +1368,7 @@ sharp_edges:
     description: |
       Generation is a black box. When things go wrong, you can't see why.
     symptoms:
-      - "It just doesn't work" debugging
+      - '"It just doesn''t work" debugging'
       - Hard to tune parameters
       - Can't explain bugs to team
     solution: |

@@ -226,7 +226,7 @@ sharp_edges:
     symptoms:
       - Server memory growing over time
       - Lag increasing after hours of uptime
-      - "Script exhausted" errors
+      - '"Script exhausted" errors'
     detection_pattern: ":Connect\\(|.Heartbeat|.RenderStepped"
     solution: |
       Connection Leak Pattern:

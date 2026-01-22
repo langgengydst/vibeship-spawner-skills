@@ -240,8 +240,8 @@ sharp_edges:
       Funnel step renamed. Query updated. Historical comparison broken.
       "Did we improve or did the definition change?" No one knows.
     why: |
-      Funnels are comparisons over time. If definitions change, comparisons'
-      are meaningless. You're comparing apples to oranges. Historical analysis
+      Funnels are comparisons over time. If definitions change, historical data
+      are meaningless. You're comparing apples to oranges. Trend analysis
       requires stable definitions.
     solution: |
       # Version your definitions:
@@ -278,7 +278,7 @@ sharp_edges:
     situation: |
       Analytics tool samples data at 10%. "We had 1000 signups!" Actually 10,000.
       Decisions made on wrong numbers. Budgets wrong. Forecasts broken.
-    why: |'
+    why: |
       High-volume analytics tools sample by default. If you don't know you're
       looking at sampled data, your numbers are 10x off. Some analyses don't
       work with sampled data at all.
@@ -372,7 +372,7 @@ sharp_edges:
       Or use custom session ID everywhere
     symptoms:
       - Session counts don't match across tools
-      - "Our sessions went up/down" but not really
+      - '"Our sessions went up/down" but not really'
       - Confusion about what a session means
     detection_pattern: null
 
@@ -380,7 +380,7 @@ sharp_edges:
     summary: Not testing that analytics events actually fire
     severity: high
     situation: |
-      Shipped new feature. Tracking code looks right. 2 weeks later, realize'
+      Shipped new feature. Tracking code looks right. 2 weeks later, realize
       events never fired. Lost 2 weeks of data. Can't analyze launch impact.
     why: |
       Analytics code breaks silently. No errors, just missing data. If you
@@ -423,7 +423,7 @@ sharp_edges:
     situation: |
       CEO asks for DAU. Marketing says 50,000. Product says 30,000. Engineering
       says 40,000. All are "right" with different definitions. Chaos.
-    why: |'
+    why: |
       Metrics without definitions are meaningless. "Active" means different things
       to different people. Without a single source of truth, everyone is right
       and everyone is wrong.

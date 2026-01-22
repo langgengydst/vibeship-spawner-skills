@@ -193,7 +193,7 @@ sharp_edges:
   - id: endless-refactor
     summary: Debt fix becomes infinite project
     severity: high
-    situation: "Quick cleanup" turns into months of work
+    situation: '"Quick cleanup" turns into months of work'
     why: |
       Scope expanded.
       No clear definition of done.
@@ -208,7 +208,7 @@ sharp_edges:
 
       1. Define "done" specifically
       2. Time-box the work
-      3. Write down what you WON'T fix
+      3. Write down what you WON''T fix
       4. Get agreement on scope
       ```
 

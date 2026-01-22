@@ -150,7 +150,7 @@ sharp_edges:
           return Math.floor(modelLimit * 0.95);
       }
     symptoms:
-      - "Context too long" errors in production
+      - '"Context too long" errors in production'
       - Works with some inputs, fails with others
       - Token counts don't match API responses
     detection_pattern: 'count.*token|token.*count|encoding'

@@ -19,7 +19,7 @@ validations:
     name: Exact String Match on LLM Output
     severity: medium
     type: regex
-    pattern: 'expect\([^)]*output[^)]*\)\.toBe\(["\'][^"\']+["\']\)|expect\([^)]*response[^)]*\)\.toEqual\(["\']'
+    pattern: 'expect\([^)]*output[^)]*\)\.toBe\(["''][^"'']+["'']\)|expect\([^)]*response[^)]*\)\.toEqual\(["'']'
     message: "Exact string matching on LLM output. Will fail with minor wording changes."
     fix_action: "Use semantic comparison or behavior detection"
     applies_to:
@@ -46,7 +46,7 @@ validations:
     name: Missing Adversarial Test Cases
     severity: medium
     type: regex
-    pattern: 'describe\s*\(["\'].*agent'
+    pattern: 'describe\s*\(["''].*agent'
     negative_pattern: 'adversarial|attack|inject|malicious|edge.?case'
     message: "Agent test suite without adversarial test cases."
     fix_action: "Add adversarial tests for prompt injection, boundary cases"
@@ -127,10 +127,10 @@ validations:
       - "*.spec.js"
 
   - id: hardcoded-expected-output
-    name: Hardcoded Expected Output
+    name: Long Hardcoded Expected Output
     severity: low
     type: regex
-    pattern: 'expectedOutput\s*[:=]\s*["\'][^"\']{100,}["\']'
+    pattern: 'expectedOutput\s*[:=]\s*["''][^"'']{100,}["'']'
     message: "Long hardcoded expected output. Consider semantic evaluation."
     fix_action: "Use semantic comparison or key fact extraction"
     applies_to:

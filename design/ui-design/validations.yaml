@@ -54,7 +54,7 @@ validations:
     name: Touch Target Too Small
     severity: error
     type: regex
-    pattern: '<button[^>]+className=["\'][^"\']*text-xs[^"\']*p-1|<button[^>]+className=["\'][^"\']*w-6[^"\']*h-6'
+    pattern: "<button[^>]+className=['\"][^'\\\"]*text-xs[^'\\\"]*p-1|<button[^>]+className=['\"][^'\\\"]*w-6[^'\\\"]*h-6"
     message: "Touch target smaller than 44x44px minimum (WCAG 2.5.5)."
     fix_action: "Ensure interactive elements are at least 44x44px for mobile accessibility"
     applies_to:
@@ -65,7 +65,7 @@ validations:
     name: Inconsistent Button Sizing
     severity: warning
     type: regex
-    pattern: '<button[^>]+style={{[^}]*height:|<button[^>]+className=["\'][^"\']*h-\['
+    pattern: "<button[^>]+style={{[^}]*height:|<button[^>]+className=['\"][^'\\\"]*h-\\['"
     message: "Custom button heights detected. Use standardized button sizes."
     fix_action: "Use button size variants (sm, md, lg) from design system"
     applies_to:
@@ -98,7 +98,7 @@ validations:
     name: Inconsistent Icon Sizing
     severity: info
     type: regex
-    pattern: '<Icon[^>]+size={?(13|15|17|19|21|23|25)}|className=["\'][^"\']*w-\[15px\]'
+    pattern: "<Icon[^>]+size={?(13|15|17|19|21|23|25)}|className=['\"][^'\\\"]*w-\\[15px\\]"
     message: "Icon sizes outside standard scale (16, 20, 24, 32, 40)."
     fix_action: "Use consistent icon sizes from design system"
     applies_to:
@@ -109,7 +109,7 @@ validations:
     name: No Visual Hierarchy
     severity: warning
     type: regex
-    pattern: '<h1[^>]*className=["\'][^"\']*text-base|<p[^>]*className=["\'][^"\']*text-4xl'
+    pattern: "<h1[^>]*className=['\"][^'\\\"]*text-base|<p[^>]*className=['\"][^'\\\"]*text-4xl"
     message: "Text sizing doesn't follow logical hierarchy."
     fix_action: "Use type scale: h1 (text-4xl), h2 (text-3xl), h3 (text-2xl), body (text-base)"
     applies_to:
@@ -132,7 +132,7 @@ validations:
     name: Text Selection Disabled
     severity: warning
     type: regex
-    pattern: 'user-select:\s*none|userSelect:\s*["\']none["\']'
+    pattern: "user-select:\\s*none|userSelect:\\s*['\"]none['\"]"
     message: "Text selection disabled unnecessarily."
     fix_action: "Only disable text selection on UI controls, not content text"
     applies_to:

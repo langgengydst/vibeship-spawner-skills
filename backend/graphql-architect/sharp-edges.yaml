@@ -353,6 +353,6 @@ sharp_edges:
       4. Add tests that verify enum alignment
     symptoms:
       - Fields return null unexpectedly
-      - "Enum value not found" errors
+      - '"Enum value not found" errors'
       - Type mismatches in responses
     detection_pattern: 'enum.*\{(?!.*values)|resolver.*return.*\.toLowerCase'

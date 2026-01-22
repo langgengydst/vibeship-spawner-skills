@@ -60,9 +60,9 @@ sharp_edges:
          # PR checklist: [ ] Docs updated
          # CI: Fail if public API changed without docs change
     symptoms:
-      - "Docs say X but code does Y"
+      - '"Docs say X but code does Y"'
       - DeprecationWarning following docs
-      - "This method doesn't exist" errors
+      - '"This method doesn''t exist" errors'
     detection_pattern: 'version|deprecated|since|v[0-9]'
 
   - id: missing-error-docs
@@ -97,7 +97,7 @@ sharp_edges:
              "Store is full. See: https://docs.mind/errors/MEMORY_STORE_FULL"
          )
     symptoms:
-      - "What does this error mean?" issues
+      - '"What does this error mean?" issues'
       - Same error questions asked repeatedly
       - Users stuck with no path forward
     detection_pattern: 'error|troubleshoot|FAQ|common.*issue'
@@ -213,7 +213,7 @@ sharp_edges:
          # Monthly: run link checker on production docs
     symptoms:
       - 404 errors in docs
-      - "Link doesn't work" issues
+      - '"Link doesn''t work" issues'
       - Users can't find referenced content
     detection_pattern: 'link|href|url|see.*also'
 

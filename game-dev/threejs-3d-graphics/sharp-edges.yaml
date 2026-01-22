@@ -70,7 +70,7 @@ sharp_edges:
     symptoms:
       - Memory usage grows over time
       - Browser becomes slow/unresponsive
-      - "Out of memory" crashes
+      - '"Out of memory" crashes'
       - Performance degrades the longer app runs
     detection_pattern: "new THREE\\.|Geometry|Material|Texture"
     solution: |
@@ -146,7 +146,7 @@ sharp_edges:
     description: Shaders that work on desktop fail silently on mobile
     symptoms:
       - Black or corrupted output on mobile only
-      - "precision" errors in shader compilation
+      - '"precision" errors in shader compilation'
       - Works on desktop, breaks on phones
       - iOS Safari shader failures
     detection_pattern: "ShaderMaterial|RawShaderMaterial|fragmentShader"
@@ -529,7 +529,7 @@ sharp_edges:
     symptoms:
       - Low FPS despite simple geometry
       - GPU not fully utilized
-      - "programs" count in renderer.info is high
+      - '"programs" count in renderer.info is high'
       - Performance drops with more objects
     detection_pattern: "new THREE.Mesh|scene.add|for.*Mesh"
     solution: |

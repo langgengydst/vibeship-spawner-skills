@@ -327,7 +327,7 @@ sharp_edges:
               push_error("No model found!")
               return ""
     symptoms:
-      - "File not found" error in export
+      - '"File not found" error in export'
       - LLM works in editor but not export
       - Model loading fails silently
       - NobodyWho initialized but no responses

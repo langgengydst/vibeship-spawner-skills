@@ -163,7 +163,7 @@ sharp_edges:
       # RIGHT: Use AWS Config rules or Firefly for drift detection
     symptoms:
       - Terraform plan shows unexpected changes
-      - "This will be destroyed/updated" for resources you didn't touch
+      - '"This will be destroyed/updated" for resources you didn''t touch'
       - Changes made in console disappear after apply
     detection_pattern: 'detailed-exitcode|plan.*target'
 
@@ -207,7 +207,7 @@ sharp_edges:
       git add .terraform.lock.hcl
       git commit -m "Upgrade AWS provider to 5.31.0"
     symptoms:
-      - "Works on my machine" but fails in CI
+      - '"Works on my machine" but fails in CI'
       - Different plans for same code
       - Errors after terraform init without code changes
     detection_pattern: 'required_providers\\s*\\{[^}]*(?!version)'
@@ -337,7 +337,7 @@ sharp_edges:
       }
     symptoms:
       - Same config produces different plans across machines
-      - "Module downloaded" messages on every init
+      - '"Module downloaded" messages on every init'
       - Different behavior in dev vs prod for same module
     detection_pattern: 'source.*=.*"(?!.*version|\\?ref=)'
 
@@ -387,7 +387,7 @@ sharp_edges:
       }
     symptoms:
       - terraform.workspace in many conditionals
-      - "Wrong environment" incidents
+      - '"Wrong environment" incidents'
       - Confusion about which workspace is active
     detection_pattern: 'terraform\\.workspace|workspace.*new.*prod'
 
@@ -439,7 +439,7 @@ sharp_edges:
       # 2. terraform state mv aws_instance.web[0] aws_instance.web["web1"]
       # 3. Remove count version
     symptoms:
-      - "X will be destroyed, Y will be created" for unchanged resources
+      - '"X will be destroyed, Y will be created" for unchanged resources'
       - Resource addresses like aws_instance.web[3]
       - Fear of removing items from lists
     detection_pattern: 'count\\s*=\\s*length\\('

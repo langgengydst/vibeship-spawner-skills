@@ -179,13 +179,13 @@ sharp_edges:
       - FPS drops to 0 during dialogue
       - Input becomes unresponsive
       - Audio stutters
-      - "Application Not Responding" on mobile
+      - '"Application Not Responding" on mobile'
     detection_pattern: '\\.Result|GetAwaiter\\(\\)\\.GetResult\\(\\)'
 
   - id: model-not-in-build
     summary: LLM works in editor but model not found in builds
     severity: critical
-    situation: "Model loaded successfully" in editor, "File not found" in player build
+    situation: '"Model loaded successfully" in editor, "File not found" in player build'
     why: |
       Unity only includes files from specific folders in builds. Assets/ folder content
       is processed and may not include raw GGUF files. Only StreamingAssets/ content
@@ -229,7 +229,7 @@ sharp_edges:
       // LLMUnity will resolve to correct platform path
     symptoms:
       - Works in editor, fails in build
-      - "File not found" or "Model not loaded" errors
+      - '"File not found" or "Model not loaded" errors'
       - Empty responses from LLM
       - Crash on model load in build
     detection_pattern: 'SetModel|modelPath|\.gguf'
@@ -287,7 +287,7 @@ sharp_edges:
     symptoms:
       - App killed by OS without error
       - Black screen after splash
-      - "Low memory" warning on device
+      - '"Low memory" warning on device'
       - Crash during model loading
     detection_pattern: 'UNITY_IOS|UNITY_ANDROID|mobile|contextSize'
 

@@ -101,7 +101,7 @@ validations:
     name: Missing Input Helper Text
     severity: info
     type: regex
-    pattern: '<input[^>]+type=["\']email["\'](?!.*help)(?!.*hint)|<input[^>]+type=["\']password["\'](?!.*requirements)'
+    pattern: "<input[^>]+type=['\\\"]email['\\\"](?!.*help)(?!.*hint)|<input[^>]+type=['\\\"]password['\\\"](?!.*requirements)"
     message: "Complex input field missing helper text or format examples."
     fix_action: "Add helper text explaining format or requirements (e.g., 'Enter your work email')"
     applies_to:

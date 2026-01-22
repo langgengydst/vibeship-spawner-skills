@@ -315,7 +315,7 @@ sharp_edges:
       // Read body
       data, err := io.ReadAll(resp.Body)
     symptoms:
-      - "connection reset by peer" errors
+      - '"connection reset by peer" errors'
       - Requests timing out after running fine initially
       - Connection pool exhaustion
     detection_pattern: 'http\.(Get|Post|Do)\([^)]*\)[^}]*(return|continue|break)[^}]*(?!defer\s+\w*\.Body\.Close)'

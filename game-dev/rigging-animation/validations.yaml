@@ -88,7 +88,7 @@ validations:
     severity: error
     type: regex
     pattern:
-      - "constraints\.new\([^)]*(?:'COPY_|'IK'|'DAMPED_TRACK')[^)]*\)[\s\S]{0,200}(?!.*subtarget)"
+      - "constraints\\.new\\([^)]*(?:'COPY_|'IK'|'DAMPED_TRACK')[^)]*\\)[\\s\\S]{0,200}(?!.*subtarget)"
     message: "Bone constraint without subtarget will likely fail. Target bone not specified."
     fix_action: "Set constraint.subtarget = 'bone_name' after adding the constraint."
     applies_to:
@@ -99,7 +99,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "bpy\.ops\.object\.parent_set\([^)]*type\s*=\s*['\"]ARMATURE_AUTO['\"]"
+      - "bpy\\.ops\\.object\\.parent_set\\([^)]*type\\s*=\\s*['\"]ARMATURE_AUTO['\"]"
     message: "Automatic weights alone often need cleanup. Add weight normalization and limit total."
     fix_action: "Follow up with bpy.ops.object.vertex_group_limit_total(limit=4) and clean weights."
     applies_to:
@@ -110,7 +110,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "bpy\.data\.armatures\.new\([^)]*\)(?![\s\S]{0,500}bpy\.ops\.object\.transform_apply)"
+      - "bpy\\.data\\.armatures\\.new\\([^)]*\\)(?![\\s\\S]{0,500}bpy\\.ops\\.object\\.transform_apply)"
     message: "Armature created without applying transforms. Scale issues will cause export problems."
     fix_action: "After armature creation, use bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)."
     applies_to:

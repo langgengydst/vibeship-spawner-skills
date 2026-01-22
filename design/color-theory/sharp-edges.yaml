@@ -152,7 +152,7 @@ sharp_edges:
       - Negative feedback from international users
       - Low conversion in specific markets
       - Cultural misunderstanding reports
-      - "This doesn't feel right" feedback
+      - '"This doesn''t feel right" feedback'
     detection_pattern: null
 
   - id: dark-mode-saturation-burn
@@ -348,7 +348,7 @@ sharp_edges:
          - CMYK: 85, 50, 0, 0
          - Pantone: 2728 C
     symptoms:
-      - "Print doesn't match screen"
+      - "Print doesn''t match screen"
       - Vibrant colors look dull printed
       - Blue turns purple in print
       - Brand inconsistency across media
@@ -473,7 +473,7 @@ sharp_edges:
     symptoms:
       - Keyboard users can't see focus
       - Accessibility audit failures
-      - "Where am I?" when tabbing
+      - '"Where am I?" when tabbing'
       - Focus disappears on certain backgrounds
     detection_pattern: 'outline:\s*(none|0)|outline-width:\s*0'
 
@@ -502,7 +502,7 @@ symptom_index:
   "hover states look wrong":
     - transparent-overlay-math
 
-  "print doesn't match screen":
+  "print doesn''t match screen":
     - print-color-mismatch
 
   "colors feel inconsistent":

@@ -62,7 +62,7 @@ sharp_edges:
            max: 10,  // Max connections in internal pool
          });
     symptoms:
-      - "too many connections" errors
+      - '"too many connections" errors'
       - Workers failing to start
       - App connections rejected
     detection_pattern: 'max_connections|teamSize|pool.*size'

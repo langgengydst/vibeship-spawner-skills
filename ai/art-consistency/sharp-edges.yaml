@@ -92,7 +92,7 @@ sharp_edges:
   - id: style-era-mixing
     summary: Different art eras or styles accidentally mix in same series
     severity: high
-    situation: "Anime" produces mix of 90s, 2000s, and modern anime aesthetics
+    situation: '"Anime" produces mix of 90s, 2000s, and modern anime aesthetics'
     why: |
       "Anime style" encompasses 50+ years of evolving aesthetics. 90s anime has
       distinct features (large eyes, angular faces, cel-shading) vs 2020s anime
@@ -280,7 +280,7 @@ sharp_edges:
     symptoms:
       - Character always has same expression regardless of prompt
       - Pose doesn't change even when explicitly requested
-      - "Smiling" prompt still produces neutral face
+      - '"Smiling" prompt still produces neutral face'
       - LoRA "overpowers" other prompt elements
 
   - id: ip-adapter-identity-leak
@@ -344,4 +344,4 @@ sharp_edges:
       - Face morphs during video
       - Hair color shifts mid-scene
       - Outfit changes between cuts
-      - "Uncanny valley" feeling from subtle shifting
+      - '"Uncanny valley" feeling from subtle shifting'

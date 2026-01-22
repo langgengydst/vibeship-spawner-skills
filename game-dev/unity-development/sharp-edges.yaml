@@ -654,7 +654,7 @@ sharp_edges:
     symptoms:
       - Memory grows over time
       - Assets stay loaded after scene change
-      - "Memory pressure" warnings
+      - '"Memory pressure" warnings'
       - App crashes after extended play
     detection_pattern: 'Addressables\.LoadAssetAsync(?![^}]*Release)'
 

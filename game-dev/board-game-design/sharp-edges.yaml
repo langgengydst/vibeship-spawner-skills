@@ -134,8 +134,8 @@ sharp_edges:
       This is intentional design. Accidental kingmaker is the problem.
     symptoms:
       - Post-game arguments about fairness
-      - "It wasn't my fault" from winner
-      - Third-place player "ruined the game"
+      - '"It wasn''t my fault" from winner'
+      - '"Third-place player "ruined the game"'
       - Requests to ban certain moves in endgame
     detection_pattern: null
 
@@ -279,7 +279,7 @@ sharp_edges:
       - "What would you change?" (what bothered them)
     symptoms:
       - All feedback is positive but game isn't selling
-      - "It's great!" with no specific praise
+      - '"It''s great!" with no specific praise'
       - Friends declining to play again
       - Convention response differs from home tests
     detection_pattern: null
@@ -382,7 +382,7 @@ sharp_edges:
     symptoms:
       - Dreading rulebook writing
       - Rules that are hard to phrase
-      - "We'll figure it out" during playtests
+      - '"We''ll figure it out" during playtests'
       - Multiple interpretations of same rule
     detection_pattern: null
 
@@ -715,7 +715,7 @@ sharp_edges:
       - Underpromise, overdeliver
     symptoms:
       - Reviews mentioning unmet expectations
-      - "Not what I expected" comments
+      - '"Not what I expected" comments'
       - Comparisons to campaign promises
       - High rate of marketplace resales
     detection_pattern: null

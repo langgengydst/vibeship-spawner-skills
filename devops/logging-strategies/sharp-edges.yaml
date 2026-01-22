@@ -378,7 +378,7 @@ sharp_edges:
       - Log files in GB
       - No log rotation configured
       - Application crash from disk pressure
-    detection_pattern: 'destination\\([\'"][^\'\"]+\\.log|writeFileSync.*log'
+    detection_pattern: "destination\\\\(['\"][^'\\\"]+\\\\.log|writeFileSync"
 
   - id: unstructured-logs
     summary: String logs that cannot be searched, filtered, or parsed
@@ -432,7 +432,7 @@ sharp_edges:
       - Manual parsing of log lines
       - Inconsistent field names
       - Cannot aggregate or filter
-    detection_pattern: 'logger\\.[a-z]+\\(`|logger\\.[a-z]+\\([\'"][^{]'
+    detection_pattern: "logger\\\\.[a-z]+\\\\(`|logger\\\\.[a-z]+\\\\(['\"][^{]"
 
   - id: excessive-debug-production
     summary: Debug logging enabled in production floods logs and impacts performance

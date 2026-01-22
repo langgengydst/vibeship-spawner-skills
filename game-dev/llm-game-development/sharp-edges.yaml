@@ -47,7 +47,7 @@ sharp_edges:
       """
     symptoms:
       - '"Method not found" errors'
-      - "Namespace not found" errors
+      - '"Namespace not found" errors'
       - Code looks correct but doesn't compile
     detection_pattern: 'GetComponent|Instantiate|AddForce|Input\.'
 
@@ -205,7 +205,7 @@ sharp_edges:
                   raise Warning(f"Unknown import: {imp}")
     symptoms:
       - Type errors from wrong package version
-      - "Cannot resolve module" errors
+      - '"Cannot resolve module" errors'
       - Deprecated API warnings
     detection_pattern: 'import|using|require|from'
 

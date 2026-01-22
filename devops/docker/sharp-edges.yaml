@@ -186,7 +186,7 @@ sharp_edges:
       # 2. Test
       # 3. Commit change
     symptoms:
-      - "Worked yesterday" failures
+      - '"Worked yesterday" failures'
       - Different behavior across builds
       - Can't reproduce issues
     detection_pattern: 'FROM\s+\w+:(latest|$)'

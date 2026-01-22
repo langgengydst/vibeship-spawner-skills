@@ -388,7 +388,7 @@ sharp_edges:
     symptoms:
       - Icons look like different families
       - Visual inconsistency across UI
-      - "Something looks off" feedback
+      - '"Something looks off" feedback'
       - Design reviews catch style mixing
     detection_pattern: null
 

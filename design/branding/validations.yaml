@@ -70,7 +70,7 @@ validations:
     name: Inconsistent Box Shadow
     severity: warning
     type: regex
-    pattern: 'box-shadow:\s*[0-9]|boxShadow:\s*["\'][0-9]'
+    pattern: "box-shadow:\\s*[0-9]|boxShadow:\\s*['\"][0-9]"
     message: "Custom shadow values detected. Use brand elevation tokens."
     fix_action: "Replace with elevation tokens (e.g., shadows.md, var(--shadow-md))"
     applies_to:
@@ -83,7 +83,7 @@ validations:
     name: Non-Standard Icon Library Usage
     severity: info
     type: regex
-    pattern: 'from\s+["\']react-icons/fa["\']|from\s+["\']react-icons/ai["\']|from\s+["\']@fortawesome'
+    pattern: "from\\s+['\"]react-icons/fa['\"]|from\\s+['\"]react-icons/ai['\"]|from\\s+['\"]@fortawesome"
     message: "Non-standard icon library detected. Use brand-approved icon system."
     fix_action: "Use approved icon library (e.g., lucide-react, heroicons)"
     applies_to:
@@ -107,7 +107,7 @@ validations:
     name: Custom Button Styling
     severity: warning
     type: regex
-    pattern: '<button[^>]+style=|<button[^>]+className=["\'][^"\']*bg-\[#'
+    pattern: "<button[^>]+style=|<button[^>]+className=['\"][^'\\\"]*bg-\\[#"
     message: "Custom button styling detected. Use brand Button component."
     fix_action: "Use standardized Button component with variant props (e.g., <Button variant='primary'>)"
     applies_to:
@@ -118,7 +118,7 @@ validations:
     name: Missing Brand Metadata
     severity: error
     type: regex
-    pattern: '<meta[^>]+property=["\']og:image["\'][^>]+content=["\']["\']|<title></title>'
+    pattern: "<meta[^>]+property=['\"]og:image['\"][^>]+content=['\"]['\"]|<title></title>"
     message: "Missing or empty brand metadata (OG image, title)."
     fix_action: "Add complete brand metadata including OG image, title, and description"
     applies_to:
@@ -143,7 +143,7 @@ validations:
     name: Unclear Color Token Naming
     severity: warning
     type: regex
-    pattern: '(color1|color2|color3|myColor|customColor)|const\s+\w*Color\w*\s*=\s*["\']#'
+    pattern: "(color1|color2|color3|myColor|customColor)|const\\s+\\w*Color\\w*\\s*=\\s*['\"]#"
     message: "Unclear color naming convention. Use semantic brand color names."
     fix_action: "Use semantic names (e.g., brandPrimary, accentGreen, neutralGray)"
     applies_to:

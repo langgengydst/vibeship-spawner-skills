@@ -45,7 +45,7 @@ validations:
     name: Inline Style Color Values
     severity: warning
     type: regex
-    pattern: 'style=\{?\{[^}]*(?:color|background|backgroundColor|borderColor):\s*["\']#[0-9a-fA-F]+'
+    pattern: "style=\\{?\\{[^}]*(?:color|background|backgroundColor|borderColor):\\s*['\"]#[0-9a-fA-F]+"
     message: "Inline style with hardcoded color. Use className with tokens."
     fix_action: "Move color to CSS class or use Tailwind utility with design token"
     applies_to:

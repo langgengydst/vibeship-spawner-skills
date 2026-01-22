@@ -248,7 +248,7 @@ sharp_edges:
       - Unauthenticated connections succeed
       - Users see others' private messages
       - Security audit failures
-    detection_pattern: 'on\\([\'"]connection[\'"].*\\)(?![\\s\\S]{0,300}auth|token|verify)'
+    detection_pattern: "on\\(['\\\"]connection['\\\"]*\\)(?![\\s\\S]{0,300}auth|token|verify)"
 
   - id: websocket-no-rate-limiting
     summary: Clients can send unlimited messages overwhelming server
@@ -306,7 +306,7 @@ sharp_edges:
       - CPU spikes with many messages
       - Server becomes unresponsive
       - Other clients timeout
-    detection_pattern: 'on\\([\'"]message[\'"](?![\\s\\S]{0,300}rate|limit|throttle)'
+    detection_pattern: "on\\(['\\\"]message['\\\"](?![\\s\\S]{0,300}rate|limit|throttle)"
 
   - id: websocket-missing-error-handling
     summary: Errors in message handlers crash server or leave connection hanging
@@ -375,7 +375,7 @@ sharp_edges:
       - Connections die mysteriously
       - No error messages to client
       - Intermittent failures
-    detection_pattern: 'on\\([\'"]message[\'"].*JSON\\.parse(?![\\s\\S]{0,100}catch)'
+    detection_pattern: "on\\(['\\\"]message['\\\"].*JSON\\.parse(?![\\s\\S]{0,100}catch)"
 
   - id: websocket-load-balancer-timeout
     summary: Load balancer closes idle connections before app expects

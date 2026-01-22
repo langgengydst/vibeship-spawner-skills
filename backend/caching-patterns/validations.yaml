@@ -9,7 +9,7 @@ validations:
     pattern:
       - 'redis\\.set\\([^)]+\\)(?!.*EX|ex|setex|expire)'
       - 'cache\\.set\\([^)]+\\)(?!.*ttl|expire)'
-      - '\\.set\\([\'"][^,]+,\\s*JSON'
+      - '\\.set\\(["''][^,]+,\\s*JSON'
     message: "Cache set without TTL. Data may become stale indefinitely."
     fix_action: "Use setex or add EX option: redis.setex(key, ttl, value)"
     applies_to:
@@ -22,7 +22,7 @@ validations:
     type: regex
     pattern:
       - 'redis\\.keys\\('
-      - '\\.keys\\([\'"].*\\*'
+      - '\\.keys\\(["'']\\.*\\*'
       - 'KEYS \\*'
       - 'KEYS .*\\*'
     message: "KEYS command blocks Redis. Use SCAN for iteration in production."

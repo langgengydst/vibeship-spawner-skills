@@ -507,7 +507,7 @@ sharp_edges:
       - Hardcoded input assumptions
       - No mobile testing
       - Performance not measured on target
-    detection_pattern: 'addEventListener\\(["\']click|addEventListener\\(["\']mouse'
+    detection_pattern: 'addEventListener\(["'']click|addEventListener\(["'']mouse'
 
   - id: hardcoded-dependencies
     summary: Systems tightly coupled with direct references

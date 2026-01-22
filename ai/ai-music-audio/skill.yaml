@@ -358,58 +358,58 @@ patterns:
 
       // Python script for AudioSeal (run on server)
       const AUDIOSEAL_SCRIPT = `
-import torch
-import torchaudio
-from audioseal import AudioSeal
-import sys
-import json
+      import torch
+      import torchaudio
+      from audioseal import AudioSeal
+      import sys
+      import json
 
-def watermark_audio(input_path, output_path, message=None):
-            # Load model
-            model = AudioSeal.load_generator("audioseal_wm_16bits")
+      def watermark_audio(input_path, output_path, message=None):
+          # Load model
+          model = AudioSeal.load_generator("audioseal_wm_16bits")
 
-    # Load audio
-    audio, sr = torchaudio.load(input_path)
-    if sr != 16000:
-        resampler = torchaudio.transforms.Resample(sr, 16000)
-        audio = resampler(audio)
+          # Load audio
+          audio, sr = torchaudio.load(input_path)
+          if sr != 16000:
+              resampler = torchaudio.transforms.Resample(sr, 16000)
+              audio = resampler(audio)
 
-    # Generate watermark
-    if message:
-        # Convert message to bits
-        msg_bits = torch.tensor([int(b) for b in format(int(message, 16), '016b')])
-        watermarked = model.embed(audio.unsqueeze(0), msg_bits.unsqueeze(0))
-    else:
-        watermarked = model.embed(audio.unsqueeze(0))
+          # Generate watermark
+          if message:
+              # Convert message to bits
+              msg_bits = torch.tensor([int(b) for b in format(int(message, 16), '016b')])
+              watermarked = model.embed(audio.unsqueeze(0), msg_bits.unsqueeze(0))
+          else:
+              watermarked = model.embed(audio.unsqueeze(0))
 
-    # Save
-    torchaudio.save(output_path, watermarked.squeeze(0), 16000)
-    return {"success": True}
+          # Save
+          torchaudio.save(output_path, watermarked.squeeze(0), 16000)
+          return {"success": True}
 
-def detect_watermark(audio_path):
-    detector = AudioSeal.load_detector("audioseal_detector_16bits")
+      def detect_watermark(audio_path):
+          detector = AudioSeal.load_detector("audioseal_detector_16bits")
 
-    audio, sr = torchaudio.load(audio_path)
-    if sr != 16000:
-        resampler = torchaudio.transforms.Resample(sr, 16000)
-        audio = resampler(audio)
+          audio, sr = torchaudio.load(audio_path)
+          if sr != 16000:
+              resampler = torchaudio.transforms.Resample(sr, 16000)
+              audio = resampler(audio)
 
-    result = detector.detect(audio.unsqueeze(0))
+          result = detector.detect(audio.unsqueeze(0))
 
-    return {
-        "is_watermarked": result.score > 0.5,
-        "confidence": float(result.score),
-        "message": result.message if hasattr(result, 'message') else None
-    }
+          return {
+              "is_watermarked": result.score > 0.5,
+              "confidence": float(result.score),
+              "message": result.message if hasattr(result, 'message') else None
+          }
 
-if __name__ == "__main__":
-    action = sys.argv[1]
-    if action == "watermark":
-        result = watermark_audio(sys.argv[2], sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else None)
-    elif action == "detect":
-        result = detect_watermark(sys.argv[2])
-    print(json.dumps(result))
-`;
+      if __name__ == "__main__":
+          action = sys.argv[1]
+          if action == "watermark":
+              result = watermark_audio(sys.argv[2], sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else None)
+          elif action == "detect":
+              result = detect_watermark(sys.argv[2])
+          print(json.dumps(result))
+      `;
 
       // Node.js wrapper
       async function watermarkAudio(

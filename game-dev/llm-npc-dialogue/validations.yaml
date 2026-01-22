@@ -157,7 +157,7 @@ validations:
     name: String Concatenation for Prompts
     severity: info
     type: regex
-    pattern: 'prompt\\s*\\+=|\\+\\s*prompt|prompt\\s*\\+\\s*["\']'
+    pattern: 'prompt\s*\+=|\+\s*prompt|prompt\s*\+\s*["'']'
     message: "Building prompts with string concatenation. Use template literals for readability."
     fix_action: "Use template literals or a prompt builder for complex prompts"
     applies_to:

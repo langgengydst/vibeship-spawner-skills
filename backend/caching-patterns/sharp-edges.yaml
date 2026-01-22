@@ -276,7 +276,7 @@ sharp_edges:
     symptoms:
       - Null results cached long-term
       - System serves errors after recovery
-      - "Not found" for existing records
+      - '"Not found" for existing records'
       - Errors continue after fix deployed
     detection_pattern: 'setex.*null|setex.*error|cache.*catch.*set'
 

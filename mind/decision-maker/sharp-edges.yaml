@@ -327,7 +327,7 @@ sharp_edges:
          - Scope creep becomes obvious when time runs out
     symptoms:
       - Meeting scope expanded since invite
-      - "Related" topics consuming time
+      - '"Related" topics consuming time'
       - Simple decisions taking weeks
       - Original question forgotten
     detection_pattern: "while we're at it|related|also should|bigger picture"

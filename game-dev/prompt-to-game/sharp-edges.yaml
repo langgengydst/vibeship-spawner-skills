@@ -13,7 +13,7 @@ sharp_edges:
     detection_pattern: "import|require|from.*(?!react|phaser|three|kaboom|godot)"
     symptoms:
       - '"X is not a function" errors'
-      - "Cannot find module" errors
+      - '"Cannot find module" errors'
       - Method exists but signature is wrong
     solution: |
       1. Verify every unfamiliar method in official docs
@@ -85,7 +85,7 @@ sharp_edges:
       - Duplicate function definitions
       - Contradictory implementations
       - References to code that doesn't exist
-      - "I'll create this function" when it already exists
+      - '"I''ll create this function" when it already exists'
     solution: |
       1. Keep files under 500 lines
       2. Split early and often
@@ -120,15 +120,15 @@ sharp_edges:
 
   - id: works-on-ai-machine
     severity: high
-    title: "Works on AI's Machine" - Missing Local Context
+    title: '"Works on AI''s Machine" - Missing Local Context'
     description: >
       AI doesn't have access to your file structure, installed
       dependencies, environment variables, or current state.
       Code works in AI's imagination but fails locally.
     detection_pattern: "file.*path|require|import|env"
     symptoms:
-      - "File not found" errors
-      - "Module not installed" errors
+      - '"File not found" errors'
+      - '"Module not installed" errors'
       - Works in AI preview, breaks locally
       - Incorrect relative paths
     solution: |
@@ -211,11 +211,11 @@ sharp_edges:
     description: >
       AI mixes browser and Node.js APIs. Uses `window` in Node.
       Uses `fs` in browser code. Doesn't consider runtime environment.
-    detection_pattern: "window|document|fs\.|process\.|require.*fs"
+    detection_pattern: "window|document|fs\\.|process\\.|require.*fs"
     symptoms:
-      - "window is not defined" in Node
-      - "require is not defined" in browser
-      - "document is not defined" in tests
+      - '"window is not defined" in Node'
+      - '"require is not defined" in browser'
+      - '"document is not defined" in tests'
     solution: |
       1. Specify runtime in prompt: "for browser" or "for Node.js"
       2. Check generated imports
@@ -277,7 +277,7 @@ red_flags:
     action: "STOP - Never use eval with any user input"
 
   - id: exposed-secret
-    pattern: '(?:api[_-]?key|secret|token)\s*[=:]\s*["\'][a-zA-Z0-9]{16,}'
+    pattern: '(?:api[_-]?key|secret|token)\s*[=:]\s*["''][a-zA-Z0-9]{16,}'
     severity: critical
     risk: "Exposed API key in client code"
     action: "Move to environment variable on server-side"

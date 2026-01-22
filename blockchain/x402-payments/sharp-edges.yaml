@@ -286,7 +286,7 @@ sharp_edges:
     title: Browser Wallet Extension Compatibility
     description: Payment flow breaks due to wallet conflicts or CSP
     symptoms:
-      - "Wallet not detected" errors
+      - '"Wallet not detected" errors'
       - Multiple wallet extensions conflicting
       - Content Security Policy blocking wallet
       - Mobile browser wallet issues
@@ -354,7 +354,7 @@ sharp_edges:
       - Payments confirmed but service not delivered
       - Duplicate deliveries on webhook retry
       - Inconsistent state between payment and service
-      - "I paid but didn't get access" complaints
+      - '"I paid but didn''t get access" complaints'
     detection_pattern: "webhook|callback|notify|event.*payment"
     solution: |
       // 1. Idempotent webhook processing
@@ -536,7 +536,7 @@ sharp_edges:
     symptoms:
       - Payments on wrong network
       - Testnet invoices in production
-      - "Invoice not found" errors
+      - '"Invoice not found" errors'
       - Funds sent to wrong network
     detection_pattern: "testnet|signet|devnet|sepolia|goerli"
     solution: |

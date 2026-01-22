@@ -158,7 +158,7 @@ sharp_edges:
     symptoms:
       - UI freezes
       - 100% CPU usage
-      - "Maximum update depth exceeded" (React analog)
+      - '"Maximum update depth exceeded" (React analog)'
     detection_pattern: 'var body.*View.*@State|body.*ViewModel.*load'
 
   - id: keychain-not-encrypted

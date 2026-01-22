@@ -88,7 +88,7 @@ validations:
     name: Event Handler Emitting Same Event Type
     severity: critical
     type: regex
-    pattern: '\.on\s*\(["\'](\w+)["\'][^}]+emit\s*\(["\'](\1)["\']'
+    pattern: '\.on\s*\(["''](\w+)["''][^}]+emit\s*\(["''](\1)["'']'
     message: "Event handler emits same event type it listens to. Risk of infinite loop."
     fix_action: "Break the cycle or add deduplication/rate limiting"
     applies_to:

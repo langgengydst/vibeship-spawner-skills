@@ -353,11 +353,11 @@ patterns:
                       role: 'system',
                       content: `You are a request classifier. Categorize user requests.
 
-Categories:
-- technical: Code issues, API problems, integration help, bugs
-- billing: Payments, subscriptions, invoices, refunds
-- general: Account questions, feature info, how-to questions
-- escalate: Complaints, urgent issues, requests for human agent
+                      Categories:
+                      - technical: Code issues, API problems, integration help, bugs
+                      - billing: Payments, subscriptions, invoices, refunds
+                      - general: Account questions, feature info, how-to questions
+                      - escalate: Complaints, urgent issues, requests for human agent
 
                       Respond with JSON: { "category": "...", "confidence": 0.0-1.0, "reasoning": "..." }`
                   }, {
@@ -443,16 +443,16 @@ Categories:
                   messages: [{
                       role: 'system',
                       content: `You are a project manager. Break down complex tasks into discrete steps.
-Each step should be:
-- Specific and actionable
-- Assignable to one worker
-- Have clear success criteria
-- List dependencies on other steps
+                      Each step should be:
+                      - Specific and actionable
+                      - Assignable to one worker
+                      - Have clear success criteria
+                      - List dependencies on other steps
 
-Available workers: ${this.describeWorkers()}`
+                      Available workers: \${this.describeWorkers()}`
                   }, {
                       role: 'user',
-                      content: `Plan this task: ${task.description}`
+                      content: `Plan this task: \${task.description}`
                   }]
               });
 
@@ -464,14 +464,14 @@ Available workers: ${this.describeWorkers()}`
                   messages: [{
                       role: 'system',
                       content: `You are a quality reviewer. Evaluate if the step was completed successfully.
-Consider: correctness, completeness, alignment with overall task.`
+                      Consider: correctness, completeness, alignment with overall task.`
                   }, {
                       role: 'user',
-                      content: `Step: ${JSON.stringify(step)}
-Result: ${JSON.stringify(result)}
-Overall task: ${state.plan.task.description}
+                      content: `Step: \${JSON.stringify(step)}
+                      Result: \${JSON.stringify(result)}
+                      Overall task: \${state.plan.task.description}
 
-Respond with: { "approved": bool, "retry": bool, "feedback": string, "planAdjustment": string | null }`
+                      Respond with: { "approved": bool, "retry": bool, "feedback": string, "planAdjustment": string | null }`
                   }]
               });
 

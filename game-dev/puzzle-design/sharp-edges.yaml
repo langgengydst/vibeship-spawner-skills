@@ -410,7 +410,7 @@ sharp_edges:
       - Players stuck but don't know why
       - Required item missing with no way to get another
       - Irreversible state change blocks progress
-      - "I have to start over" moments
+      - '"I have to start over" moments'
     detection_pattern: null
 
   - id: puzzle-solution-ambiguity

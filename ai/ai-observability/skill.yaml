@@ -380,22 +380,22 @@ patterns:
       async function evaluateFaithfulness(sample: RAGSample): Promise<number> {
         const prompt = `You are evaluating whether an answer is faithful to the provided context.
 
-Context:
-\${sample.contexts.join("\\n\\n")}
+        Context:
+        ${sample.contexts.join("\n\n")}
 
-Question: \${sample.question}
-        Answer: \${sample.answer}
+        Question: ${sample.question}
+        Answer: ${sample.answer}
 
-Task:
-1. List each claim made in the answer.
-2. For each claim, determine if it can be inferred from the context.
-3. Calculate the ratio of supported claims to total claims.
+        Task:
+        1. List each claim made in the answer.
+        2. For each claim, determine if it can be inferred from the context.
+        3. Calculate the ratio of supported claims to total claims.
 
-Return JSON:
-{
-  "claims": [{"claim": "...", "supported": true/false, "evidence": "..."}],
-  "faithfulness_score": 0.0-1.0
-}`;
+        Return JSON:
+        {
+          "claims": [{"claim": "...", "supported": true/false, "evidence": "..."}],
+          "faithfulness_score": 0.0-1.0
+        }`;
 
         const response = await anthropic.messages.create({
           model: "claude-sonnet-4-20250514",
@@ -413,18 +413,18 @@ Return JSON:
       async function evaluateAnswerRelevancy(sample: RAGSample): Promise<number> {
         const prompt = `Evaluate how relevant the answer is to the question.
 
-Question: ${sample.question}
-Answer: ${sample.answer}
+        Question: ${sample.question}
+        Answer: ${sample.answer}
 
-Score from 0-1:
-- 1.0: Directly and completely answers the question
-- 0.7-0.9: Answers the question with minor irrelevant info
-- 0.4-0.6: Partially answers, missing key aspects
-- 0.1-0.3: Mostly irrelevant with some tangential relation
-- 0.0: Completely irrelevant
+        Score from 0-1:
+        - 1.0: Directly and completely answers the question
+        - 0.7-0.9: Answers the question with minor irrelevant info
+        - 0.4-0.6: Partially answers, missing key aspects
+        - 0.1-0.3: Mostly irrelevant with some tangential relation
+        - 0.0: Completely irrelevant
 
-Return JSON: {"score": 0.0-1.0, "reasoning": "..."}`;
-
+        Return JSON:
+        { "score": 0.0-1.0, "reasoning": "..." }`;
         const response = await anthropic.messages.create({
           model: "claude-sonnet-4-20250514",
           max_tokens: 256,
@@ -441,17 +441,17 @@ Return JSON: {"score": 0.0-1.0, "reasoning": "..."}`;
       async function evaluateContextPrecision(sample: RAGSample): Promise<number> {
         const prompt = `Evaluate the precision of retrieved contexts for answering the question.
 
-Question: ${sample.question}
+        Question: ${sample.question}
 
-Contexts:
-${sample.contexts.map((c, i) => `[${i + 1}] ${c}`).join("\n\n")}
+        Contexts:
+        ${sample.contexts.map((c, i) => `[${i + 1}] ${c}`).join("\n\n")}
 
-For each context, determine if it's relevant to answering the question.
-Return JSON:
-{
-  "context_relevance": [{"index": 1, "relevant": true/false, "reason": "..."}],
-  "precision_score": 0.0-1.0
-}`;
+        For each context, determine if it's relevant to answering the question.
+        Return JSON:
+        {
+          "context_relevance": [{"index": 1, "relevant": true/false, "reason": "..."}],
+          "precision_score": 0.0-1.0
+        }`;
 
         const response = await anthropic.messages.create({
           model: "claude-sonnet-4-20250514",
@@ -663,18 +663,18 @@ Return JSON:
         // Check consistency across samples
         const consistencyPrompt = `Compare these responses for factual consistency:
 
-Original response: ${originalResponse}
+        Original response: ${originalResponse}
 
-Additional samples:
-${samples.map((s, i) => `Sample ${i + 1}: ${s}`).join("\n\n")}
+        Additional samples:
+        ${samples.map((s, i) => `Sample ${i + 1}: ${s}`).join("\n\n")}
 
-Identify any factual claims that differ significantly between responses.
-Return JSON:
-{
-  "consistent": true/false,
-  "consistency_score": 0.0-1.0,
-  "inconsistent_claims": ["claim1", "claim2"]
-}`;
+        Identify any factual claims that differ significantly between responses.
+        Return JSON:
+        {
+          "consistent": true/false,
+          "consistency_score": 0.0-1.0,
+          "inconsistent_claims": ["claim1", "claim2"]
+        }`;
 
         const checkResponse = await anthropic.messages.create({
           model: "claude-sonnet-4-20250514",
@@ -699,27 +699,27 @@ Return JSON:
       ): Promise<FactCheckResult> {
         const prompt = `You are a fact-checker. Verify if the response is supported by the context.
 
-Context:
-${context}
+        Context:
+        ${context}
 
-Response to verify:
-${response}
+        Response to verify:
+        ${response}
 
-Instructions:
-1. Extract each factual claim from the response.
-2. Check if each claim is supported by the context.
-3. A claim is a hallucination if it cannot be inferred from the context.
+        Instructions:
+        1. Extract each factual claim from the response.
+        2. Check if each claim is supported by the context.
+        3. A claim is a hallucination if it cannot be inferred from the context.
 
-Return JSON:
-{
-  "claims": [
-    {"claim": "...", "supported": true/false, "evidence": "quote from context or 'not found'"}
-  ],
-  "is_hallucination": true/false,
-  "confidence": 0.0-1.0,
-  "unsupported_claims": ["claim1", "claim2"],
-  "suggested_corrections": ["correction1"]
-}`;
+        Return JSON:
+        {
+          "claims": [
+            {"claim": "...", "supported": true/false, "evidence": "quote from context or 'not found'"}
+          ],
+          "is_hallucination": true/false,
+          "confidence": 0.0-1.0,
+          "unsupported_claims": ["claim1", "claim2"],
+          "suggested_corrections": ["correction1"]
+        }`;
 
         const checkResponse = await anthropic.messages.create({
           model: "claude-sonnet-4-20250514",

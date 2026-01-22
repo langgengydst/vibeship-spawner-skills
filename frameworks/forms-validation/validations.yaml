@@ -34,7 +34,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - "errors\.[\w]+\.message.*<span(?!.*role)"
+      - "errors\\.[\\w]+\\.message.*<span(?!.*role)"
     message: "Add role=alert to error messages for screen readers"
     fix_action: "Add role=\"alert\" to error span"
     applies_to:
@@ -58,8 +58,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "z\.number\(\)(?!.*coerce)"
-      - "z\.object.*formData.*z\.number\(\)"
+      - "z\\.number\\(\\)(?!.*coerce)"
+      - "z\\.object.*formData.*z\\.number\\(\\)"
     message: "Use z.coerce.number() for form data"
     fix_action: "Replace z.number() with z.coerce.number()"
     applies_to:
@@ -71,7 +71,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "export async function.*formData.*(?!.*safeParse|.*parse\()"
+      - "export async function.*formData.*(?!.*safeParse|.*parse\\()"
     message: "Always validate form data on server"
     fix_action: "Add Zod validation with safeParse"
     applies_to:
@@ -82,8 +82,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "catch.*\{[^}]*reset\(\)"
-      - "error.*\{[^}]*form\.reset"
+      - "catch.*\\{[^}]*reset\\(\\)"
+      - "error.*\\{[^}]*form\\.reset"
     message: "Do not reset form on error - preserve user input"
     fix_action: "Remove reset() from error handler"
     applies_to:
@@ -95,9 +95,9 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - "alert\([\"'].*error"
-      - "alert\([\"'].*required"
-      - "alert\([\"'].*invalid"
+      - "alert\\([\"'].*error"
+      - "alert\\([\"'].*required"
+      - "alert\\([\"'].*invalid"
     message: "Use inline errors instead of alert()"
     fix_action: "Show errors next to form fields"
     applies_to:

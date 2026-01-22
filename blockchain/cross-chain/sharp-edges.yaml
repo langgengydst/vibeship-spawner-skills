@@ -154,7 +154,7 @@ sharp_edges:
       // Implement retry mechanism
     symptoms:
       - Messages arrive but fail to execute
-      - "Out of gas" on destination chain
+      - '"Out of gas" on destination chain'
       - Stuck funds requiring manual retry
     detection_pattern: null
 

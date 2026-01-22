@@ -40,7 +40,7 @@ sharp_edges:
     symptoms:
       - Agent interrupts user
       - Responses before sentence complete
-      - "Let me finish" user frustration
+      - '"Let me finish" user frustration'
     detection_pattern: 'turn_detection|silence_duration'
 
   - id: audio-format-mismatch
@@ -154,7 +154,7 @@ sharp_edges:
       room.on("reconnected", lambda: print("Reconnected!"))
     symptoms:
       - Audio cuts out
-      - "Connection lost" errors
+      - '"Connection lost" errors'
       - Partial responses
     detection_pattern: 'websocket|ConnectionClosed'
 

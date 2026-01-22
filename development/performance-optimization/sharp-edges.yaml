@@ -288,7 +288,7 @@ sharp_edges:
       });
     symptoms:
       - Janky animations
-      - "Forced reflow" in DevTools
+      - '"Forced reflow" in DevTools'
       - High paint/layout times
     detection_pattern: 'offsetHeight|offsetWidth|getBoundingClientRect'
 
@@ -505,7 +505,7 @@ sharp_edges:
       - Slow initial page load
       - Large JS download in DevTools
       - Lighthouse performance score dropping
-    detection_pattern: 'from [\'"]moment[\'"]|from [\'"]lodash[\'"]'
+    detection_pattern: "from ['\"]moment['\"]|from ['\"]lodash['\"]"
 
   - id: memory-leaks
     summary: Memory usage grows until page crashes

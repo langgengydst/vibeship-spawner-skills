@@ -17,7 +17,7 @@ sharp_edges:
       ```
       Symptoms:
       - High click, high bounce
-      - "Clickbait" comments
+      - '"Clickbait" comments'
       - Trust erosion
       - Declining engagement over time
       ```
@@ -226,5 +226,5 @@ sharp_edges:
     symptoms:
       - Unexpected negative reactions
       - Backlash despite intentions
-      - "Read the room" comments
+      - '"Read the room" comments'
     detection_pattern: "offensive|insensitive|tone deaf"

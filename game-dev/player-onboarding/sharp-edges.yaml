@@ -182,7 +182,7 @@ sharp_edges:
       - Logos before gameplay
       - Multi-minute intro cutscene
       - Lore dump at start
-      - "Press Start" screen
+      - '"Press Start" screen'
     detection_pattern: 'playVideo.*await|cutscene.*skipEnabled.*false'
 
   - id: hard-fail-during-tutorial
@@ -233,7 +233,7 @@ sharp_edges:
       - Game over during first level
       - Progress loss on early mistakes
       - Loading screens after tutorial deaths
-      - "YOU DIED" screen for new players
+      - '"YOU DIED" screen for new players'
     detection_pattern: 'gameOver.*tutorial|death.*penalty.*tutorial'
 
   - id: skipping-breaks-game
@@ -409,7 +409,7 @@ sharp_edges:
   - id: hint-spam-annoyance
     summary: Relentless hints that won't stop even when player is exploring
     severity: medium
-    situation: "Did you forget to press X?" appearing every 10 seconds
+    situation: '"Did you forget to press X?" appearing every 10 seconds'
     why: |
       Not every pause is confusion. Sometimes players want to explore.
       Constant hints communicate "you're doing it wrong."

@@ -85,7 +85,7 @@ validations:
         - "if quality_check(image): export_image(generated)"
 
   - id: negative-prompt-missing
-    pattern: 'prompt\s*=\s*["\'][^"\']+["\'](?!.*negative)'
+    pattern: 'prompt\s*=\s*["''][^"'']+["''](?!.*negative)'
     severity: info
     message: "Generation without negative prompt - may produce artifacts"
     fix: "Add negative_prompt for anatomy/quality: 'extra fingers, blurry, watermark'"
@@ -198,7 +198,7 @@ validation_groups:
 
 auto_fix_rules:
   - id: add-negative-prompt
-    pattern: '(prompt\s*=\s*["\'][^"\']+["\'])(?!\s*,\s*negative)'
+    pattern: '(prompt\s*=\s*["''][^"'']+["''])(?!\s*,\s*negative)'
     replacement: '$1, negative_prompt="extra fingers, bad anatomy, blurry, watermark"'
     description: "Adds standard negative prompt for quality"
 

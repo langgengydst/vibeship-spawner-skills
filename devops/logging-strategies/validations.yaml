@@ -77,7 +77,7 @@ validations:
     type: regex
     pattern:
       - 'logger\\.error\\([^)]*\\.message[^)]*\\)'
-      - 'logger\\.error\\([\'"][^\'\"]+[\'"]\\)'
+      - 'logger\\.error\\(["''][^"'']+["'']\\)'
       - 'catch.*logger\\.error.*(?!.*stack)'
     message: "Error logged without stack trace. Include full error object."
     fix_action: "Log complete error: logger.error({ err: error }, 'message')"

@@ -64,7 +64,7 @@ sharp_edges:
       of a new player is unknowable to someone who's seen the level 1000 times.
     symptoms:
       - Team thinks level is "too easy" but players struggle
-      - '"Obvious" paths aren't followed'
+      - '"Obvious" paths aren''t followed'
       - Players miss critical items that seem visible to team
       - Tutorial moments are skipped or misunderstood
       - Playtest feedback contradicts team expectations
@@ -188,7 +188,7 @@ sharp_edges:
       warning feels unfair, not clever. The "gotcha" moment punishes players
       for learning what you taught them.
     symptoms:
-      - "That's unfair!" player reactions
+      - '"That''s unfair!" player reactions'
       - Memorization-based gameplay (die to learn)
       - Players become paranoid, test everything
       - Pacing slows as trust erodes
@@ -225,7 +225,7 @@ sharp_edges:
       interactive element needs visual language.
     symptoms:
       - Players running past exits
-      - "How do I open this?" questions
+      - '"How do I open this?" questions'
       - Wandering in completed rooms
       - Prompt spam near doors
     solution: |
@@ -307,9 +307,9 @@ sharp_edges:
     symptoms:
       - Players avoiding the map
       - Ignoring side content entirely
-      - "I'll do that later" (never returns)
+      - '"I''ll do that later" (never returns)'
       - Completionists burning out
-      - "Too much content" criticism
+      - '"Too much content" criticism'
     solution: |
       1. LAYER INFORMATION REVEAL
          - Only show nearby or discovered icons
@@ -343,7 +343,7 @@ sharp_edges:
       be watched, skilled players will abuse this. Spawn protection is a
       band-aid; spawn design is the cure.
     symptoms:
-      - "Spawn camping" complaints
+      - '"Spawn camping" complaints'
       - Kill streaks immediately after enemy spawn
       - Players quitting after spawn deaths
       - Spawn protection band-aids added
@@ -382,7 +382,7 @@ sharp_edges:
       Coyote time and jump buffering change the effective jump window. Your
       metrics must account for how players actually play.
     symptoms:
-      - "I pressed jump!" complaints
+      - '"I pressed jump!" complaints'
       - Deaths at platform edges
       - Jumps working sometimes and not others
       - Speedrunners jumping early consistently
@@ -419,7 +419,7 @@ sharp_edges:
       attentive players but shouldn't be the only source of story. Dark Souls
       works because systems tell the story, not just item descriptions.
     symptoms:
-      - "What's the story?" player confusion
+      - '"What''s the story?" player confusion'
       - Main narrative unclear to most players
       - Rich lore that nobody finds
       - Critics praise story, players don't understand it

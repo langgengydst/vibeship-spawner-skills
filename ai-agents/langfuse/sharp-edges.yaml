@@ -122,7 +122,7 @@ sharp_edges:
     symptoms:
       - Separate unrelated traces
       - Missing parent-child relationships
-      - "Orphan" spans
+      - '"Orphan" spans'
     detection_pattern: '@observe'
 
   - id: high-cardinality-names

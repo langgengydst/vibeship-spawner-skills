@@ -268,7 +268,7 @@ sharp_edges:
       - Baking without cage mesh
       - Very large ray distance values
       - Not using match by mesh name
-      - "It worked on simpler models" but fails on complex
+      - '"It worked on simpler models" but fails on complex'
 
   - id: texture-texel-density-mismatch
     summary: Inconsistent texel density makes some assets look blurry

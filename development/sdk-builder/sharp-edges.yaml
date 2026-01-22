@@ -126,7 +126,7 @@ sharp_edges:
     symptoms:
       - Hung requests in production
       - Connection pool exhaustion
-      - "SDK is slow" complaints
+      - '"SDK is slow" complaints'
     detection_pattern: 'timeout|httpx|aiohttp|requests\.'
 
   - id: leaking-credentials
@@ -267,13 +267,13 @@ sharp_edges:
     symptoms:
       - High latency for every request
       - Many TIME_WAIT connections
-      - "Too many open files" errors
+      - '"Too many open files" errors'
     detection_pattern: 'async with httpx|with requests\.Session'
 
   - id: generic-error-messages
     summary: Unhelpful errors frustrate developers
     severity: medium
-    situation: "Error occurred" with no details
+    situation: '"Error occurred" with no details'
     why: |
       "Request failed". What request? What failed? How to fix?
       Developer searches, finds nothing. Opens support ticket.

@@ -11,10 +11,10 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'from [\'"]moment[\'"]'
-      - 'from [\'"]lodash[\'"]$'
-      - 'import _ from [\'"]lodash[\'"]'
-      - 'require\\([\'"]moment[\'"]\\)'
+      - "from ['\"]moment['\"]"
+      - "from ['\"]lodash['\"]$"
+      - "import _ from ['\"]lodash['\"]"
+      - "require\\\\(['\"]moment['\"]\\\\)"
     message: "Heavy library import - consider lighter alternatives"
     fix_action: "Use date-fns instead of moment, lodash-es with specific imports"
     applies_to:
@@ -28,10 +28,10 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'import.*from [\'"]\\./.*Chart[\'"]'
-      - 'import.*from [\'"]\\./.*Editor[\'"]'
-      - 'import.*from [\'"]\\./.*Modal[\'"]'
-      - 'import.*from [\'"]@monaco-editor'
+      - "import.*from ['\"]\\\\./.*Chart['\"]"
+      - "import.*from ['\"]\\\\./.*Editor['\"]"
+      - "import.*from ['\"]\\\\./.*Modal['\"]"
+      - "import.*from ['\"]@monaco-editor"
     message: "Consider lazy loading heavy components"
     fix_action: "Use dynamic(() => import('./Component')) or lazy()"
     applies_to:

@@ -64,7 +64,7 @@ sharp_edges:
     symptoms:
       - Migration takes much longer than expected
       - Application blocked during constraint addition
-      - "pending trigger events" errors
+      - '"pending trigger events" errors'
     detection_pattern: 'FOREIGN KEY|REFERENCES|ADD CONSTRAINT'
 
   - id: deploy-order-failure
@@ -97,7 +97,7 @@ sharp_edges:
          # Alembic/Django migrations run before app starts
     symptoms:
       - Immediate errors after deployment
-      - "column does not exist" or "table does not exist"
+      - '"column does not exist" or "table does not exist"'
       - Works in staging, fails in production
     detection_pattern: 'deploy|release|migration.*order'
 
@@ -149,7 +149,7 @@ sharp_edges:
     symptoms:
       - Migration times out
       - Production slowed during backfill
-      - "statement timeout" errors
+      - '"statement timeout" errors'
     detection_pattern: 'UPDATE.*SET.*WHERE|backfill|batch'
 
   - id: rollback-data-loss
@@ -179,7 +179,7 @@ sharp_edges:
       4. Plan for rollback data handling:
          # Document: "Rows created after migration will need X on rollback"
     symptoms:
-      - "Cannot deserialize" after rollback
+      - '"Cannot deserialize" after rollback'
       - Data corruption after rollback
       - New records missing after rollback
     detection_pattern: 'rollback|revert|undo|backward'

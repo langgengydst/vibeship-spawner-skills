@@ -150,7 +150,7 @@ sharp_edges:
       5. Consider creature interactions (predator-prey relationships)
       6. Use regional variants for different biomes
     symptoms:
-      - "What does this thing even do?" questions
+      - '"What does this thing even do?" questions'
       - World feels like a creature zoo, not living ecosystem
       - Creatures seem randomly placed
       - No sense of food chain or natural order
@@ -184,7 +184,7 @@ sharp_edges:
       - Cute design described as "creepy" or "unsettling"
       - Horror design gets laughs instead of screams
       - Players avoid "cute" companion creature
-      - "Scary" enemy becomes community joke
+      - '"Scary" enemy becomes community joke'
       - Merchandise of cute creature doesn't sell
     detection_pattern: null
     version_range: null
@@ -281,7 +281,7 @@ sharp_edges:
       - Team cuts features from creature
       - Final creature looks stiff compared to concept
       - Budget/schedule overruns
-      - "We can't animate that" feedback
+      - '"We can''t animate that" feedback'
     detection_pattern: null
     version_range: null
 

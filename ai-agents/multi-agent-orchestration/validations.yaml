@@ -77,7 +77,7 @@ validations:
     name: Hardcoded Agent Selection
     severity: low
     type: regex
-    pattern: 'if\s*\([^)]*===?\s*["\'][^"\']+["\']\s*\)\s*\{[^}]*Agent'
+    pattern: 'if\s*\([^)]*===?\s*["''][^"'']+["'']\s*\)\s*\{[^}]*Agent'
     message: "Agent selection using hardcoded string matching. Consider using registry."
     fix_action: "Use agent registry with capability matching for flexible routing"
     applies_to:

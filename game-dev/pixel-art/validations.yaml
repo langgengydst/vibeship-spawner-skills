@@ -132,7 +132,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'getContext\\(["\']2d["\']\\)(?![\\s\\S]{0,100}imageSmoothingEnabled\\s*=\\s*false)'
+      - 'getContext\(["'']2d["'']\)(?![^]{0,100}imageSmoothingEnabled\s*=\s*false)'
     message: "Canvas 2D context should have imageSmoothingEnabled = false for pixel art."
     fix_action: "After getContext('2d'), add: ctx.imageSmoothingEnabled = false"
     applies_to:

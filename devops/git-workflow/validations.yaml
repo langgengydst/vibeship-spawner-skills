@@ -63,7 +63,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'git\s+commit\s+-m\s+["\']([Ww][Ii][Pp]|wip|WIP)["\']'
+      - 'git\s+commit\s+-m\s+["'']([Ww][Ii][Pp]|wip|WIP)["'']'
     message: "WIP commits should be squashed before merge"
     fix_action: "Use git rebase -i to squash WIP commits"
     applies_to:
@@ -75,7 +75,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'git\s+commit\s+-m\s+["\'](fix|update|change|modify|misc|stuff)["\']'
+      - 'git\s+commit\s+-m\s+["''](fix|update|change|modify|misc|stuff)["'']'
     message: "Commit message is too generic - describe what was changed"
     fix_action: "Describe the specific change: 'fix(auth): prevent session timeout'"
     applies_to:

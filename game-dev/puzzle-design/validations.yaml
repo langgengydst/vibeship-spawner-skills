@@ -102,9 +102,9 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'solution\s*=\s*["\'][a-zA-Z0-9]+["\']'
-      - 'password\s*=\s*["\'][a-zA-Z0-9]+["\']'
-      - 'code\s*===?\s*["\']\\d+["\']'
+      - 'solution\s*=\s*["''][a-zA-Z0-9]+["'']'
+      - 'password\s*=\s*["''][a-zA-Z0-9]+["'']'
+      - 'code\s*===?\s*["'']\d+["'']'
     message: "Hardcoded puzzle solution. Consider data-driven approach for easier testing."
     fix_action: "Move solutions to config/data file for easier adjustment and playtesting"
     applies_to:
@@ -328,8 +328,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - '(?i)permanent|irreversible|(?:can\'?t|cannot)\s+undo'
-      - '(?i)puzzle.*(?:destroy|break).*(?:can\'?t|cannot)\s+(?:restore|reset)'
+      - 'permanent|irreversible|(?:can''?t|cannot)\s+undo'
+      - 'puzzle.*(?:destroy|break).*(?:can''?t|cannot)\s+(?:restore|reset)'
     message: "Irreversible state change in puzzle. Verify this cannot softlock the player."
     fix_action: "Add auto-save before irreversible actions or provide reset mechanism"
     applies_to:

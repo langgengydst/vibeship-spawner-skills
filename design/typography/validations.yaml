@@ -85,7 +85,7 @@ validations:
     name: All Caps on Block Text
     severity: warning
     type: regex
-    pattern: '<(p|div|span)[^>]*class=["\'][^"\']*uppercase[^"\']*["\'][^>]*>(?![^<]{0,50}<\/)'
+    pattern: "<(p|div|span)[^>]*class=['\"][^'\\\"]*uppercase[^'\\\"]*['\"][^>]*>(?![^<]{0,50}<\\/)"
     message: "text-transform: uppercase on potentially long text. ALL CAPS is 50% harder to read."
     fix_action: "Reserve uppercase for short labels (2-3 words), buttons, or navigation. Use normal case for body."
     applies_to:
@@ -126,7 +126,7 @@ validations:
     name: Google Fonts Without display Parameter
     severity: error
     type: regex
-    pattern: 'fonts\.googleapis\.com/css2?\?[^"'']*(?!display=)[^"'']*["\''> ]'
+    pattern: "fonts\\.googleapis\\.com/css2?\\?[^\\\"']*(?!display=)[^\\\"']*[\"'> ]"
     message: "Google Fonts URL missing display=swap parameter, will cause invisible text."
     fix_action: "Add &display=swap to Google Fonts URL"
     applies_to:
@@ -218,7 +218,7 @@ validations:
     name: Prose Content Without Line Length Limit
     severity: warning
     type: regex
-    pattern: '<(article|p|div)[^>]*class=["\'][^"\']*prose[^"\']*["\'][^>]*>(?![^<]*max-w)'
+    pattern: "<(article|p|div)[^>]*class=['\"][^'\"]*prose[^'\"]*['\"][^>]*>(?![^<]*max-w)"
     message: "Prose content without max-width. Long lines (80+ chars) are hard to read."
     fix_action: "Add max-width: 65ch (or max-w-prose in Tailwind) to limit line length"
     applies_to:

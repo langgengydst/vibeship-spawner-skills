@@ -36,7 +36,7 @@ validations:
         - "const key = getSecret()"
 
   - id: innerhtml-assignment
-    pattern: '\.innerHTML\s*=\s*[^"\'`]'
+    pattern: '\\.innerHTML\s*=\s*[^"''`]'
     severity: warning
     message: "innerHTML with variable - potential XSS vulnerability"
     fix: "Use textContent or sanitize input"

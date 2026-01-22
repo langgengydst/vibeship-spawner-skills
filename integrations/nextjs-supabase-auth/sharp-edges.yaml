@@ -402,7 +402,7 @@ red_flags:
 
   - id: storing-password-plaintext
     severity: critical
-    pattern: 'password[\'"]?\\s*[=:]\\s*[\'"](?!.*\\$2[aby])'
+    pattern: 'password[''"]?\\s*[=:]\\s*[''"](?!.*\\$2[aby])'
     in_files:
       - "*.ts"
       - "*.tsx"

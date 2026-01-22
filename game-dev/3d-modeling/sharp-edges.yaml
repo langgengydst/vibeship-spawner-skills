@@ -688,7 +688,7 @@ edges:
       - Can't create different LODs from source
       - Wasted hours of work
     trigger_conditions:
-      - "Just quickly applying" modifiers
+      - '"Just quickly applying" modifiers'
       - Deadline pressure
       - Not using version control
     prevention: |

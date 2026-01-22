@@ -32,7 +32,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'method_name.*=.*["\']backdoor\\.'
+      - 'method_name.*=.*["'']backdoor\\.'
       - 'estimate_effect.*method.*=(?!.*multiple|.*robust)'
     message: "Using single causal estimator. Use multiple for robustness."
     fix_action: "Try multiple estimators and check agreement"

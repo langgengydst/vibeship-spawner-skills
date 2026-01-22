@@ -186,7 +186,7 @@ sharp_edges:
       Compare to Lethal Company's $10 = $40 for group.
     detection_pattern: "price|cost|purchase"
     symptoms:
-      - "I'll wait for a sale" comments
+      - '"I''ll wait for a sale" comments'
       - Solo play only despite co-op design
       - Low conversion from stream viewers
     solution: |
@@ -223,7 +223,7 @@ sharp_edges:
       your Steam reviews will tank from the other 99%.
     detection_pattern: "solo|single.*player|alone"
     symptoms:
-      - "Only fun with friends" reviews
+      - '"Only fun with friends" reviews'
       - Low player retention
       - Negative Steam reviews despite streamer success
     solution: |

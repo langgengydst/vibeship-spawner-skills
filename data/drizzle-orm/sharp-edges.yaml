@@ -182,7 +182,7 @@ sharp_edges:
       // Or switch to Neon/Supabase (real PostgreSQL with lateral join support)
     symptoms:
       - SQL syntax errors
-      - "Unsupported query" from PlanetScale
+      - '"Unsupported query" from PlanetScale'
       - Works locally but fails in production
     detection_pattern: null
     version_range: ">=0.20.0"
@@ -337,7 +337,7 @@ sharp_edges:
 
       # Check ecosystem compatibility before upgrading
     symptoms:
-      - "db.query is not a function" (moved to db._query)
+      - '"db.query is not a function" (moved to db._query)'
       - Type errors after upgrade
       - Third-party library incompatibility
     detection_pattern: '"drizzle-orm":\s*"[^"]*beta'

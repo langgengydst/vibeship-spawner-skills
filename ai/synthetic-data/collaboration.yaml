@@ -456,33 +456,22 @@ integration_patterns:
             // Write input data
             await writeFile(inputPath, JSON.stringify(realData));
 
-            // Python script
-            const script = `
-import json
-import pandas as pd
-from sdv.single_table import GaussianCopulaSynthesizer, CTGANSynthesizer, TVAESynthesizer
-from sdv.metadata import SingleTableMetadata
+          const script = `
+            import json
+            import pandas as pd
+            from sdv.evaluation.single_table import evaluate_quality
 
-with open('${inputPath}', 'r') as f:
-    data = json.load(f)
+            real_df = pd.DataFrame(json.load(open('\${realPath}')))
+            synth_df = pd.DataFrame(json.load(open('\${synthPath}')))
 
-df = pd.DataFrame(data)
-metadata = SingleTableMetadata()
-metadata.detect_from_dataframe(df)
+            report = evaluate_quality(real_df, synth_df)
 
-synthesizers = {
-    'gaussian_copula': GaussianCopulaSynthesizer,
-    'ctgan': CTGANSynthesizer,
-    'tvae': TVAESynthesizer,
-}
-
-Synthesizer = synthesizers['${config.synthesizer}']
-synth = Synthesizer(metadata)
-synth.fit(df)
-synthetic = synth.sample(${sampleCount})
-
-synthetic.to_json('${outputPath}', orient='records')
-`;
+            print(json.dumps({
+                'score': report.get_score(),
+                'columnShapes': report.get_property('Column Shapes').get('Score', 0),
+                'columnPairTrends': report.get_property('Column Pair Trends').get('Score', 0)
+            }))
+          `;
 
             // Execute Python
             await this.runPython(script);
@@ -514,21 +503,21 @@ synthetic.to_json('${outputPath}', orient='records')
             await writeFile(synthPath, JSON.stringify(syntheticData));
 
             const script = `
-import json
-import pandas as pd
-from sdv.evaluation.single_table import evaluate_quality
+              import json
+              import pandas as pd
+              from sdv.evaluation.single_table import evaluate_quality
 
-real_df = pd.DataFrame(json.load(open('${realPath}')))
-synth_df = pd.DataFrame(json.load(open('${synthPath}')))
+              real_df = pd.DataFrame(json.load(open('\${realPath}')))
+              synth_df = pd.DataFrame(json.load(open('\${synthPath}')))
 
-report = evaluate_quality(real_df, synth_df)
+              report = evaluate_quality(real_df, synth_df)
 
-print(json.dumps({
-    'score': report.get_score(),
-    'columnShapes': report.get_property('Column Shapes').get('Score', 0),
-    'columnPairTrends': report.get_property('Column Pair Trends').get('Score', 0)
-}))
-`;
+              print(json.dumps({
+                  'score': report.get_score(),
+                  'columnShapes': report.get_property('Column Shapes').get('Score', 0),
+                  'columnPairTrends': report.get_property('Column Pair Trends').get('Score', 0)
+              }))
+            `;
 
             const output = await this.runPython(script);
             return JSON.parse(output);

@@ -356,7 +356,7 @@ sharp_edges:
       - Withdraw transactions fail
       - Funds stuck in contract forever
       - Multi-sig can't receive payments
-      - "Out of gas" on withdraw attempts
+      - '"Out of gas" on withdraw attempts'
     detection_pattern: "\\.transfer\\(|\\.send\\("
     solution: |
       // BAD - 2300 gas stipend
@@ -448,7 +448,7 @@ sharp_edges:
     symptoms:
       - Traits don't show on OpenSea
       - Rarity.tools can't parse collection
-      - "Properties" section empty
+      - '"Properties" section empty'
       - Animation_url content doesn't play
     detection_pattern: "attributes|trait_type|value"
     solution: |

@@ -58,7 +58,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'system.*prompt.*=(?!.*not|.*never|.*don\'t|.*avoid|.*do not)'
+      - 'system.*prompt.*=(?!.*not|.*never|.*don''t|.*avoid|.*do not)'
     message: "System prompt without negative instructions (don'ts)."
     fix_action: "Add explicit don'ts to prevent common failure modes"
     applies_to:
@@ -71,8 +71,8 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'prompt\s*=\s*["\'][^"\']{100,}["\']'
-      - 'system_prompt\s*=\s*["\'][^"\']{100,}["\']'
+      - 'prompt\s*=\s*["''][^"'']{100,}["'']'
+      - 'system_prompt\s*=\s*["''][^"'']{100,}["'']'
     message: "Long hardcoded prompt - consider externalizing for management."
     fix_action: "Move prompts to separate files for version control"
     applies_to:

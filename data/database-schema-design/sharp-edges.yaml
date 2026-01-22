@@ -187,9 +187,9 @@ sharp_edges:
 
       -- Tools: pg_repack, pt-online-schema-change, gh-ost
     symptoms:
-      - "Simple" migration takes hours
+      - '"Simple" migration takes hours'
       - Application timeouts during migration
-      - "We need a maintenance window" for column addition
+      - '"We need a maintenance window" for column addition'
     detection_pattern: 'ALTER TABLE.*ADD COLUMN.*DEFAULT|ALTER TABLE.*ALTER COLUMN.*TYPE'
 
   - id: soft-delete-query-leak
@@ -362,7 +362,7 @@ sharp_edges:
         // CHECK (status IN ('PENDING', 'SHIPPED', 'ARCHIVED'))
       }
     symptoms:
-      - "invalid input value for enum" errors after deploy
+      - '"invalid input value for enum" errors after deploy'
       - Works locally, fails in production
       - Enum drift between environments
     detection_pattern: 'enum.*\\{[^}]*\\}'

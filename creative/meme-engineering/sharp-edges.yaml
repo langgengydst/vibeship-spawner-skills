@@ -42,7 +42,7 @@ sharp_edges:
       | A | Can be weird with guardrails |
       | B | Can reference trends safely |
       | C | Stick to owned content |
-      | F | Just don't |
+      | F | Just don''t |
 
       ### Decision Framework
 
@@ -55,7 +55,7 @@ sharp_edges:
       □ Can we handle being roasted?
       □ Is our response time fast enough?
 
-      If any "no" → don't post.
+      If any "no" → don''t post.
       ```
     symptoms:
       - '"How do you do fellow kids" energy'
@@ -175,7 +175,7 @@ sharp_edges:
       ```
     symptoms:
       - Crickets on posts
-      - "I don't get it" comments
+      - '"I don''t get it" comments'
       - Wrong crowd engaging
     detection_pattern: "who is this for|wrong audience|didn't land"
 

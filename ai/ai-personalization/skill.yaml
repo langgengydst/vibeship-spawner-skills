@@ -656,30 +656,25 @@ patterns:
 
         return `You are a helpful assistant personalized for this user.
 
-User Profile: ${context.profileSummary}
+          User Profile: ${context.profileSummary}
 
-Communication Guidelines:
-- ${styleGuide[context.preferences.communicationStyle]}
-- ${verbosityGuide[context.preferences.verbosity]}
-- ${expertiseGuide[context.preferences.expertise]}
+          Communication Guidelines:
+          - ${styleGuide[context.preferences.communicationStyle]}
+          - ${verbosityGuide[context.preferences.verbosity]}
+          - ${expertiseGuide[context.preferences.expertise]}
 
-Personalization Notes:
-- Remember the user's previous interactions and preferences
-- Maintain consistency with past conversations
-- Adapt explanations to their expertise level`;
+          Personalization Notes:
+          - Remember the user's previous interactions and preferences
+          - Maintain consistency with past conversations
+          - Adapt explanations to their expertise level;`;
       }
 
       // Personalized chat with memory
-      async function personalizedChat(
-            userMessage: string,
-            context: UserContext,
-            ragContext?: PersonalizedRAGContext
-      ): Promise<string> {
+      async function personalizedChat(userMessage, context, ragContext) {
         const systemPrompt = buildPersonalizedSystemPrompt(context);
 
-        const messages: OpenAI.ChatCompletionMessageParam[] = [
-          { role: "system", content: systemPrompt },
-        ];
+        const messages: OpenAI.ChatCompletionMessageParam[] = [];
+        messages.push({ role: "system", content: systemPrompt });
 
         // Add relevant memories from RAG
         if (ragContext?.relevantMemories.length) {

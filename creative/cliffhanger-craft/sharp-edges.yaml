@@ -119,7 +119,7 @@ sharp_edges:
       | Changed direction | Bridge content |
     symptoms:
       - Disappointment after reveal
-      - "That's it?" reactions
+      - '"That''s it?" reactions'
       - Trust erosion
     detection_pattern: "disappointed|not worth it|waited for this"
 

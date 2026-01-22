@@ -197,7 +197,7 @@ sharp_edges:
       - Player position rubber-banding
       - State changes don't persist
       - Different behavior on host vs client
-      - "Desynced" gameplay feel
+      - '"Desynced" gameplay feel'
     detection_pattern: '(Health|Ammo|Score|Lives|Mana)\s*[-+]=(?!.*HasAuthority|.*ROLE_Authority)'
 
   - id: hard-asset-references
@@ -249,7 +249,7 @@ sharp_edges:
       - Long level load times
       - High memory usage
       - Editor opens slowly
-      - "Reference Viewer" shows everything connected
+      - '"Reference Viewer" shows everything connected'
     detection_pattern: 'UPROPERTY\([^)]*\)\s*(UStaticMesh|USkeletalMesh|UTexture2D|UMaterialInterface|USoundBase|UAnimMontage)\*'
 
   - id: constructor-component-access
@@ -344,7 +344,7 @@ sharp_edges:
       // Blueprint: Always use "Cast" node with both exec pins
       // Connect the "Cast Failed" pin to handle the failure case
     symptoms:
-      - "Accessed None" Blueprint errors
+      - '"Accessed None" Blueprint errors'
       - Random crashes on overlap/hit events
       - Crashes with mixed actor types
       - Works in test, crashes in play
@@ -497,7 +497,7 @@ sharp_edges:
       // Reference this DataAsset from GameMode = all meshes cook
     symptoms:
       - Works in editor, crashes in package
-      - "Failed to load" errors in packaged game
+      - '"Failed to load" errors in packaged game'
       - Missing meshes/textures in build
       - LogAssetRegistry warnings
     detection_pattern: 'LoadObject<[^>]+>\s*\(\s*nullptr\s*,\s*TEXT\s*\('

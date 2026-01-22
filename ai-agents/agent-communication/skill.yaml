@@ -364,10 +364,10 @@ patterns:
                       role: 'system',
                       content: `You are contributing to a collaborative analysis on: ${topic}
 
-Existing contributions:
-${context}
+                      Existing contributions:
+                      ${context}
 
-Add new insights that complement, not duplicate, existing contributions.`
+                      Add new insights that complement, not duplicate, existing contributions.`
                   }]
               });
 
@@ -376,7 +376,7 @@ Add new insights that complement, not duplicate, existing contributions.`
                   `${topic}.${this.id}`,
                   response.content,
                   this.id,
-                              { confidence: 0.8 }
+                  { confidence: 0.8 }
               );
           }
 

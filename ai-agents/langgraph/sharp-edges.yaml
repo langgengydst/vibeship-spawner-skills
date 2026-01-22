@@ -206,7 +206,7 @@ sharp_edges:
   - id: async-sync-mismatch
     summary: Mixing async and sync incorrectly
     severity: medium
-    situation: "Event loop" errors or blocking
+    situation: '"Event loop" errors or blocking'
     why: |
       LangGraph supports both sync and async.
       Mixing them causes problems.

@@ -116,7 +116,7 @@ sharp_edges:
     symptoms:
       - Clicks don't register during animation
       - Users clicking multiple times
-      - "Is this broken?" feeling
+      - '"Is this broken?" feeling'
       - Rage clicks on slow animations
     detection_pattern: 'pointer-events:\s*none.*transition'
 
@@ -186,7 +186,7 @@ sharp_edges:
       - Users don't notice animation (too fast)
       - Users waiting for UI (too slow)
       - Frustration on repeated use
-      - "Laggy" user feedback
+      - '"Laggy" user feedback'
     detection_pattern: 'transition-duration:\s*[1-9][0-9]{3,}ms|animation-duration:\s*[1-9]s'
 
   - id: z-index-animation-clash
