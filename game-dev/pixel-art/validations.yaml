@@ -96,7 +96,7 @@ validations:
     severity: error
     type: regex
     pattern:
-      - '\\.jpe?g["\']\\s*(?:as\\s+)?(?:sprite|texture|tileset|atlas|sheet)'
+      - "\\.jpe?g[\"']\\s*(?:as\\s+)?(?:sprite|texture|tileset|atlas|sheet)"
       - 'load\\.image\\([^)]+\\.jpe?g'
       - 'load\\.spritesheet\\([^)]+\\.jpe?g'
       - "src=['\"][^'\"]+sprite[^'\"]*\\.jpe?g"

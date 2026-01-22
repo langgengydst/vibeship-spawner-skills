@@ -111,7 +111,7 @@ sharp_edges:
     description: Smooth gradients become stepped on 8-bit displays
     symptoms:
       - Visible steps in gradient backgrounds
-      - "Posterization" effect
+      - '"Posterization" effect'
       - Worse on mobile and cheaper monitors
       - Print output looks different than screen
     detection_pattern: "gradient|lerp|color.*transition"

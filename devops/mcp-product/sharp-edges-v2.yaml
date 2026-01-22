@@ -56,7 +56,7 @@ sharp_edges:
       include_in_summary: true
 
   - id: silent-success-dead-end
-    summary: Returning { ok: true } leaves users stranded
+    summary: "Returning { ok: true } leaves users stranded"
     severity: critical
     context:
       when:
@@ -185,7 +185,7 @@ sharp_edges:
         spawner_remember  // "I want to remember this decision"
         spawner_context   // "I want to load my project context"
     detection:
-      pattern: 'name:\s*["\'].*_(create|get|update|delete|fetch|set)_'
+      pattern: "name:\\s*[\"'].*_(create|get|update|delete|fetch|set)_"
       file_types: ['*.ts', '*.js', '*.yaml']
 
   - id: jargon-without-explanation

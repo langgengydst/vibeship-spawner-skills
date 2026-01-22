@@ -141,7 +141,7 @@ sharp_edges:
     symptoms:
       - Attackers can set role/admin flags
       - Hidden fields can be manipulated
-      - "...req.body" in database operations
+      - '"...req.body" in database operations'
     detection_pattern: '\\.create\\(.*req\\.body|update\\(.*\\.\\.\\.req'
 
   - id: jwt-none-algorithm
@@ -200,7 +200,7 @@ sharp_edges:
     symptoms:
       - Tokens with no signature accepted
       - No algorithm validation
-      - "alg: none" works
+      - '"alg: none" works'
     detection_pattern: 'jwt\\.verify\\([^,]+,[^,]+\\)$'
 
   - id: timing-attacks
@@ -486,7 +486,7 @@ sharp_edges:
                name.length < 255;
       }
     symptoms:
-      - "../" in file paths works
+      - '"../" in file paths works'
       - User input in file operations
       - Can read files outside upload directory
     detection_pattern: 'readFile.*req\\.(params|query|body)'

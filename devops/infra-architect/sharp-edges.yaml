@@ -24,7 +24,7 @@ sharp_edges:
       4. Use PodDisruptionBudgets to limit concurrent terminations
     symptoms:
       - Pods constantly scaling up and down
-      - "0/1 pods ready" during traffic spikes
+      - '"0/1 pods ready" during traffic spikes'
       - HPA events showing rapid replica changes
     detection_pattern: 'stabilizationWindowSeconds|behavior:\s*scaleDown'
 
@@ -52,7 +52,7 @@ sharp_edges:
       4. Configure readiness probe to fail on shutdown
     symptoms:
       - 502/504 errors during deployments
-      - "connection reset by peer" in client logs
+      - '"connection reset by peer" in client logs'
       - Database connection pool errors during shutdown
     detection_pattern: 'terminationGracePeriodSeconds|preStop'
 
@@ -207,6 +207,6 @@ sharp_edges:
       4. Sync secrets across namespaces with external-secrets
     symptoms:
       - ImagePullBackOff status
-      - "unauthorized" or "not found" in pod events
+      - '"unauthorized" or "not found" in pod events'
       - Works locally but fails in cluster
     detection_pattern: 'imagePullSecrets|docker-registry'

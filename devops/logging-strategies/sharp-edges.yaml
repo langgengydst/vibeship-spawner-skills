@@ -316,11 +316,11 @@ sharp_edges:
         res.status(err.statusCode || 500).json({ error: 'Internal error' });
       });
     symptoms:
-      - "Error occurred" logs without details
+      - '"Error occurred" logs without details'
       - Missing stack traces
       - Cannot reproduce errors from logs
       - Multiple errors, unknown which is root cause
-    detection_pattern: 'logger\\.error\\([\'"]|catch.*logger\\.error.*message'
+    detection_pattern: "logger\\\\.error\\\\([\"']|catch.*logger\\\\.error.*message"
 
   - id: log-rotation-disk-full
     summary: Logs fill up disk, crash application or host

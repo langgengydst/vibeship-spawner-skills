@@ -33,7 +33,7 @@ sharp_edges:
       - Quality always beats quantity
     symptoms:
       - Big numbers, low engagement
-      - "Ghost town" feeling
+      - '"Ghost town" feeling'
       - OG members leaving
       - Culture complaints
     detection_pattern: "growing but|numbers up|engagement down|quiet"

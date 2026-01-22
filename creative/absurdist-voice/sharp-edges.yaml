@@ -4,7 +4,7 @@ sharp_edges:
   - id: crossing-the-line
     summary: Absurdism that becomes actually offensive
     severity: high
-    situation: "Edgy" content that hurts people
+    situation: '"Edgy" content that hurts people'
     why: |
       Edge felt safe internally.
       Didn't test with outsiders.

@@ -4,7 +4,7 @@ version: "1.0"
 
 validations:
   - id: hardcoded-api-key
-    pattern: '(?:api[_-]?key|secret|token)\s*[=:]\s*["\'][a-zA-Z0-9_-]{20,}["\']'
+    pattern: "(?:api[_-]?key|secret|token)\\s*[=:]\\s*[\"'][a-zA-Z0-9_-]{20,}[\"']"
     severity: critical
     message: "Hardcoded API key detected - use environment variables"
     fix: "Move to .env file: STABILITY_API_KEY=your_key_here"

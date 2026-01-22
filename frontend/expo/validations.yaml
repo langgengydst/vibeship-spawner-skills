@@ -17,7 +17,7 @@ validations:
     name: Hardcoded API Key in Config
     severity: high
     type: regex
-    pattern: '(apiKey|API_KEY|secret)["\']?\s*[:=]\s*["\'][a-zA-Z0-9_-]{20,}'
+    pattern: "(apiKey|API_KEY|secret)[\"']?\\s*[:=]\\s*[\"'][a-zA-Z0-9_-]{20,}"
     message: "API keys should not be hardcoded. Use environment variables."
     fix_action: "Use EAS secrets or expo-constants for runtime config"
     applies_to:

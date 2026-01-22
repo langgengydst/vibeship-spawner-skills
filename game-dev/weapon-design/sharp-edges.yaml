@@ -68,7 +68,7 @@ sharp_edges:
     symptoms:
       - Players confuse weapons in inventory
       - Enemy weapon identification fails
-      - "They all look the same" feedback
+      - '"They all look the same" feedback'
       - Loot drops feel unrewarding
     detection_pattern: null
 

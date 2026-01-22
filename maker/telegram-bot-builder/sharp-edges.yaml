@@ -65,7 +65,7 @@ sharp_edges:
       }
       ```
     symptoms:
-      - "Too Many Requests" errors
+      - '"Too Many Requests" errors'
       - Messages not delivering
       - 429 error codes
       - Bot seems slow
@@ -200,7 +200,7 @@ sharp_edges:
       ```
     symptoms:
       - Multi-step flows fail
-      - "Start over" needed frequently
+      - '"Start over" needed frequently'
       - User data lost
       - Inconsistent behavior
     detection_pattern: "state|session|forgot|lost|context"

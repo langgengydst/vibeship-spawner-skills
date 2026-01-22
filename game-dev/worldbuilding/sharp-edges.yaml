@@ -275,10 +275,10 @@ sharp_edges:
       Taking a real-world culture and just adding fantasy names. Often becomes
       stereotyping or exoticization, especially of non-Western cultures.
     symptoms:
-      - "Desert People" who are just Arabs with different names
-      - "Honor-Bound Warriors" who are just Japanese samurai
-      - "Noble Savages" based on Indigenous stereotypes
-      - "Mysterious Eastern Mystics" based on Asian stereotypes
+      - '"Desert People" who are just Arabs with different names'
+      - '"Honor-Bound Warriors" who are just Japanese samurai'
+      - '"Noble Savages" based on Indigenous stereotypes'
+      - '"Mysterious Eastern Mystics" based on Asian stereotypes'
       - Culture has all the stereotypes, none of the depth
     detection_pattern: "inspired by|based on|like the|similar to|eastern|tribal"
     situation: |
@@ -340,7 +340,7 @@ sharp_edges:
       Names from different cultures sound identical. Unpronounceable names.
     symptoms:
       - Fantasy names next to modern names
-      - "Sir Bob" alongside "Xylprthax the Undying"
+      - '"Sir Bob" alongside "Xylprthax the Undying"'
       - Different cultures have identical naming patterns
       - Players can't pronounce or remember names
       - Names look like keyboard mashing
@@ -400,7 +400,7 @@ sharp_edges:
       systems that real people would genuinely follow.
     symptoms:
       - Religion has rules but no believers with genuine faith
-      - "Evil god" that people worship for no reason
+      - '"Evil god" that people worship for no reason'
       - Religion is just "fantasy Christianity" with name changes
       - Believers act like they don't actually believe
       - Religion doesn't answer any existential questions
@@ -470,7 +470,7 @@ sharp_edges:
       - Rivers flow uphill or have no source
       - Mountains appear in random locations
       - Biomes make no geographic sense
-      - "Because it's fantasy" when questioned
+      - '"Because it''s fantasy" when questioned'
     detection_pattern: "map|geography|climate|biome|desert|forest|mountain"
     situation: |
       You place biomes on a map based on what looks cool or what you need
@@ -609,7 +609,7 @@ sharp_edges:
       they solve, requiring more retcons, leading to lore chaos.
     symptoms:
       - Fans keep a list of contradictions
-      - "That was retconned" becomes common phrase
+      - '"That was retconned" becomes common phrase'
       - Writers lose track of what's canon
       - New reveals contradict old ones
       - Lore becomes incomprehensible to newcomers

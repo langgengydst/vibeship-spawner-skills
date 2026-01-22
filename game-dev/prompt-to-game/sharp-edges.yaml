@@ -12,7 +12,7 @@ sharp_edges:
       AI is confident but wrong.
     detection_pattern: "import|require|from.*(?!react|phaser|three|kaboom|godot)"
     symptoms:
-      - "X is not a function" errors
+      - '"X is not a function" errors'
       - "Cannot find module" errors
       - Method exists but signature is wrong
     solution: |

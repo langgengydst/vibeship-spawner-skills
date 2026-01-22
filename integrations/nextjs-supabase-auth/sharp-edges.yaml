@@ -390,7 +390,7 @@ red_flags:
 
   - id: no-rls-with-auth
     severity: critical
-    pattern: 'createClient[\\s\\S]{0,300}?from\\([\'"](?!public\\.)'
+    pattern: "createClient[\\\\s\\\\S]{0,300}?from\\\\([\"'](?!public\\\\.)"
     in_files:
       - "*.ts"
       - "*.tsx"

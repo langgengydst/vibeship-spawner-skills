@@ -397,7 +397,7 @@ sharp_edges:
       Include human figure silhouettes at 1.8m height
       in at least side and front views.
     symptoms:
-      - "How big is this supposed to be?" in reviews
+      - '"How big is this supposed to be?" in reviews'
       - 3D model built at wrong scale
       - Interiors don't fit humans when modeled
       - Vehicle looks like toy or building unexpectedly

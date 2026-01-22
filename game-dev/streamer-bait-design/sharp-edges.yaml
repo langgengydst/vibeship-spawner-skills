@@ -13,7 +13,7 @@ sharp_edges:
     detection_pattern: "music|soundtrack|audio|licensed"
     symptoms:
       - Streamers decline keys
-      - "Is this DMCA safe?" in every review
+      - '"Is this DMCA safe?" in every review'
       - Muted sections in VODs
     solution: |
       1. Ship with Streamer Mode toggle

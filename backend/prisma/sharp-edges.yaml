@@ -65,7 +65,7 @@ sharp_edges:
   - id: connection-exhaustion
     summary: Too many database connections
     severity: high
-    situation: "Connection timeout" or "Too many clients"
+    situation: '"Connection timeout" or "Too many clients"'
     why: |
       New PrismaClient per request.
       Serverless scales connections.
@@ -328,6 +328,6 @@ sharp_edges:
       });
     symptoms:
       - Related data disappeared
-      - "Row not found" errors
+      - '"Row not found" errors'
       - Data integrity issues
     detection_pattern: 'onDelete.*Cascade'

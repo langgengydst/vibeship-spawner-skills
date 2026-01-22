@@ -425,7 +425,7 @@ sharp_edges:
   - id: scope-explosion
     summary: Adding features without cutting others
     severity: critical
-    situation: "Just one more mechanic" without time adjustment
+    situation: '"Just one more mechanic" without time adjustment'
     why: |
       Game never ships. Everything is half-done. Quality suffers. Team burns out.
       Project dies in development.

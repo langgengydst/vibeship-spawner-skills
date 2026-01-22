@@ -33,7 +33,7 @@ sharp_edges:
     symptoms:
       - Tests pass in isolation, fail in suite
       - Random test failures in CI
-      - '"Unique constraint violation" in test logs
+      - '"Unique constraint violation" in test logs'
     detection_pattern: 'fixture.*scope.*session|shared.*database|@pytest.fixture.*scope'
 
   - id: async-test-not-awaited
@@ -62,7 +62,7 @@ sharp_edges:
          # ruff: enable RUF006 (asyncio-dangling-task)
     symptoms:
       - Tests pass but functionality is broken
-      - "coroutine was never awaited" warnings
+      - '"coroutine was never awaited" warnings'
       - Async tests complete instantly
     detection_pattern: 'assert.*\(\)(?!.*await)|async def test.*(?!.*await)'
 
@@ -208,7 +208,7 @@ sharp_edges:
          pytest --resource-monitor
     symptoms:
       - CI runs slower over time
-      - "Too many open files" errors
+      - '"Too many open files" errors'
       - Tests hang waiting for resources
     detection_pattern: 'tempfile|open\(|create.*connection'
 

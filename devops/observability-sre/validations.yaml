@@ -24,9 +24,9 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'logger\.(info|warning|error)\(["\'][^"\']+["\'](?!.*request_id)'
-      - 'console\.(log|error)\(["\'][^"\']+["\']\)'
-      - 'log\.(Info|Warn|Error)\(["\'][^"\']+["\'](?!.*traceId)'
+      - "logger\\.(info|warning|error)\\([\"'][^\"']+[\"'](?!.*request_id)"
+      - "console\\.(log|error)\\([\"'][^\"']+[\"']\\)"
+      - "log\\.(Info|Warn|Error)\\([\"'][^\"']+[\"'](?!.*traceId)"
     message: "Log without request context. Can't correlate during debugging."
     fix_action: "Include request_id or trace_id: logger.info('msg', request_id=req_id)"
     applies_to:

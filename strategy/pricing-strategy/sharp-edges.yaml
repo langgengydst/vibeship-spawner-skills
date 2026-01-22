@@ -243,13 +243,13 @@ sharp_edges:
          - Strategic market entry
     symptoms:
       - Low conversion in specific countries
-      - '"Too expensive" from specific regions
+      - '"Too expensive" from specific regions'
       - Tax compliance concerns
       - Payment failures in some countries
     detection_pattern: "international|global|localization|currency|PPP"
 
   - id: feature-gating-confusion
-    title: Feature Gating Confusion - What's in Each Tier?
+    title: "Feature Gating Confusion - What's in Each Tier?"
     severity: medium
     situation: |
       Three pricing tiers. Each tier has 10+ features. Feature matrix is
@@ -323,7 +323,7 @@ sharp_edges:
          - Cohort retention by plan type
          - LTV by monthly vs annual
     symptoms:
-      - >50% of customers on monthly
+      - '>50% of customers on monthly'
       - High early churn (before month 3)
       - Cash flow concerns
       - Monthly highlighted on pricing page
@@ -363,5 +363,5 @@ sharp_edges:
     symptoms:
       - Most customers on cheapest tier
       - Middle tier underperforms
-      - "Your prices seem high" feedback
+      - '"Your prices seem high" feedback'
     detection_pattern: "pricing page|price order|tiers|plans"

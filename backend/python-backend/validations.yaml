@@ -11,8 +11,8 @@ validations:
     severity: error
     type: regex
     pattern:
-      - '(password|api_key|secret|token)\s*=\s*["\'][^"\']{8,}'
-      - 'SECRET_KEY\s*=\s*["\'][^"\']+["\']'
+      - "(password|api_key|secret|token)\\s*=\\s*[\"'][^\"']{8,}"
+      - "SECRET_KEY\\s*=\\s*[\"'][^\"']+[\"']"
     message: "Secrets should be in environment variables, not code"
     fix_action: "Use os.getenv() or pydantic-settings"
     applies_to:
@@ -23,9 +23,9 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'execute\s*\(\s*f["\']'
-      - 'execute\s*\([^)]*%\s*\('
-      - 'raw\s*\(\s*f["\']'
+      - "execute\\s*\\(\\s*f[\"']"
+      - "execute\\s*\\([^)]*%\\s*\\("
+      - "raw\\s*\\(\\s*f[\"']"
     message: "Use parameterized queries to prevent SQL injection"
     fix_action: "Use query parameters: execute(sql, (param,))"
     applies_to:

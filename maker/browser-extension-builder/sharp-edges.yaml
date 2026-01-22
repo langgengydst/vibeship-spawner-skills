@@ -183,7 +183,7 @@ sharp_edges:
       4. Be patient (can take weeks)
     symptoms:
       - Rejection email received
-      - "Policy violation" mentioned
+      - '"Policy violation" mentioned'
       - Extension removed from store
       - Appeals denied
     detection_pattern: "rejected|store|policy|violation|removed"

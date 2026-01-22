@@ -9,7 +9,7 @@ sharp_edges:
     description: Browser can destroy your WebGL context anytime - handle it or your app dies
     symptoms:
       - Black screen after tab switch
-      - "WebGL context lost" in console
+      - '"WebGL context lost" in console'
       - All textures gone, scene empty
       - Mobile browser tab reload kills everything
     detection_pattern: "WebGLRenderer|createRenderer|new THREE"

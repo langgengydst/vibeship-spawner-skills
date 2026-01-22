@@ -228,7 +228,7 @@ validations:
   - id: false-urgency
     name: Narrative urgency without mechanical enforcement
     severity: medium
-    description: "Hurry!" in dialogue but no time limit in gameplay
+    description: "\"Hurry!\" in dialogue but no time limit in gameplay"
     pattern:
       file_glob: "**/*.{ink,yarn,json,yaml}"
       match: "(hurry|quickly|no time|urgent|immediately|right now|before it's too late)"

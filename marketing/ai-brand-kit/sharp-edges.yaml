@@ -203,7 +203,7 @@ edges:
       code:
         - prompts specify exact structures
         - no room for contextual adaptation
-        - "always" and "never" overused
+        - '"always" and "never" overused'
     problem: |
       In pursuit of consistency, prompts become so prescriptive they kill
       creativity. "Always use this exact sentence structure." "Never vary

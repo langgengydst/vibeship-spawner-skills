@@ -11,9 +11,9 @@ validations:
     severity: critical
     type: regex
     pattern:
-      - 'query\\s*\\(\\s*[`\'"].*\\$\{'
-      - 'query\\s*\\(\\s*[`\'"].*\\+\\s*'
-      - 'WHERE.*=.*[\'"]\\s*\\+\\s*'
+      - "query\\s*\\(\\s*[`'\"]"
+      - "query\\s*\\(\\s*[`'\"]"
+      - "WHERE.*=.*['\"]\\s*\\+\\s*"
       - 'exec\\s*\\(.*\\+.*\\)'
     message: "Potential SQL injection - use parameterized queries"
     fix_action: "Use prepared statements or ORM with parameter binding"
@@ -42,9 +42,9 @@ validations:
     severity: critical
     type: regex
     pattern:
-      - 'api[_-]?key\\s*[=:]\\s*[\'"][a-zA-Z0-9]{20,}'
-      - 'secret\\s*[=:]\\s*[\'"][a-zA-Z0-9]{20,}'
-      - 'password\\s*[=:]\\s*[\'"][^\'"]{8,}'
+      - "api[_-]?key\\s*[=:]\\s*['\"][a-zA-Z0-9]{20,}"
+      - "secret\\s*[=:]\\s*['\"][a-zA-Z0-9]{20,}"
+      - "password\\s*[=:]\\s*['\"][^'\"]{8,}"
       - 'sk_live_[a-zA-Z0-9]+'
       - 'ghp_[a-zA-Z0-9]+'
       - 'AKIA[A-Z0-9]{16}'
@@ -75,8 +75,8 @@ validations:
     severity: high
     type: regex
     pattern:
-      - 'createHash\\s*\\([\'"]md5[\'"]\\)'
-      - 'createHash\\s*\\([\'"]sha1[\'"]\\)'
+      - "createHash\\s*\\(['\"]md5['\"]\\)"
+      - "createHash\\s*\\(['\"]sha1['\"]\\)"
       - 'hashSync\\s*\\([^,]+,\\s*[0-5]\\s*\\)'
     message: "Use strong password hashing (Argon2 or bcrypt with high rounds)"
     fix_action: "Use Argon2id or bcrypt with cost factor >= 10"

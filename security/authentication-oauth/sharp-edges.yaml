@@ -108,7 +108,7 @@ sharp_edges:
     symptoms:
       - Passwords visible in database
       - MD5/SHA in password code
-      - "Forgot password" emails contain actual password
+      - '"Forgot password" emails contain actual password'
     detection_pattern: 'md5\(|sha1\(|sha256\(.*password|password.*=.*password'
 
   - id: no-oauth-state-validation
@@ -249,7 +249,7 @@ sharp_edges:
       - Hardcoded "secret" or "password" for JWT
       - Short JWT secret
       - Secret in git repository
-    detection_pattern: "jwt\.sign\([^)]+['\"]\w{1,20}['\"]|secret.*=.*['\"]\w{1,20}['\"]"
+    detection_pattern: "jwt\\.sign\\([^)]+['\"]\\w{1,20}['\"]|secret.*=.*['\"]\\w{1,20}['\"]"
 
   - id: no-refresh-token-rotation
     summary: Refresh tokens that can be reused indefinitely
@@ -450,7 +450,7 @@ sharp_edges:
         return text.includes(suffix);
       }
     symptoms:
-      - "123456" accepted as password
+      - '"123456" accepted as password'
       - No password strength indicator
       - Breaches expose many simple passwords
     detection_pattern: 'password\.length.*>.*[1-7]\b|minLength.*[1-7]\b'

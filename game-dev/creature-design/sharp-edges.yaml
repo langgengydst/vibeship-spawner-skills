@@ -48,7 +48,7 @@ sharp_edges:
     symptoms:
       - Can't tell creatures apart in gameplay
       - Players don't react appropriately to threat
-      - "What was that thing?" complaints
+      - '"What was that thing?" complaints'
       - Art looks great in portfolio, fails in game
       - Creatures blend into backgrounds
     detection_pattern: null

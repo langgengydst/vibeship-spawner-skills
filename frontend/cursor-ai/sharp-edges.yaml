@@ -137,7 +137,7 @@ sharp_edges:
     symptoms:
       - AI forgets earlier instructions
       - Partial responses
-      - "I don't see that file" errors
+      - '"I don''t see that file" errors'
     detection_pattern: '@src/|@lib/|@components/'
 
   - id: background-agent-isolation

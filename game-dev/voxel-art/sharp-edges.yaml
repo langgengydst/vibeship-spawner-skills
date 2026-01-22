@@ -268,7 +268,7 @@ edges:
       - Frame rate drops from 60 to 5 FPS
       - Models render as black (too many tris)
       - Unity/Unreal import hangs or crashes
-      - "Draw call" warnings everywhere
+      - '"Draw call" warnings everywhere'
     trigger_conditions:
       - Direct MagicaVoxel OBJ export without optimization
       - Not checking triangle count before import
@@ -413,7 +413,7 @@ edges:
       If any are missing during import, the model appears grey or untextured.
     symptoms:
       - Model imports as solid grey/white
-      - "Missing material" warnings
+      - '"Missing material" warnings'
       - No colors on imported mesh
       - Works in Blender, fails in engine
     trigger_conditions:

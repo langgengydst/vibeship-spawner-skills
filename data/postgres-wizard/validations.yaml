@@ -66,7 +66,7 @@ validations:
     pattern:
       - 'execute\s*\(\s*f"[^"]*\{[^}]+\}'
       - "execute\\s*\\(\\s*f'[^']*\\{[^}]+\\}"
-      - 'query\s*\+\s*["\'][^"\']+["\']\s*\+'
+      - "query\\s*\\+\\s*[\"'][^\"']+[\"']\\s*\\+"
       - '`SELECT.*\$\{.*\}`'
     message: "SQL string concatenation. SQL injection vulnerability."
     fix_action: "Use parameterized queries: execute(sql, (param,))"

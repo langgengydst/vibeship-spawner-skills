@@ -46,7 +46,7 @@ sharp_edges:
       - Instantiate() with 4 parameters
       """
     symptoms:
-      - "Method not found" errors
+      - '"Method not found" errors'
       - "Namespace not found" errors
       - Code looks correct but doesn't compile
     detection_pattern: 'GetComponent|Instantiate|AddForce|Input\.'

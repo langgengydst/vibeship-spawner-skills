@@ -225,7 +225,7 @@ sharp_edges:
       - Document metadata standard publicly
     symptoms:
       - Broken NFT images
-      - "Unknown" items in marketplaces
+      - '"Unknown" items in marketplaces'
       - Metadata changes without warning
     detection_pattern: 'tokenURI.*https://|metadata.*http://'
 

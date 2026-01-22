@@ -173,7 +173,7 @@ patterns:
         return { created: true, id: "abc123" };
     why:
       - Vibe coders learn through usage
-      - "It said success but nothing happened" = dead end
+      - '"It said success but nothing happened" = dead end'
       - Every success is a teaching moment
 
   - id: human-error-messages
@@ -215,7 +215,7 @@ patterns:
         spawner_fetch_edges     // Database thinking
     why:
       - Users think in goals, not database operations
-      - "I want to plan my project" not "I want to create a project record"
+      - '"I want to plan my project" not "I want to create a project record"'
       - Verbs like get/set/fetch/create signal developer tools, not user tools
 
 # ============================================================================
@@ -235,8 +235,8 @@ anti_patterns:
     name: Jargon Wall
     description: Using technical terms without explanation
     why:
-      - "RLS policies" means nothing to someone who started last week
-      - "Hydration errors" is gibberish to non-React developers
+      - '"RLS policies" means nothing to someone who started last week'
+      - '"Hydration errors" is gibberish to non-React developers'
       - You'll lose them immediately
     instead: Plain language first, technical terms in parentheses
 
@@ -244,7 +244,7 @@ anti_patterns:
     name: Silent Success
     description: Returning minimal confirmation without context
     why:
-      - "{ ok: true }" tells users nothing
+      - '{ ok: true } tells users nothing'
       - Did it work? What happened? What next?
       - They're left guessing
     instead: Confirm what happened, show the result, suggest next steps
@@ -262,7 +262,7 @@ anti_patterns:
     name: CRUD Naming
     description: Naming tools like database operations
     why:
-      - "spawner_create_project" is database thinking
+      - '"spawner_create_project" is database thinking'
       - Users don't think in CRUD
       - They think in goals and workflows
     instead: Name by what users accomplish (plan, remember, unstick)
@@ -271,7 +271,7 @@ anti_patterns:
     name: Raw Error Codes
     description: Returning error codes or stack traces without human explanation
     why:
-      - "-32602 Invalid params" helps no one
+      - '"-32602 Invalid params" helps no one'
       - Vibe coders don't know what params are
       - Developers need WHICH param and WHY
     instead: What went wrong, why it might have happened, what to try next

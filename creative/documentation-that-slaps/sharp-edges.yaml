@@ -143,7 +143,7 @@ sharp_edges:
     symptoms:
       - Thousands of pages, low traffic
       - Same questions in Slack
-      - "Did you check the docs?" / "Where?"
+      - '"Did you check the docs?" / "Where?"'
       - Beautiful docs no one sees
     detection_pattern: "where is|can't find|is there docs"
 

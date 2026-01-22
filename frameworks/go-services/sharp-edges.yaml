@@ -140,7 +140,7 @@ sharp_edges:
           f.Close()  // Immediate close
       }
     symptoms:
-      - "too many open files" errors
+      - '"too many open files" errors'
       - Memory usage spikes during loops
       - Resources not released as expected
     detection_pattern: 'for\s+[^{]*\{[^}]*defer\s+'

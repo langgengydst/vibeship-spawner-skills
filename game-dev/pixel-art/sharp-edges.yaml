@@ -10,7 +10,7 @@ sharp_edges:
     symptoms:
       - Blurry rotated sprites
       - Some pixels larger than others
-      - "Staircase" patterns become irregular
+      - '"Staircase" patterns become irregular'
       - Art loses its crisp pixel quality
     detection_pattern: "rotate|rotation|angle|transform|spin"
     why_it_happens: |

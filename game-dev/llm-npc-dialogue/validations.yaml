@@ -55,7 +55,7 @@ validations:
     name: Hardcoded API Key
     severity: critical
     type: regex
-    pattern: 'api[_-]?key\\s*[=:]\\s*["\'][a-zA-Z0-9_-]{20,}["\']|sk-[a-zA-Z0-9]{20,}'
+    pattern: "api[_-]?key\\s*[=:]\\s*[\"'][a-zA-Z0-9_-]{20,}[\"']|sk-[a-zA-Z0-9]{20,}"
     message: "Hardcoded API key detected. This will be exposed in builds."
     fix_action: "Use environment variables or secure key storage"
     applies_to:

@@ -50,7 +50,7 @@ receives_from:
     provides:
       - Replayability for streaming
       - Unique content per run
-      - "Never the same stream twice" design
+      - '"Never the same stream twice" design'
 
 delegation_triggers:
   - trigger: "core loop|fundamental mechanics|game design"

@@ -52,7 +52,7 @@ sharp_edges:
         new Chart(canvas, config);
       });
     symptoms:
-      - "window is not defined" error
+      - '"window is not defined" error'
       - "document is not defined" error
       - Works in dev, crashes in production
     detection_pattern: '(?<!browser\s*&&\s*)(?<!if\s*\(browser\)\s*)(window\.|document\.|localStorage)'

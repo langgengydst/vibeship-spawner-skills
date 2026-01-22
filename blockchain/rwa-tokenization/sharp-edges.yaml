@@ -433,9 +433,9 @@ sharp_edges:
       checks. Skipping verifications to save gas creates vulnerabilities.
     symptoms:
       - Batched transfers skip individual checks
-      - "Gas efficient mode" bypasses compliance
-      - Cached verification to avoid re-checks
-      - "We check off-chain before on-chain"
+      - '"Gas efficient mode" bypasses compliance'
+      - cached verification to avoid re-checks
+      - '"We check off-chain before on-chain"'
     why_dangerous: |
       Gas shortcuts create:
       - Compliance bypass vectors

@@ -233,7 +233,7 @@ sharp_edges:
          - If we won't touch it for 10 months, don't pay yet
     symptoms:
       - Refactoring code that works
-      - "Cleanup" in stable areas
+      - '"Cleanup" in stable areas'
       - No business driver for the work
       - Measuring success by code changed, not problems solved
     detection_pattern: "clean up|refactor.*that works|make it nicer"

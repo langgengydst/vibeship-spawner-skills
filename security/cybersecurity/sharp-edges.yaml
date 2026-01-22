@@ -236,7 +236,7 @@ sharp_edges:
       - No salt in hashing
       - Plaintext password storage
       - Reversible encryption for passwords
-    detection_pattern: 'md5\(|sha1\(|createHash\(["\']md5|createHash\(["\']sha1'
+    detection_pattern: "md5\\(|sha1\\(|createHash\\([\"']md5|createHash\\([\"']sha1"
 
   - id: csrf-vulnerability
     summary: State-changing requests without CSRF protection
@@ -432,7 +432,7 @@ sharp_edges:
       - MD5 or SHA1 for security
       - ECB mode
       - Static/predictable IVs
-    detection_pattern: 'createCipher\\(["\']des|createHash\\(["\']md5|aes-.*-ecb'
+    detection_pattern: "createCipher\\([\"']des|createHash\\([\"']md5|aes-.*-ecb"
 
   - id: unvalidated-redirect
     summary: Redirecting users based on user-supplied URLs

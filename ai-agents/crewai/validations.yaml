@@ -60,7 +60,7 @@ validations:
     name: Vague Agent Role
     severity: low
     type: regex
-    pattern: 'role\s*=\s*["\'](?:Agent|Assistant|Helper|Worker)["\']'
+    pattern: "role\\s*=\\s*[\"'](?:Agent|Assistant|Helper|Worker)[\"']"
     message: "Agent role is too generic. Be specific about expertise."
     fix_action: "Use specific role like 'Senior Python Developer' or 'Market Research Analyst'"
     applies_to:

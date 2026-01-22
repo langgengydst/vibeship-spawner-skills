@@ -32,7 +32,7 @@ validations:
     name: String-Based Blackboard Keys
     severity: warning
     type: regex
-    pattern: 'blackboard\\.set\\s*\\(\\s*["\']|GetValue\\s*\\(\\s*["\']|SetValue\\s*\\(\\s*["\']'
+    pattern: "blackboard\\.set\\s*\\(\\s*[\"']|GetValue\\s*\\(\\s*[\"']|SetValue\\s*\\(\\s*[\"']"
     message: "String-based blackboard access. Typos cause silent failures."
     fix_action: "Use typed blackboard properties or constants for keys"
     applies_to:

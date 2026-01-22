@@ -32,7 +32,7 @@ sharp_edges:
     symptoms:
       - Extensive docs for unshipped features
       - Docs that need major rewrites
-      - "Let me update the docs" in every PR
+      - '"Let me update the docs" in every PR'
     detection_pattern: "comprehensive docs|full documentation|document everything"
 
   - id: generated-docs-as-done
@@ -66,7 +66,7 @@ sharp_edges:
     symptoms:
       - Users asking "how do I..." for documented features
       - Support questions that should be in docs
-      - "It's in the API reference" as the answer to everything
+      - '"It''s in the API reference" as the answer to everything'
     detection_pattern: "auto-generate|JSDoc|TypeDoc|Swagger|OpenAPI"
 
   - id: docs-in-wrong-place
@@ -103,7 +103,7 @@ sharp_edges:
          - Wiki can link to repo docs
          - Don't copy repo docs to wiki
     symptoms:
-      - "Check the wiki" for technical questions
+      - '"Check the wiki" for technical questions'
       - Wiki pages with conflicting information
       - "Which doc is correct?"
     detection_pattern: "confluence|notion|wiki|documentation site"
@@ -301,7 +301,7 @@ sharp_edges:
          - Does every sentence help you USE the product?
          - Delete sentences that only SELL the product
     symptoms:
-      - "Best-in-class" in API docs
+      - '"Best-in-class" in API docs'
       - Feature comparisons in tutorials
       - Vague benefits without examples
     detection_pattern: "best|leading|powerful|revolutionary|unlike|better than"
@@ -349,5 +349,5 @@ sharp_edges:
     symptoms:
       - Same support questions repeatedly
       - GitHub issues asking about documented features
-      - "Works for me" vs user errors
+      - '"Works for me" vs user errors'
     detection_pattern: "error|troubleshoot|common issues|FAQ"

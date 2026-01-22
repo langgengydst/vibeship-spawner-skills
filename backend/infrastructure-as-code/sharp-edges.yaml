@@ -125,7 +125,7 @@ sharp_edges:
       # Remove from state without destroying
       terraform state rm aws_rds_instance.prod
     symptoms:
-      - "Resource X will be destroyed" for protected resource
+      - '"Resource X will be destroyed" for protected resource'
       - deletion_protection not set on stateful resources
       - Team believes prevent_destroy is absolute protection
     detection_pattern: 'prevent_destroy.*true(?![^}]*deletion_protection)'

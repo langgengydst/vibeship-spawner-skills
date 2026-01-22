@@ -173,7 +173,7 @@ sharp_edges:
     title: On-Chain Data Doesn't Mean What You Think
     description: Blockchain data is transparent but easily misinterpreted
     symptoms:
-      - '"Whale accumulation" trades fail
+      - '"Whale accumulation" trades fail'
       - Exchange flows don't predict price
       - On-chain signals are consistently wrong
     detection_pattern: "on.*chain|whale|exchange.*flow|wallet"
@@ -318,8 +318,8 @@ sharp_edges:
     title: Extreme Sentiment Can Persist for Months
     description: Markets can stay irrational longer than you can stay solvent
     symptoms:
-      - "Fear is extreme" but market keeps falling
-      - "Greed is extreme" but market keeps rising
+      - '"Fear is extreme" but market keeps falling'
+      - '"Greed is extreme" but market keeps rising'
       - Contrarian signals lose money
     detection_pattern: "extreme|overbought|oversold|fear|greed"
     solution: |
@@ -392,7 +392,7 @@ sharp_edges:
     description: Most alt data is expensive garbage that looks good in backtests
     symptoms:
       - Expensive data subscription
-      - "Works" in backtest, fails live
+      - '"Works" in backtest, fails live'
       - High correlation with price (lagging indicator)
     detection_pattern: "alternative.*data|satellite|credit.*card|web.*traffic"
     solution: |

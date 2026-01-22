@@ -4,7 +4,7 @@ sharp_edges:
   - id: chesterton-fence
     summary: Removing code without understanding why it exists
     severity: high
-    situation: "Dead code" turned out to be critical
+    situation: '"Dead code" turned out to be critical'
     why: |
       Didn't understand the context.
       Tested in wrong conditions.

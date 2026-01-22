@@ -39,7 +39,7 @@ sharp_edges:
       - Workers stop processing without error
       - Jobs accumulate in 'waiting' state
       - Works locally, fails in production after Redis restart
-      - "Max retries reached" in logs
+      - '"Max retries reached" in logs'
     detection_pattern: "new (Queue|Worker)\\([^)]*\\)(?!.*maxRetriesPerRequest)"
 
   - id: stalled-jobs-not-handled
@@ -82,7 +82,7 @@ sharp_edges:
       Check for jobs stuck in 'active' for too long
     symptoms:
       - Jobs stuck in 'active' state after worker restart
-      - "Stalled" events without recovery
+      - '"Stalled" events without recovery'
       - Worker crash loses in-progress jobs
       - Queue gets "clogged" with phantom active jobs
     detection_pattern: "new Worker\\([^)]*\\)(?!.*stalledInterval)"
@@ -256,7 +256,7 @@ sharp_edges:
     symptoms:
       - Redis memory grows continuously
       - Job add/complete operations slow
-      - "OOM command not allowed" errors
+      - '"OOM command not allowed" errors'
       - Serialization errors for very large objects
     detection_pattern: "queue\\.add\\([^)]*JSON\\.stringify|queue\\.add\\([^)]*Buffer|queue\\.add\\([^)]*readFile"
 

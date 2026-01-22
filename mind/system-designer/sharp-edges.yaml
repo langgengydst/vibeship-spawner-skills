@@ -364,7 +364,7 @@ sharp_edges:
     symptoms:
       - Duplicate records after retries
       - Double charges/orders
-      - "Click once" warnings needed
+      - '"Click once" warnings needed'
       - Fear of retrying failed operations
     detection_pattern: "increment|append|push|add|+=|\\+\\+"
 
@@ -397,7 +397,7 @@ sharp_edges:
     symptoms:
       - API endpoint times out at scale
       - Memory spikes on list endpoints
-      - "Just add limit" refactoring
+      - '"Just add limit" refactoring'
       - Database performance degradation
     detection_pattern: "SELECT \\* FROM|findAll\\(\\)|find\\(\\{\\}\\)"
 

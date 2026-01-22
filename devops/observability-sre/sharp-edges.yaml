@@ -33,7 +33,7 @@ sharp_edges:
            evaluation_interval: 15s
     symptoms:
       - Prometheus OOM crashes
-      - "too many time series" errors
+      - '"too many time series" errors'
       - Slow PromQL queries
     detection_pattern: 'labels\(.*user_id|labels\(.*request_id|labels\(.*email'
 
@@ -137,7 +137,7 @@ sharp_edges:
     symptoms:
       - Traces end abruptly at service boundaries
       - Can't see full request path
-      - "orphan" spans without parents
+      - '"orphan" spans without parents'
     detection_pattern: 'traceparent|trace-id|W3C.*trace'
 
   - id: sampling-misses-errors

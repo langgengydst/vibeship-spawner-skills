@@ -46,7 +46,7 @@ sharp_edges:
       - JWT secret in source code
       - Same secret across environments
       - Short or dictionary-word secret
-      - 'secret' or 'password' as secret
+      - "'secret' or 'password' as secret"
     detection_pattern: "jwt\\.sign.*['\"][a-zA-Z0-9]{4,30}['\"]|JWT_SECRET.*\\|\\|"
 
   - id: sql-injection-template-literals

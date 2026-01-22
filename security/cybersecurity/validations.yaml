@@ -33,7 +33,7 @@ validations:
     name: XSS via innerHTML
     severity: error
     type: regex
-    pattern: 'innerHTML\s*=\s*[^"\']+(?:req|user|input|data|param)|dangerouslySetInnerHTML\s*=\s*\{\s*\{\s*__html|v-html\s*='
+    pattern: "innerHTML\\s*=\\s*[^\"']+(?:req|user|input|data|param)|dangerouslySetInnerHTML\\s*=\\s*\\{\\s*\\{\\s*__html|v-html\\s*="
     message: "Potential XSS vulnerability. Sanitize user content before rendering."
     fix_action: "Use DOMPurify.sanitize() or framework auto-escaping"
     applies_to:
@@ -47,7 +47,7 @@ validations:
     name: Dangerous eval Usage
     severity: error
     type: regex
-    pattern: 'eval\s*\(|new\s+Function\s*\(|setTimeout\s*\(\s*["\']|setInterval\s*\(\s*["\']'
+    pattern: "eval\\s*\\(|new\\s+Function\\s*\\(|setTimeout\\s*\\(\\s*[\"']|setInterval\\s*\\(\\s*[\"']"
     message: "eval() or dynamic code execution. Avoid or use safer alternatives."
     fix_action: "Replace with JSON.parse() for data or explicit logic"
     applies_to:
@@ -60,7 +60,7 @@ validations:
     name: Weak Hash Algorithm
     severity: error
     type: regex
-    pattern: 'createHash\s*\(\s*["\']md5["\']|createHash\s*\(\s*["\']sha1["\']|md5\s*\(|sha1\s*\('
+    pattern: "createHash\\s*\\(\\s*[\"']md5[\"']|createHash\\s*\\(\\s*[\"']sha1[\"']|md5\\s*\\(|sha1\\s*\\("
     message: "MD5/SHA1 is cryptographically broken. Use SHA-256 or bcrypt for passwords."
     fix_action: "Use createHash('sha256') or bcrypt for passwords"
     applies_to:
@@ -71,7 +71,7 @@ validations:
     name: Weak Cipher
     severity: error
     type: regex
-    pattern: 'createCipher\s*\(\s*["\']des|createCipher\s*\(\s*["\']rc4|aes-.*-ecb'
+    pattern: "createCipher\\s*\\(\\s*[\"']des|createCipher\\s*\\(\\s*[\"']rc4|aes-.*-ecb"
     message: "Weak or broken cipher algorithm. Use AES-256-GCM."
     fix_action: "Use createCipheriv('aes-256-gcm', key, iv)"
     applies_to:
@@ -82,7 +82,7 @@ validations:
     name: Missing CSRF Protection
     severity: warning
     type: regex
-    pattern: 'method\s*=\s*["\']POST["\'](?![\\s\\S]*csrf)|method\s*=\s*["\']post["\'](?![\\s\\S]*csrf)'
+    pattern: "method\\s*=\\s*[\"']POST[\"'](?![\\\\s\\\\S]*csrf)|method\\s*=\\s*[\"']post[\"'](?![\\\\s\\\\S]*csrf)"
     message: "Form without CSRF token. Add CSRF protection."
     fix_action: "Add CSRF token: <input type='hidden' name='_csrf' value={csrfToken} />"
     applies_to:
@@ -106,7 +106,7 @@ validations:
     name: Open Redirect
     severity: warning
     type: regex
-    pattern: 'res\.redirect\s*\(\s*req\.(query|params|body)|redirect\s*:\s*req\.(query|params|body)|location\s*=\s*[^"\']*req\.'
+    pattern: "res\\.redirect\\s*\\(\\s*req\\.(query|params|body)|redirect\\s*:\\s*req\\.(query|params|body)|location\\s*=\\s*[^\"']*req\\."
     message: "Open redirect vulnerability. Validate redirect URLs."
     fix_action: "Whitelist allowed redirect destinations"
     applies_to:
@@ -161,7 +161,7 @@ validations:
     name: JWT None Algorithm
     severity: error
     type: regex
-    pattern: 'algorithms\s*:\s*\[\s*["\']none["\']|algorithm\s*:\s*["\']none["\']'
+    pattern: "algorithms\\s*:\\s*\\[\\s*[\"']none[\"']|algorithm\\s*:\\s*[\"']none[\"']"
     message: "JWT 'none' algorithm allows unsigned tokens. Never allow."
     fix_action: "Specify allowed algorithms: algorithms: ['HS256', 'RS256']"
     applies_to:

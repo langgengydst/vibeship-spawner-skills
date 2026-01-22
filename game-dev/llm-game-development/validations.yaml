@@ -30,7 +30,7 @@ validations:
     name: Stringly-Typed Godot Code
     severity: warning
     type: regex
-    pattern: 'get_node\(\s*["\']|has_node\(\s*["\']'
+    pattern: "get_node\\(\\s*[\"']|has_node\\(\\s*[\"']"
     negative_pattern: '@onready|$|%'
     message: "String-based node access. LLMs often miss Godot 4's $ and % syntax."
     fix_action: "Use $NodeName or %UniqueNode for type-safe node access"

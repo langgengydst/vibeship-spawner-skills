@@ -45,7 +45,7 @@ sharp_edges:
          First point should be easier than tenth point.
          Early game advantages should have natural caps.
     symptoms:
-      - "The game was decided in round 2" comments
+      - '"The game was decided in round 2" comments'
       - Players checking phones before game ends
       - Leading player getting bored
       - Experienced players winning 90%+ against newbies

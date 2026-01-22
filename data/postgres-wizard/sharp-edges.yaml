@@ -207,7 +207,7 @@ sharp_edges:
          CREATE INDEX ON table (id::text);  -- If queries always use text
     symptoms:
       - Index exists but EXPLAIN shows filter, not index cond
-      - "::type" casts appearing in EXPLAIN output
+      - '"::type" casts appearing in EXPLAIN output'
       - Same query fast with literal, slow with parameter
     detection_pattern: 'implicit cast|::text|::uuid|::integer'
 

@@ -147,7 +147,7 @@ sharp_edges:
       # 5. Build step
     symptoms:
       - Slow builds for small code changes
-      - "npm install" runs every build
+      - '"npm install" runs every build'
       - No layer cache hits
     detection_pattern: 'COPY\s+\.\s+\.[\s\S]*RUN\s+(npm|pip|go)\s+(install|ci|build)'
 

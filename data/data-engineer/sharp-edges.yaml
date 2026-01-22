@@ -96,7 +96,7 @@ sharp_edges:
          # Then recreate and backfill
     symptoms:
       - Database disk filling up
-      - "no space left on device" in PostgreSQL logs
+      - '"no space left on device" in PostgreSQL logs'
       - Consumer can't keep up with producer
     detection_pattern: 'replication_slot|wal.*size|slot.*lag'
 

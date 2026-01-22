@@ -45,7 +45,7 @@ sharp_edges:
       - Explicitly random features
     symptoms:
       - Users complain results changed
-      - "I got different result" comments
+      - '"I got different result" comments'
       - Low share rates
       - Confusion in comments
     detection_pattern: "Math\\.random|different result|changed|not the same"

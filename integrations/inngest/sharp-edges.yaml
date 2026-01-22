@@ -40,7 +40,7 @@ sharp_edges:
       - Each worker handles a chunk
     symptoms:
       - Function terminated without error
-      - "Exceeded maximum duration" in logs
+      - '"Exceeded maximum duration" in logs'
       - Partial work completed, rest lost
       - Works locally, fails in production
     detection_pattern: "step\\.run\\([^)]+for\\s*\\("
@@ -88,7 +88,7 @@ sharp_edges:
       - Only the step result is checkpointed
       - Keep step results small too
     symptoms:
-      - "Payload too large" error
+      - '"Payload too large" error'
       - Slow event ingestion
       - Dashboard loads slowly
       - Memory pressure on workers
@@ -193,7 +193,7 @@ sharp_edges:
     symptoms:
       - Function runs slowly
       - High memory usage
-      - "Step output too large" error
+      - '"Step output too large" error'
       - Dashboard shows large step data
     detection_pattern: null
     version_range: ">=1.0.0"
@@ -282,7 +282,7 @@ sharp_edges:
       - Function in array but wrong import path
     symptoms:
       - Events sent but no function executes
-      - "Function not found" in Inngest dashboard
+      - '"Function not found" in Inngest dashboard'
       - Dev server shows no Inngest routes
       - inngest dev shows 0 functions
     detection_pattern: "export const \\{ GET, POST, PUT \\} = serve"
@@ -327,7 +327,7 @@ sharp_edges:
       - Events sent, nothing happens locally
       - No function logs in terminal
       - Works in production but not locally
-      - "Connection refused" errors
+      - '"Connection refused" errors'
     detection_pattern: null
     version_range: ">=1.0.0"
 
@@ -477,7 +477,7 @@ sharp_edges:
       - Start conservative, increase with monitoring
     symptoms:
       - Database connection exhausted
-      - "Too many requests" from external APIs
+      - '"Too many requests" from external APIs'
       - Cascading failures
       - All functions fail simultaneously
     detection_pattern: "createFunction\\([^)]+\\)(?!.*concurrency)"

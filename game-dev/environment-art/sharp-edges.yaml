@@ -352,7 +352,7 @@ sharp_edges:
       - Unexplained memory usage
       - Mipmap artifacts
       - Compression failures
-      - "Texture dimensions not supported" errors
+      - '"Texture dimensions not supported" errors'
     detection_pattern: 'non.*power.*of.*2|texture.*size|mipmap.*artifact|padding'
     version_range: "all"
 

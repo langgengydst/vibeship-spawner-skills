@@ -125,7 +125,7 @@ sharp_edges:
          # Return Result type
          def get_user(id: str) -> Result[User, NotFoundError]:
     symptoms:
-      - "Incompatible types" on code that works
+      - '"Incompatible types" on code that works'
       - Excessive type: ignore comments
       - Type narrowing not working
     detection_pattern: 'type:\s*ignore|cast\(|assert.*is not None'
@@ -295,5 +295,5 @@ sharp_edges:
     symptoms:
       - State "leaking" between function calls
       - Tests passing individually, failing together
-      - "Default" values changing mysteriously
+      - '"Default" values changing mysteriously'
     detection_pattern: 'def.*=\s*\[\]|def.*=\s*\{\}'

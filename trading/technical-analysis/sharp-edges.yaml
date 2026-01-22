@@ -31,11 +31,11 @@ sharp_edges:
       3. Size positions for the failure rate, not success rate
       4. Backtest on your own data, don't trust screenshots
     references:
-      - '"Encyclopedia of Chart Patterns" - Thomas Bulkowski
+       - '"Encyclopedia of Chart Patterns" - Thomas Bulkowski'
 
   - id: indicator-lag-trap
     severity: CRITICAL
-    title: All Indicators Lag - You're Trading the Past
+    title: "All Indicators Lag - You're Trading the Past"
     description: Indicators are derived from past prices, they don't predict future
     symptoms:
       - Entering trades late after moves already happened
@@ -310,14 +310,14 @@ sharp_edges:
          - 2-3 parameters max
          - Simple systems are robust systems
     references:
-      - "Advances in Financial Machine Learning" - Marcos Lopez de Prado
+      - '"Advances in Financial Machine Learning" - Marcos Lopez de Prado'
 
   - id: news-event-technical-conflict
     severity: MEDIUM
     title: Technical Analysis Fails at News Events
     description: Charts don't predict FOMC, earnings, or black swans
     symptoms:
-      - "Perfect setup" destroyed by news
+      - '"Perfect setup" destroyed by news'
       - Large gap moves invalidate analysis
       - Stop losses gapped through
     detection_pattern: "FOMC|earnings|news.*event|gap"

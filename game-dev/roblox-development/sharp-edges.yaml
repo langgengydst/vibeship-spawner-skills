@@ -9,7 +9,7 @@ sharp_edges:
     description: Hit the limit and your saves silently fail
     symptoms:
       - Players losing data randomly
-      - "DataStore request was added to queue" warnings
+      - '"DataStore request was added to queue" warnings'
       - Save failures during high traffic
     detection_pattern: "DataStore|GetAsync|SetAsync|UpdateAsync"
     solution: |

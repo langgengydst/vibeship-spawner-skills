@@ -36,7 +36,7 @@ sharp_edges:
   - id: connection-exhaustion
     summary: Too many workers exhaust database connections
     severity: high
-    situation: "FATAL: too many connections" during high load
+    situation: '"FATAL: too many connections" during high load'
     why: |
       Each pg-boss worker maintains database connections. With teamSize=10
       and multiple worker processes, you quickly exhaust max_connections.

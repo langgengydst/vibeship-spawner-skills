@@ -26,7 +26,7 @@ validations:
     name: Absolute Model Path
     severity: high
     type: regex
-    pattern: 'SetModel\\s*\\(\\s*["\'][A-Za-z]:\\\\|SetModel\\s*\\(\\s*["\']/'
+    pattern: "SetModel\\s*\\(\\s*[\"'][A-Za-z]:\\\\|SetModel\\s*\\(\\s*[\"']/"
     message: "Absolute path for model. Won't work in builds - use StreamingAssets."
     fix_action: "Place model in StreamingAssets and use Application.streamingAssetsPath"
     applies_to:

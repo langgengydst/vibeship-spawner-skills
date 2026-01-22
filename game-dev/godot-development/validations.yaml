@@ -209,7 +209,7 @@ validations:
     category: architecture
     file_patterns:
       - "*.gd"
-    pattern: 'get_node\\s*\\(\\s*["\']\\.\\./'
+    pattern: "get_node\\s*\\(\\s*[\"']\\.\\./"
     fix_hint: |
       Use alternatives:
       ```gdscript

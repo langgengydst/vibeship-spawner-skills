@@ -98,7 +98,7 @@ sharp_edges:
       -- Note: Data is gone, but schema is restored
     symptoms:
       - Migrations without corresponding down/rollback
-      - "We'll handle rollback if needed" (famous last words)
+      - '"We''ll handle rollback if needed" (famous last words)'
       - DROP COLUMN in production migration
     detection_pattern: 'DROP COLUMN|DROP TABLE(?! IF EXISTS)|TRUNCATE'
 

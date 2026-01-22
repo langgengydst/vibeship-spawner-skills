@@ -11,8 +11,8 @@ validations:
       - "api_key\\s*[=:]\\s*['\"][^$\\{][^'\"]{8,}['\"]"
       - "secret\\s*[=:]\\s*['\"][^$\\{][^'\"]{8,}['\"]"
       - "token\\s*[=:]\\s*['\"][^$\\{][^'\"]{8,}['\"]"
-      - 'AWS_SECRET_ACCESS_KEY\s*[=:]\s*["\'][A-Za-z0-9/+=]{20,}'
-      - 'PRIVATE_KEY\s*[=:]\s*["\'][A-Za-z0-9/+=]{20,}'
+      - "AWS_SECRET_ACCESS_KEY\\s*[=:]\\s*[\"'][A-Za-z0-9/+=]{20,}"
+      - "PRIVATE_KEY\\s*[=:]\\s*[\"'][A-Za-z0-9/+=]{20,}"
     message: "Hardcoded secret detected. Will be visible in version control."
     fix_action: "Move to environment variable and use process.env"
     applies_to:
@@ -49,9 +49,9 @@ validations:
     pattern:
       - 'eval\s*\('
       - 'new\s+Function\s*\('
-      - 'setTimeout\s*\(\s*["\']'
-      - 'setInterval\s*\(\s*["\']'
-      - 'exec\s*\(\s*[`"\'].*\\$'
+      - "setTimeout\\s*\\(\\s*[\"']"
+      - "setInterval\\s*\\(\\s*[\"']"
+      - "exec\\s*\\(\\s*[`\"'].*\\\\$"
     message: "eval() or similar dynamic code execution detected. High risk of code injection."
     fix_action: "Replace with safe alternatives (JSON.parse, mathjs, explicit logic)"
     applies_to:
@@ -147,8 +147,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - '<form.*method=["\']post["\'](?![^>]*csrf)'
-      - '<form.*method=["\']POST["\'](?![^>]*csrf)'
+      - "<form.*method=[\"']post[\"'](?![^>]*csrf)"
+      - "<form.*method=[\"']POST[\"'](?![^>]*csrf)"
     message: "Form POST without CSRF token. Vulnerable to cross-site request forgery."
     fix_action: "Add CSRF token to form or use SameSite cookies"
     applies_to:

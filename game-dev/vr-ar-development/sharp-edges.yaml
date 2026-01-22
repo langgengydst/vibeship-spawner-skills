@@ -9,7 +9,7 @@ sharp_edges:
     description: Moving the user's viewpoint without their control causes nausea
     symptoms:
       - Users feel nauseous within minutes
-      - "I can only play for 5 minutes" feedback
+      - '"I can only play for 5 minutes" feedback'
       - Users remove headset suddenly
       - Negative reviews about comfort
     detection_pattern: "camera.*position|camera.*move|dolly|fly"
@@ -104,7 +104,7 @@ sharp_edges:
       - Stuttering visuals
       - Delayed response to head movement
       - User reports dizziness
-      - "Judder" when moving head
+      - '"Judder" when moving head'
     detection_pattern: "render|animate|draw|update"
     solution: |
       Performance Budgets:

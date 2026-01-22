@@ -135,7 +135,7 @@ sharp_edges:
       # If everyone knows it, don't teach it.
     symptoms:
       - Tutorial for standard FPS/platformer controls
-      - "Move with WASD" popup
+      - '"Move with WASD" popup'
       - Teaching mouse look in first-person game
       - Players visibly annoyed at basic prompts
     detection_pattern: 'wasd|arrow.*keys|move.*left.*right|mouse.*look'

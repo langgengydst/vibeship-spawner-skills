@@ -109,7 +109,7 @@ sharp_edges:
       | Comments mentioning formula | Audience sees through it |
     symptoms:
       - Declining CTR on proven hooks
-      - "Here we go again" comments
+      - '"Here we go again" comments'
       - Formula feels stale
     detection_pattern: "always the same|predictable|seen this before"
 

@@ -64,7 +64,7 @@ sharp_edges:
       ```
     symptoms:
       - Declining return rates
-      - "Just tell me" comments
+      - '"Just tell me" comments'
       - Audience frustration
     detection_pattern: "get to point|tired of waiting|just tell us"
 

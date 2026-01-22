@@ -317,7 +317,7 @@ sharp_edges:
           continue-on-error: true
           # Alert but don't block
     symptoms:
-      - "Re-run" being clicked often
+      - '"Re-run" being clicked often'
       - Same tests failing randomly
       - Developers ignoring failures
     detection_pattern: null
@@ -497,7 +497,7 @@ sharp_edges:
           steps:
             - run: npm test -- --shard=${{ matrix.shard }}/4
     symptoms:
-      - >30 minute CI runs
+      - '>30 minute CI runs'
       - Developers not waiting for CI
       - Low PR throughput
     detection_pattern: null

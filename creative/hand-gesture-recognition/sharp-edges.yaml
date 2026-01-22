@@ -551,7 +551,7 @@ sharp_edges:
     description: Hand tracking needs WebGL2 and WASM - not everyone has them
     symptoms:
       - Black screen on older browsers
-      - "WebGL not supported" errors
+      - '"WebGL not supported" errors'
       - Crashes on iOS Safari versions
       - Works on Chrome, breaks on Firefox
     detection_pattern: "webgl|wasm|mediapipe"

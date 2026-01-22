@@ -117,7 +117,7 @@ sharp_edges:
     symptoms:
       - Warning about detached HEAD
       - Commits disappear after checkout
-      - "HEAD detached at" in git branch output
+      - '"HEAD detached at" in git branch output'
     detection_pattern: 'git\s+checkout\s+[a-f0-9]{7,40}(?!\s+-b)'
 
   - id: merge-vs-rebase-confusion

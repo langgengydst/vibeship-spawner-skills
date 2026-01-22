@@ -73,7 +73,7 @@ sharp_edges:
       - No clear invalidation strategy
       - Stale data bugs appearing
       - Original operation wasn't actually slow
-    detection_pattern: "redis|memcache|cache\\\.set|cache\\\.get"
+    detection_pattern: "redis|memcache|cache\\\\.set|cache\\\\.get"
 
   - id: wrong-profiling-level
     title: Wrong Profiling Level - Measuring the Wrong Thing
@@ -103,7 +103,7 @@ sharp_edges:
       - No noticeable production improvement
       - Optimizing code that's tiny fraction of total time
       - Missing the real bottleneck
-    detection_pattern: "benchmark|micro.*benchmark|perf\\\.measure"
+    detection_pattern: "benchmark|micro.*benchmark|perf\\\\.measure"
 
   - id: memory-leak-optimization
     title: Memory Leak From Optimization - Cache That Grows Forever
@@ -272,7 +272,7 @@ sharp_edges:
       - Out of memory on large datasets
       - Slow queries on tables that grew
       - No LIMIT in queries
-    detection_pattern: "\\\.all\\(\\)|\\\.find\\(\\{\\}\\)|SELECT.*FROM.*(?!LIMIT)"
+    detection_pattern: "\\\\.all\\(\\)|\\\\.find\\(\\{\\}\\)|SELECT.*FROM.*(?!LIMIT)"
 
   - id: serialization-overhead
     title: Serialization Overhead - JSON All The Things
@@ -313,7 +313,7 @@ sharp_edges:
       - High serialization CPU usage
       - Slow responses despite fast queries
       - Clients receiving unused data
-    detection_pattern: "to_json|to_dict|JSON\\\.stringify|serialize"
+    detection_pattern: "to_json|to_dict|JSON\\\\.stringify|serialize"
 
   - id: connection-pool-exhaustion
     title: Connection Pool Exhaustion - Running Out of Connections
@@ -349,7 +349,7 @@ sharp_edges:
          # Connection automatically returned
          ```
     symptoms:
-      - "Connection pool exhausted" errors
+      - '"Connection pool exhausted" errors'
       - Requests timing out waiting for connections
       - Database showing too many connections
       - Works at low load, fails at high load

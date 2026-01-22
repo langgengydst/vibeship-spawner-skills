@@ -143,7 +143,7 @@ sharp_edges:
       - IFoo + FooImpl everywhere
       - Interfaces with single implementations
       - Factory classes that just call constructors
-      - "For testability" interfaces never mocked
+      - '"For testability" interfaces never mocked'
     detection_pattern: "interface I|Impl|Factory|Provider"
 
   - id: big-bang-refactoring
@@ -175,7 +175,7 @@ sharp_edges:
          - Each leaf is a small, independent PR
     symptoms:
       - PRs with 1000+ lines
-      - "This is part 1 of 5" multi-week refactoring
+      - '"This is part 1 of 5" multi-week refactoring'
       - Review comments like "LGTM" on huge diffs
       - Long-lived feature branches
     detection_pattern: "large refactoring|big cleanup|refactoring PR"
@@ -277,9 +277,9 @@ sharp_edges:
          - File it, note it, fix it separately
          - Characterization test the bug if needed
     symptoms:
-      - "Refactoring" PRs that add/change tests
+      - '"Refactoring" PRs that add/change tests'
       - Unexpected behavior after "simple refactoring"
-      - "I just cleaned it up" introducing bugs
+      - '"I just cleaned it up" introducing bugs'
       - Edge case differences after refactoring
     detection_pattern: "refactor.*fix|clean up.*also|improve.*change"
 
@@ -311,7 +311,7 @@ sharp_edges:
          - Future developers will thank you
          - Or add a test that documents the edge case
     symptoms:
-      - "This looks wrong" code being cleaned up
+      - '"This looks wrong" code being cleaned up'
       - Bugs in edge cases after "obvious improvements"
       - Long-forgotten issues reappearing
       - Customer complaints after "internal cleanup"

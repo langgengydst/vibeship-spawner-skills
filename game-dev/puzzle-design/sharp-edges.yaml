@@ -322,7 +322,7 @@ sharp_edges:
       - Solutions require knowledge not in game
       - Success correlates with player background, not skill
       - Certain player demographics consistently fail
-      - "I had to Google it" in playtester feedback
+      - '"I had to Google it" in playtester feedback'
     detection_pattern: null
 
   - id: puzzle-combinatorial-explosion

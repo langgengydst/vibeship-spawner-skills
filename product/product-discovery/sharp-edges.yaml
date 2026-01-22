@@ -265,7 +265,7 @@ sharp_edges:
       - Learn from real usage
     symptoms:
       - Months of research, no shipping
-      - "Need more data" repeatedly
+      - '"Need more data" repeatedly'
       - Fear of being wrong
     detection_pattern: "analysis paralysis|enough research|decide"
 

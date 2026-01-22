@@ -524,7 +524,7 @@ sharp_edges:
       - Frame rate drops during gameplay
       - Profiler shows Find operations
       - Long frames when many objects exist
-      - "Stuttering" as scene grows
+      - '"Stuttering" as scene grows'
     detection_pattern: 'GameObject\.Find\s*\(|FindObjectOfType|FindObjectsOfType'
 
   - id: new-allocations-update

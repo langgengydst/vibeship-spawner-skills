@@ -38,7 +38,7 @@ sharp_edges:
       - Ghost town community
       - Only founders posting
       - New members leave immediately
-      - "Is anyone here?" messages
+      - '"Is anyone here?" messages'
     detection_pattern: "empty community|no activity|ghost town|dead server"
 
   - id: community-strategy-mismatch

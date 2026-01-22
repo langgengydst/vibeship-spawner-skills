@@ -79,7 +79,7 @@ sharp_edges:
       });
     symptoms:
       - Users must refresh to reconnect
-      - "Unreliable" on mobile
+      - '"Unreliable" on mobile'
       - Silent failures
     detection_pattern: 'new WebSocket\\([^)]+\\)(?!.*reconnect)'
 
@@ -226,7 +226,7 @@ sharp_edges:
       }, 60000);
     symptoms:
       - Server memory grows over time
-      - "Ghost" clients in maps
+      - '"Ghost" clients in maps'
       - Server crashes after hours/days
     detection_pattern: null
 

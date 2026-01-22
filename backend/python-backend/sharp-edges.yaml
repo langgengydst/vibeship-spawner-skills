@@ -296,7 +296,7 @@ sharp_edges:
       - Secrets visible in Git
       - Unauthorized access
       - Cloud bills spiking
-    detection_pattern: '(api_key|password|secret).*=.*["\'][a-zA-Z0-9]{20,}'
+    detection_pattern: "(api_key|password|secret).*=.*[\"'][a-zA-Z0-9]{20,}"
 
   - id: global-state
     summary: Global mutable state causes race conditions

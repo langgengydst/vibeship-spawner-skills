@@ -62,7 +62,7 @@ sharp_edges:
         }
       }
     symptoms:
-      - "Connection lost" stays forever
+      - '"Connection lost" stays forever'
       - Works locally but fails in production
       - Users report needing to refresh
       - App dies after laptop sleep
@@ -179,7 +179,7 @@ sharp_edges:
       - Memory usage grows over time
       - Events fire multiple times
       - App gets slower after reconnections
-      - "Maximum call stack exceeded" errors
+      - '"Maximum call stack exceeded" errors'
     detection_pattern: 'addEventListener(?![\\s\\S]{0,200}removeEventListener)'
 
   # --- HIGH: Will cause ongoing issues ---

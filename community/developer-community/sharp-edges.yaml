@@ -32,7 +32,7 @@ sharp_edges:
       - Celebrate doc contributions
     symptoms:
       - Support tickets about documented features
-      - "Docs are outdated" complaints
+      - '"Docs are outdated" complaints'
       - Tutorials that don't work
       - Code samples that fail
     detection_pattern: "outdated|doesn't work|docs wrong|broken example"

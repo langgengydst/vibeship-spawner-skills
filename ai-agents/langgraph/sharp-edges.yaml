@@ -146,7 +146,7 @@ sharp_edges:
     symptoms:
       - Agent forgets previous messages
       - Each call seems independent
-      - "I don't have context" responses
+      - '"I don''t have context" responses'
     detection_pattern: 'app\.invoke\([^,]+\)[^,]*$|invoke.*\{[^}]*\}[^,]*\)'
 
   - id: tool-node-error-handling
@@ -252,7 +252,7 @@ sharp_edges:
       async for chunk in app.astream(input):  # async
           print(chunk)
     symptoms:
-      - "cannot be used in 'await' expression"
+      - '"cannot be used in ''await'' expression"'
       - Event loop blocked
       - Slow performance
     detection_pattern: 'async def.*\n.*[^a]invoke\(|def [^a].*\n.*await'
@@ -298,6 +298,6 @@ sharp_edges:
       from graph import app
       result = app.invoke(input)
     symptoms:
-      - AttributeError: 'StateGraph' has no attribute 'invoke'
+      - '"AttributeError: ''StateGraph'' has no attribute ''invoke''"'
       - Missing methods on graph object
     detection_pattern: 'StateGraph\([^)]*\)\.invoke|graph\.invoke'

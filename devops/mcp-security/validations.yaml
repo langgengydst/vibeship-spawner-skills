@@ -17,7 +17,7 @@ validations:
     name: Hardcoded Secrets
     severity: critical
     type: regex
-    pattern: '(?:api_key|apiKey|secret|password|token|auth)\s*[=:]\s*["\'][A-Za-z0-9+/=_-]{20,}["\']'
+    pattern: "(?:api_key|apiKey|secret|password|token|auth)\\s*[=:]\\s*[\"'][A-Za-z0-9+/=_-]{20,}[\"']"
     message: "Hardcoded secret detected. Security vulnerability."
     fix_action: "Use environment variables: process.env.SECRET_NAME"
     applies_to:
@@ -53,7 +53,7 @@ validations:
     name: Potential SQL Injection
     severity: critical
     type: regex
-    pattern: 'query\s*\(\s*[`"\'].*\$\{|execute\s*\(\s*[`"\'].*\+'
+    pattern: "query\\s*\\(\\s*[`\"'].*\\$\\{|execute\\s*\\(\\s*[`\"'].*\\+"
     message: "String interpolation in SQL query. SQL injection risk."
     fix_action: "Use parameterized queries: query('SELECT * FROM users WHERE id = ?', [id])"
     applies_to:
@@ -64,7 +64,7 @@ validations:
     name: Potential Command Injection
     severity: critical
     type: regex
-    pattern: 'exec\s*\(\s*[`"\'].*\$\{|spawn\s*\(\s*[`"\'].*\+'
+    pattern: "exec\\s*\\(\\s*[`\"'].*\\$\\{|spawn\\s*\\(\\s*[`\"'].*\\+"
     message: "String interpolation in shell command. Command injection risk."
     fix_action: "Use array form: spawn('cmd', ['arg1', arg2]) or whitelist commands"
     applies_to:

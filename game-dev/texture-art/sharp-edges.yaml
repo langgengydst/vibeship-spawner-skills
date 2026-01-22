@@ -136,7 +136,7 @@ sharp_edges:
     red_flags:
       - Normal map using DXT1/BC1 compression
       - Normal map file size suspiciously small
-      - "Automatic" compression without checking result
+      - '"Automatic" compression without checking result'
 
   - id: texture-mipmap-bleeding
     summary: Insufficient UV padding causes color bleeding at distance

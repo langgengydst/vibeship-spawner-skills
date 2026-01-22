@@ -41,11 +41,11 @@ sharp_edges:
       - High growth but high churn
       - Users join but don't connect
       - Single-player usage patterns
-      - '"Viral" in pitch but no lock-in
+      - '"Viral" in pitch but no lock-in'
     detection_pattern: "viral|network effects|sharing|invite"
 
   - id: data-moat-delusion
-    title: Data Moat Delusion - Data Alone Isn't a Moat
+    title: "Data Moat Delusion - Data Alone Isn't a Moat"
     severity: high
     situation: |
       Startup has lots of data. Investor asks about moat. Founder says "data
@@ -86,7 +86,7 @@ sharp_edges:
          - Purchased datasets (available to competitors)
          - Public APIs (same access for all)
     symptoms:
-      - "Data is our moat" with no proprietary data
+      - '"Data is our moat" with no proprietary data'
       - Data could be bought or scraped
       - Competitors catching up on data quickly
     detection_pattern: "data moat|data advantage|proprietary data"
@@ -224,7 +224,7 @@ sharp_edges:
     symptoms:
       - High awareness but no pricing power
       - Heavy marketing spend but commodity perception
-      - "We'll build a brand" as strategy
+      - '"We''ll build a brand" as strategy'
     detection_pattern: "brand|awareness|marketing spend|premium"
 
   - id: scale-without-advantage

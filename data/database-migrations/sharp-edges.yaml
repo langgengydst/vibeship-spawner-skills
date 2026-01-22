@@ -93,7 +93,7 @@ sharp_edges:
       Week 4: Contract (remove old column)
     symptoms:
       - 500 errors after deploy
-      - "Column not found" errors
+      - '"Column not found" errors'
       - Cannot rollback
     detection_pattern: 'ALTER.*RENAME.*COLUMN'
 

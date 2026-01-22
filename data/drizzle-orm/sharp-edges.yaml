@@ -94,7 +94,7 @@ sharp_edges:
     symptoms:
       - No migration history
       - Can't rollback changes
-      - "What changed?" confusion
+      - '"What changed?" confusion'
       - Schema drift between environments
     detection_pattern: null
     version_range: ">=0.20.0"

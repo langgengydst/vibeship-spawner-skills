@@ -102,7 +102,7 @@ sharp_edges:
     title: Lightning Invoice Expiration Race Condition
     description: Payment made to expired invoice causes fund loss or service denial
     symptoms:
-      - "Payment succeeded but invoice expired" errors
+      - '"Payment succeeded but invoice expired" errors'
       - Funds stuck in payment channels
       - Customer complaints about lost payments
       - Inconsistent payment state

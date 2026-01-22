@@ -36,7 +36,7 @@ sharp_edges:
       - 30+ minutes investigating without mitigation
       - Jumping between systems following symptoms
       - Everyone looking at different things
-      - "The database is slow" as the conclusion
+      - '"The database is slow" as the conclusion'
     detection_pattern: "investigating|looking at|checking|seems slow"
 
   - id: alert-storm-paralysis

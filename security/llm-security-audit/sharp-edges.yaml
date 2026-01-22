@@ -564,7 +564,7 @@ sharp_edges:
           }
       }
     symptoms:
-      - "We're SOC2 compliant" but finding vulnerabilities
+      - '"We''re SOC2 compliant" but finding vulnerabilities'
       - Compliance checklist all green, security posture weak
       - Auditors unfamiliar with AI-specific risks
     detection_pattern: 'compliance|SOC2|ISO|audit|certified'

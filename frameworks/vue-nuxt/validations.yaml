@@ -83,7 +83,7 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'if\s*\(\s*\w+\s*===?\s*(true|false|null|undefined|[0-9]+|"[^"]*"|\'[^\']*\')\s*\)'
+      - "if\\s*\\(\\s*\\w+\\s*===?\\s*(true|false|null|undefined|[0-9]+|\"[^\"]*\"|'[^']*')\\s*\\)"
     message: "Possible ref comparison without .value - refs need .value in script"
     fix_action: "Use .value: if (myRef.value === true)"
     applies_to:

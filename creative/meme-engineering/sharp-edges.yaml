@@ -58,7 +58,7 @@ sharp_edges:
       If any "no" → don't post.
       ```
     symptoms:
-      - "How do you do fellow kids" energy
+      - '"How do you do fellow kids" energy'
       - Heavy-handed brand insertion
       - Approval took days
     detection_pattern: "brand meme|company social|corporate funny"

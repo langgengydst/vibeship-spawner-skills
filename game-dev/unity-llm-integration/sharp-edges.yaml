@@ -41,7 +41,7 @@ sharp_edges:
           #endif
       }
     symptoms:
-      - "Failed to load library ios" error
+      - '"Failed to load library ios" error'
       - Stuck at "Warming up the model"
       - Crash on launch with native exception
       - Works on simulator but not device

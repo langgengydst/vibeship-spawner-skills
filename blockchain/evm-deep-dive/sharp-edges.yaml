@@ -308,7 +308,7 @@ sharp_edges:
     title: Yul Stack Depth Limit
     description: EVM has 16 accessible stack slots limit
     symptoms:
-      - "Stack too deep" errors in assembly
+      - '"Stack too deep" errors in assembly'
       - Cannot access all local variables
       - Complex functions fail to compile
     detection_pattern: "assembly|function.*\\{[^}]*\\{[^}]*\\}"

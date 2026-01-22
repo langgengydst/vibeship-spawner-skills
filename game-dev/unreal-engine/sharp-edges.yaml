@@ -133,7 +133,7 @@ sharp_edges:
     symptoms:
       - Blueprints stop working correctly
       - Property values reset randomly
-      - "Blueprint could not be loaded" errors
+      - '"Blueprint could not be loaded" errors'
       - Crashes on PIE after compile
       - Values in editor don't match runtime
     detection_pattern: null

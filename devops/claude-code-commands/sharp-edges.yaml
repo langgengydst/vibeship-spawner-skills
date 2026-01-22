@@ -42,7 +42,7 @@ sharp_edges:
       // CORRECT: .claude/commands/feature.md
     symptoms:
       - Command not appearing in / menu
-      - "Unknown command" error
+      - '"Unknown command" error'
       - Works for you but not teammates
     detection_pattern: 'commands/\\.|command/|claude/commands[^/]'
 
@@ -104,7 +104,7 @@ sharp_edges:
     detection_pattern: '\$[Aa]rguments|\$ARGUMENT[^S]|\$\{ARGUMENTS\}'
 
   - id: file-reference-not-loading
-    summary: @file reference doesn't include file contents
+    summary: "@file reference doesn't include file contents"
     severity: medium
     situation: File reference treated as literal text
     why: |
@@ -155,7 +155,7 @@ sharp_edges:
       its patterns in this review.
     symptoms:
       - File contents not appearing in context
-      - "@filename" treated as literal text
+      - '"@filename" treated as literal text'
       - Works in some commands but not others
     detection_pattern: '@\\./|@\\.\\./'
 

@@ -64,7 +64,7 @@ sharp_edges:
       | Android low | 64MB |
     symptoms:
       - Black screen after running
-      - "WebGL context lost" errors
+      - '"WebGL context lost" errors'
       - Scene disappears randomly
       - Crashes on mobile
     detection_pattern: "context.*lost|black screen|crash|disappear"

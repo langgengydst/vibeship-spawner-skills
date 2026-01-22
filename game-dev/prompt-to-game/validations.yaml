@@ -20,7 +20,7 @@ validations:
         - "// eval is dangerous"
 
   - id: exposed-api-key
-    pattern: '(?:api[_-]?key|secret|token|password)\s*[=:]\s*["\'][a-zA-Z0-9_-]{16,}["\']'
+    pattern: "(?:api[_-]?key|secret|token|password)\\s*[=:]\\s*[\"'][a-zA-Z0-9_-]{16,}[\"']"
     severity: error
     message: "Hardcoded secret detected - use environment variables"
     fix: "Move to .env file and access via process.env"

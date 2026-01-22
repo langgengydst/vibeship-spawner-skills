@@ -139,7 +139,7 @@ validations:
     pattern:
       - 'https://mainnet\.infura\.io'
       - 'https://eth-mainnet\.g\.alchemy\.com'
-      - 'rpc.*=.*["\']https://(?!.*env)'
+      - "rpc.*=.*[\"']https://(?!.*env)"
     message: "Hardcoded RPC URL - should be configurable via environment."
     fix_action: "Use environment variable for RPC URL"
     applies_to:

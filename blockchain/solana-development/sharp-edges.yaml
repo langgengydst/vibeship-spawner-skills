@@ -122,7 +122,7 @@ sharp_edges:
     description: Transaction exceeds 1232 byte limit
     symptoms:
       - Transactions failing silently
-      - "Transaction too large" errors
+      - '"Transaction too large" errors'
       - Batch operations failing
     detection_pattern: "multiple.*accounts.*single.*transaction"
     solution: |

@@ -77,7 +77,7 @@ sharp_edges:
       - CPU spike
       - Request timeout
       - Application hang
-      - "Too long" errors
+      - '"Too long" errors'
     detection_pattern: "slow regex|hang|timeout|backtrack"
 
   - id: false-validation

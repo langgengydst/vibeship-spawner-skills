@@ -87,10 +87,10 @@ validations:
     severity: critical
     type: regex
     pattern:
-      - 'password:\s*["\'][^"\']+["\']'
-      - 'apiKey:\s*["\'][^"\']+["\']'
-      - 'secret:\s*["\'][^"\']+["\']'
-      - 'token:\s*["\'][A-Za-z0-9+/=]{20,}["\']'
+      - "password:\\s*[\"'][^\"']+[\"']"
+      - "apiKey:\\s*[\"'][^\"']+[\"']"
+      - "secret:\\s*[\"'][^\"']+[\"']"
+      - "token:\\s*[\"'][A-Za-z0-9+/=]{20,}[\"']"
     message: "Hardcoded secret in manifest. Will be in Git history forever."
     fix_action: "Use Kubernetes Secrets or external secrets manager"
     applies_to:

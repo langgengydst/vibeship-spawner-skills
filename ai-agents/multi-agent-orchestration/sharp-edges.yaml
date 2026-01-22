@@ -336,7 +336,7 @@ Summarize:
                   }, {
                       role: 'user',
                       content: `Current state: ${JSON.stringify(currentState)}
-Handing off to: ${nextAgentId}`
+                      Handing off to: ${nextAgentId}`
                   }]
               });
 

@@ -301,7 +301,7 @@ sharp_edges:
     symptoms:
       - Snapshots updated without review
       - Massive snapshot files
-      - "Update snapshot" commits
+      - '"Update snapshot" commits'
     detection_pattern: 'toMatchSnapshot\(\)$'
 
   - id: missing-error-tests

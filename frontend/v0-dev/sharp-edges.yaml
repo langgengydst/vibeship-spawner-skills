@@ -36,7 +36,7 @@ sharp_edges:
       ls components/ui/
       # Compare with v0 imports
     symptoms:
-      - "Module not found" errors
+      - '"Module not found" errors'
       - "Cannot find './ui/button'"
       - Missing component files
     detection_pattern: 'import.*@/components/ui'

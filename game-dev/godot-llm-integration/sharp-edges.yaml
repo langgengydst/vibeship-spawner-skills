@@ -232,7 +232,7 @@ sharp_edges:
       - NPC forgets earlier conversation
       - Responses become generic/confused
       - NPC contradicts what it said earlier
-      - "Lost in the middle" behavior
+      - '"Lost in the middle" behavior'
     detection_pattern: 'context_size|system_prompt|get_context_length'
 
   - id: mobile-not-ready

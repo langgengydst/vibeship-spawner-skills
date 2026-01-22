@@ -192,7 +192,7 @@ sharp_edges:
           npm ci
     symptoms:
       - Builds take 10+ minutes
-      - "Downloading packages" on every build
+      - '"Downloading packages" on every build'
       - Same Dockerfile much faster on another machine
       - Developers skip local testing due to build time
     detection_pattern: 'COPY\s+\.\s+\.\s*\n.*npm install|COPY\s+\.\s+\.\s*\n.*pip install'
@@ -237,7 +237,7 @@ sharp_edges:
       # - Stack overflow (musl smaller default stack)
       # - Native module crashes (compiled for glibc)
     symptoms:
-      - "Error loading shared library"
+      - '"Error loading shared library"'
       - Segmentation fault on startup
       - DNS lookups hang or fail
       - Locale/encoding errors
@@ -291,7 +291,7 @@ sharp_edges:
       # Also check that .dockerignore is in root of build context
       # (not in subdirectory)
     symptoms:
-      - "Sending build context" takes minutes
+      - '"Sending build context" takes minutes'
       - Context is hundreds of MB or GB
       - Builds start slowly even when cached
       - CI runners run out of disk space
@@ -389,7 +389,7 @@ sharp_edges:
       ARG NODE_VERSION=20.10.0
       FROM node:${NODE_VERSION}-alpine
     symptoms:
-      - "Works on my machine" but fails in CI
+      - '"Works on my machine" but fails in CI'
       - Same commit builds differently
       - Random test failures after merging
       - Security scans show different vulnerabilities

@@ -148,8 +148,8 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'value:\\s*["\']?(sk_|pk_|api_|secret_|password)'
-      - 'password:\\s*["\']?[^\\s]+'
+      - "value:\\s*[\"']?(sk_|pk_|api_|secret_|password)"
+      - "password:\\s*[\"']?[^\\\\s]+"
     message: "Secrets should not be hardcoded in manifests"
     fix_action: "Use Secret resource and secretKeyRef"
     applies_to:
@@ -201,7 +201,7 @@ code_smells:
     suggestion: "Split into separate deployments unless truly sidecar pattern"
 
   - id: catch-all-labels
-    name: Using generic labels like 'app: web'
+    name: "Using generic labels like 'app: web'"
     description: "Labels too generic to be useful for selection"
     pattern: 'app:\\s*(web|app|service|api)\\s*$'
     suggestion: "Use descriptive labels: app: user-service, component: api"

@@ -95,7 +95,7 @@ sharp_edges:
       }
     symptoms:
       - Intermittent tool failures
-      - "undefined" in tool responses
+      - '"undefined" in tool responses'
       - Works in testing, fails with AI
     detection_pattern: 'inputSchema|properties|required'
 
@@ -160,7 +160,7 @@ sharp_edges:
     symptoms:
       - Tool hangs then fails
       - Partial work lost
-      - "Connection closed" errors
+      - '"Connection closed" errors'
     detection_pattern: 'await|async|Promise|setTimeout'
 
   - id: state-between-requests
@@ -210,7 +210,7 @@ sharp_edges:
       // Each request is self-contained
     symptoms:
       - Multi-step workflows fail partway
-      - "Not found" errors on second step
+      - '"Not found" errors on second step'
       - Works in testing, fails in production
     detection_pattern: 'let |var |this\.'
 
@@ -270,6 +270,6 @@ sharp_edges:
       }));
     symptoms:
       - Wrong content returned
-      - "Resource not found" for valid resources
+      - '"Resource not found" for valid resources'
       - Confusion about which resource to request
     detection_pattern: 'uri:|uriTemplate'

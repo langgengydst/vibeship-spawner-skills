@@ -20,7 +20,7 @@ edges:
       subdivision surfaces are applied. The subdivision algorithm doesn't
       know how to smoothly interpolate across irregular polygons.
     symptoms:
-      - "Pinching" at n-gon boundaries after subdivision
+      - '"Pinching" at n-gon boundaries after subdivision'
       - Shading artifacts that appear only after smoothing
       - Wavy surfaces on what should be flat areas
       - Different results in different software

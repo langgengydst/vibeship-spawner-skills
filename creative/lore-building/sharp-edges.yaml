@@ -69,7 +69,7 @@ sharp_edges:
   - id: lore-gatekeeping
     summary: Deep lore creating toxic expertise hierarchy
     severity: medium
-    situation: "True fans" attacking newcomers
+    situation: '"True fans" attacking newcomers'
     why: |
       Lore depth creates insiders.
       Investment creates ownership.

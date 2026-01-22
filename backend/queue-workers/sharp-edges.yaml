@@ -68,7 +68,7 @@ sharp_edges:
       - Duplicate emails sent
       - Customers charged multiple times
       - Duplicate database records created
-      - "Why did this run twice?" in logs
+      - '"Why did this run twice?" in logs'
     detection_pattern: 'queue\\.add(?![\\s\\S]{0,300}idempotency|dedupe)'
 
   - id: no-dlq
@@ -205,7 +205,7 @@ sharp_edges:
       }
     symptoms:
       - Jobs stuck in "active" state after deploy
-      - "Lock expired" errors
+      - '"Lock expired" errors'
       - Partial data processing
       - Zombie jobs in queue
     detection_pattern: 'new Worker(?![\\s\\S]{0,1000}SIGTERM|graceful)'
@@ -322,7 +322,7 @@ sharp_edges:
     symptoms:
       - Workers stuck on same job for hours
       - Queue depth keeps growing
-      - "All workers busy" but nothing processing
+      - '"All workers busy" but nothing processing'
       - Metrics show jobs active but not completing
     detection_pattern: 'new Worker(?![\\s\\S]{0,500}lockDuration|timeout)'
 
@@ -377,7 +377,7 @@ sharp_edges:
       }
     symptoms:
       - Redis CPU spike on restart
-      - "Connection refused" bursts
+      - '"Connection refused" bursts'
       - All workers reconnect at same second
       - Cascading failures
     detection_pattern: 'retryStrategy(?![\\s\\S]{0,200}jitter|random)'

@@ -63,7 +63,7 @@ validations:
     type: regex
     pattern:
       - 'logger\\.[a-z]+\\(`[^`]*\\$\\{'
-      - 'logger\\.[a-z]+\\([\'"][^{]+[\'"]\\s*\\)'
+      - "logger\\\\.[a-z]+\\\\([\"'][^{]+[\"']\\\\s*\\\\)"
       - 'console\\.log\\(`[^`]*\\$\\{'
     message: "String concatenation in log. Use structured logging for searchability."
     fix_action: "Replace with: logger.info({ field: value }, 'message')"

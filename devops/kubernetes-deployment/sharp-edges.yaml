@@ -531,7 +531,7 @@ sharp_edges:
       # Just "is the process responsive?"
     symptoms:
       - Pods restart during traffic spikes
-      - "Liveness probe failed" in events
+      - '"Liveness probe failed" in events'
       - Container restart count increases under load
       - App was working, now getting killed
     detection_pattern: 'livenessProbe|failureThreshold.*1|timeoutSeconds.*1'

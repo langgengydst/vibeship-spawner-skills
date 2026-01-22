@@ -301,7 +301,7 @@ sharp_edges:
          // node.js - not recommended for complex cases
          process.on('SIGCHLD', ...);
     symptoms:
-      - `ps aux` shows many zombie processes
+      - '`ps aux` shows many zombie processes'
       - Container eventually fails
       - Resource exhaustion
     detection_pattern: 'ENTRYPOINT(?!.*tini|.*dumb-init)|CMD(?!.*init)'

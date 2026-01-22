@@ -86,7 +86,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - '(?i)color\s*===?\s*["\'](?:red|green|blue|yellow)'
+      - "(?i)color\\s*===?\\s*[\"'](?:red|green|blue|yellow)"
       - '(?i)if\s*\(\s*(?:\.color|getColor|tile\.color)'
       - '(?i)switch\s*\(\s*color\s*\)'
     message: "Color-based puzzle logic detected. Ensure alternative for colorblind players."

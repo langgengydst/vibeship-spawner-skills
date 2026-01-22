@@ -99,7 +99,7 @@ sharp_edges:
          - Mock unstable externals
          - Seed random generators
     symptoms:
-      - "Just rerun it" in team vocabulary
+      - '"Just rerun it" in team vocabulary'
       - Same test fails for different PRs
       - CI has retry logic for tests
       - Tests pass locally, fail in CI
@@ -201,7 +201,7 @@ sharp_edges:
     symptoms:
       - Tests fail on certain dates
       - Tests fail in certain timezones
-      - "It works on my machine" with dates
+      - '"It works on my machine" with dates'
       - CI failures on month boundaries
     detection_pattern: "new Date\\(['\"]\\d{4}-|Date\\.parse|moment\\(['\"]\\d"
 
@@ -310,6 +310,6 @@ sharp_edges:
       - expect().toBeTruthy() everywhere
       - Tests with no expect()
       - Coverage high but bugs frequent
-      - "I wrote a test for it" but test is useless
+      - '"I wrote a test for it" but test is useless'
     detection_pattern: "expect\\(.*\\)\\.toBeTruthy|expect\\(.*\\)\\.toBeDefined|expect\\(.*\\)\\.not\\.toBeNull"
 

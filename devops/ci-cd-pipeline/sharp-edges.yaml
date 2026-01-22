@@ -390,7 +390,7 @@ sharp_edges:
       # If re-run is needed, investigate why
       # Required status checks should be stable
     symptoms:
-      - "Just re-run CI" as common phrase
+      - '"Just re-run CI" as common phrase'
       - Tests pass on retry
       - Team ignores CI failures
       - Merges with failing CI

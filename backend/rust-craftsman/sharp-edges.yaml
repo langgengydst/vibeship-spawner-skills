@@ -345,6 +345,6 @@ sharp_edges:
          do_lots_of_work(&value);
     symptoms:
       - Runtime panics on borrow
-      - "Already borrowed" errors
+      - '"Already borrowed" errors'
       - Panics only under specific call patterns
     detection_pattern: 'RefCell|borrow_mut.*borrow|borrow.*borrow_mut'

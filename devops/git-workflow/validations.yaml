@@ -51,7 +51,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'git\s+commit\s+-m\s+["\'][^"\']{1,10}["\']'
+      - "git\\s+commit\\s+-m\\s+[\"'][^\"']{1,10}[\"']"
     message: "Commit message is too short - explain what and why"
     fix_action: "Write a descriptive message: what changed and why"
     applies_to:

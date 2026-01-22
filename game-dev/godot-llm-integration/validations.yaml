@@ -27,7 +27,7 @@ validations:
     name: Absolute Model Path
     severity: high
     type: regex
-    pattern: 'model_file\\s*=\\s*["\'][A-Za-z]:|model_path\\s*=\\s*["\']/'
+    pattern: "model_file\\s*=\\s*[\"'][A-Za-z]:|model_path\\s*=\\s*[\"']/"
     message: "Absolute path for model won't work in exports. Use res:// path."
     fix_action: "Place model in res://ai/models/ and use res:// path"
     applies_to:

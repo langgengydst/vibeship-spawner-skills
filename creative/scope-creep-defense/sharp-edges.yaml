@@ -57,7 +57,7 @@ sharp_edges:
       | Deadline sacred | Or explicitly moved |
     symptoms:
       - Deadline slipping repeatedly
-      - "Just one more" pattern
+      - '"Just one more" pattern'
       - Team overtime
       - Quality suffering
     detection_pattern: "just add|quick addition|while you're there|one more"

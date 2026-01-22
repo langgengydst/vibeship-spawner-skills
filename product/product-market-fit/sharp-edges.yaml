@@ -132,7 +132,7 @@ sharp_edges:
       | Enterprise | 70% | 60% | 55% |
     symptoms:
       - Conflicting conclusions about retention
-      - "Good" retention but poor business outcomes
+      - '"Good" retention but poor business outcomes'
       - No cohort analysis
     detection_pattern: "retention|cohort|churn"
 

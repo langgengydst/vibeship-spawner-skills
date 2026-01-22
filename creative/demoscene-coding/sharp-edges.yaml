@@ -11,7 +11,7 @@ sharp_edges:
       - Works on your NVIDIA, fails on AMD
       - Visual artifacts appear on Intel integrated graphics
       - Shader compiles but renders wrong on competition machine
-      - "It worked in development" becomes demo party tragedy
+      - '"It worked in development" becomes demo party tragedy'
     detection_pattern: "shader|glsl|webgl|fragment"
     solution: |
       GPU Compatibility Checklist:

@@ -285,7 +285,7 @@ sharp_edges:
         on(type: string) { return this.events$.pipe(filter(e => e.type === type)); }
       }
     symptoms:
-      - "Error: Circular dependency" at runtime
+      - '"Error: Circular dependency" at runtime'
       - DI resolution fails
       - Hard to trace dependency chains
     detection_pattern: null

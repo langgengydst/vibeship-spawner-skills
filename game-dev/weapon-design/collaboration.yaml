@@ -351,7 +351,7 @@ handoff_protocols:
       - "Rarity tier"
     recommended:
       - "Reference animations from similar games"
-      - "Intended "feel" description"
+      - 'Intended "feel" description'
       - "Silhouette attack arc suggestions"
 
   to_vfx:

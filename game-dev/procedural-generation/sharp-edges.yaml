@@ -123,7 +123,7 @@ sharp_edges:
       worldgens. You must too.
     symptoms:
       - Players stuck with no path forward
-      - "Impossible level" bug reports
+      - '"Impossible level" bug reports'
       - QA can't reproduce (different seed)
       - Forums list "bad seeds to avoid"
       - Softlocks requiring restart

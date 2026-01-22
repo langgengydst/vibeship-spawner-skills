@@ -80,7 +80,7 @@ sharp_edges:
     symptoms:
       - Conditions never trigger
       - Comparisons always false
-      - "Cannot read property of [object Object]" errors
+      - '"Cannot read property of [object Object]" errors'
     detection_pattern: 'if\s*\(\s*\w+\s*[=!]==?\s*[0-9"\'true|false|null]'
 
   - id: async-setup-blocking

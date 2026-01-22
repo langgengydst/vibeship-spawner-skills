@@ -126,7 +126,7 @@ sharp_edges:
       | Will incidents drop? | Trackable? |
     symptoms:
       - Refactoring for "cleanliness"
-      - "It bothers me" motivation
+      - '"It bothers me" motivation'
       - No measurable improvement
       - Time spent, nothing to show
     detection_pattern: "code smell|bothers me|should be cleaner"

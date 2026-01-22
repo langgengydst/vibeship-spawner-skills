@@ -47,7 +47,7 @@ sharp_edges:
     symptoms:
       - Test passes locally, fails in CI
       - setTimeout/sleep in test code
-      - '"Just re-run it" as common response
+      - '"Just re-run it" as common response'
       - Inconsistent test results
     detection_pattern: 'setTimeout|sleep|waitForTimeout|new Promise.*setTimeout'
 
@@ -427,7 +427,7 @@ sharp_edges:
       // In CI: fail if snapshot changes without explicit flag
       // Require separate PR for snapshot updates with screenshot
     symptoms:
-      - "Update snapshot" in every PR
+      - '"Update snapshot" in every PR'
       - 100+ line snapshot files
       - Nobody reads snapshot diffs
       - Visual bugs slip through

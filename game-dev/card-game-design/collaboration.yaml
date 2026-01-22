@@ -360,7 +360,7 @@ boundaries:
         - "State management (complexity vs performance)"
 
   delegates_completely:
-    - "Visual art direction" -> ui-design
+    - '"Visual art direction" -> ui-design'
     - "Server infrastructure" -> backend
     - "Monetization pricing" -> game-monetization
     - "Narrative and lore" -> worldbuilding

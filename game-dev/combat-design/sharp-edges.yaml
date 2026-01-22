@@ -48,7 +48,7 @@ sharp_edges:
       - Players complain attacks "phase through" enemies
       - Players die to attacks that "clearly missed"
       - Inconsistent damage dealing at edges of attacks
-      - "Hitbox porn" or "hitbox gore" comments on forums
+      - '"Hitbox porn" or "hitbox gore" comments on forums'
     detection_pattern: null  # Visual issue, not code pattern
 
   - id: input-latency-stack

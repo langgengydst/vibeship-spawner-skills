@@ -127,7 +127,7 @@ sharp_edges:
          - With 0.8 correlation: ~8-9% true risk
          - Not 10% (uncorrelated) or 2% (single)
     references:
-      - "All Correlations Go to One in a Crisis" - various research
+      - '"All Correlations Go to One in a Crisis" - various research'
 
   - id: leverage-path-dependency
     severity: CRITICAL
@@ -311,7 +311,7 @@ sharp_edges:
     symptoms:
       - Massive slippage on exits
       - Can't close position at any reasonable price
-      - "Stuck" in position during crisis
+      - '"Stuck" in position during crisis'
     detection_pattern: "liquidity|volume|slippage|exit"
     solution: |
       Liquidity Reality Check:
@@ -407,7 +407,7 @@ sharp_edges:
               'var_cvar_ratio': cvar_95 / var_95  # Higher = fatter tails
           }
     references:
-      - "The Black Swan" - Nassim Taleb
+      - '"The Black Swan" - Nassim Taleb'
 
   - id: single-strategy-risk
     severity: MEDIUM

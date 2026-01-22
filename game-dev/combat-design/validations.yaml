@@ -50,7 +50,7 @@ validations:
     name: Animation Without Damage Frame Event
     severity: info
     type: regex
-    pattern: '(attackAnim|attack_anim|AttackAnimation)\s*[=:]\s*["\'][^"\']+["\'](?!.*event|notify)'
+    pattern: "(attackAnim|attack_anim|AttackAnimation)\\s*[=:]\\s*[\"'][^\"']+[\"'](?!.*event|notify)"
     message: "Attack animation reference without visible event/notify setup. Damage timing should use animation events."
     fix_action: "Add animation events for damage frames, sound triggers, and VFX spawning"
     applies_to:

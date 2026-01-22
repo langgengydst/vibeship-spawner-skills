@@ -139,7 +139,7 @@ sharp_edges:
       - Nodes going NotReady
       - Random pod evictions
       - OOMKilled pods
-      - "Cannot schedule pod" errors
+      - '"Cannot schedule pod" errors'
     detection_pattern: 'containers:[^}]*(?!resources:)'
 
   - id: missing-health-checks
@@ -379,7 +379,7 @@ sharp_edges:
       # - Only set CPU limits if you need strict isolation
     symptoms:
       - High P99 latency with low average
-      - "Random" slowness
+      - '"Random" slowness'
       - container_cpu_cfs_throttled high
     detection_pattern: 'limits:[^}]*cpu:'
 
@@ -440,7 +440,7 @@ sharp_edges:
       # Check endpoints (what IPs service points to):
       kubectl get endpoints my-service
     symptoms:
-      - "Connection refused" after deployments
+      - '"Connection refused" after deployments'
       - Intermittent connection failures
       - Stale connections to old pods
     detection_pattern: null

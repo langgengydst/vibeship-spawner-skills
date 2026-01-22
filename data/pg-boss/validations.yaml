@@ -33,7 +33,7 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'send\(["\'](?:payment|order|critical)[^"\']*["\'][^)]+\)(?!.*deadLetter)'
+      - "send\\([\"'](?:payment|order|critical)[^\"']*[\"'][^)]+\\)(?!.*deadLetter)"
     message: "Critical job without dead letter queue. Failed jobs will be lost."
     fix_action: "Add deadLetter: { deadLetter: 'failed-critical-jobs' }"
     applies_to:

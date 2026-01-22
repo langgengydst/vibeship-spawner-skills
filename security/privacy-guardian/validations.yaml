@@ -7,11 +7,11 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'API_KEY.*=.*["\'][a-zA-Z0-9]{20,}["\']'
-      - 'SECRET.*=.*["\'][a-zA-Z0-9]{20,}["\']'
-      - 'PASSWORD.*=.*["\'][^"\']+["\']'
-      - 'Fernet\\(b["\']'
-      - 'ENCRYPTION_KEY.*=.*["\']'
+      - "API_KEY.*=.*[\"'][a-zA-Z0-9]{20,}[\"']"
+      - "SECRET.*=.*[\"'][a-zA-Z0-9]{20,}[\"']"
+      - "PASSWORD.*=.*[\"'][^\"']+[\"']"
+      - "Fernet\\(b[\"']"
+      - "ENCRYPTION_KEY.*=.*[\"']"
     message: "Hardcoded secret detected. Use environment variables or secret manager."
     fix_action: "Move secret to environment variable or secret management system"
     applies_to:

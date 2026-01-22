@@ -104,7 +104,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - '^version:\s*["\']'
+      - "^version:\\s*[\"']"
     message: "The 'version' field is obsolete in Docker Compose v2"
     fix_action: "Remove version field - it's ignored"
     applies_to:

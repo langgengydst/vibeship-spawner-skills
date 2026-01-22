@@ -31,7 +31,7 @@ validations:
     name: Unrestricted Bash in allowedTools
     severity: high
     type: regex
-    pattern: '--allowedTools.*["'\'']Bash["'\'']|--allowedTools.*Bash[^(]'
+    pattern: "--allowedTools.*[\"'\\\\']Bash[\"'\\\\']|--allowedTools.*Bash[^(]"
     message: "Unrestricted Bash access in CI. Specify allowed commands."
     fix_action: "Use --allowedTools \"Bash(npm test),Bash(npm run lint)\""
     applies_to:

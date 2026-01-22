@@ -34,7 +34,7 @@ sharp_edges:
          # Verify kill switch works
          curl -X POST /chaos/abort
     symptoms:
-      - '"Simple experiment" caused major outage
+      - '"Simple experiment" caused major outage'
       - Unrelated services affected
       - Experiment couldn't be stopped quickly
     detection_pattern: 'blast.*radius|scope|affected.*percent|PODS_AFFECTED'
@@ -137,7 +137,7 @@ sharp_edges:
            scope: canary
            traffic_percentage: 10
     symptoms:
-      - "Works in staging" fails in production
+      - '"Works in staging" fails in production'
       - First production experiment causes incident
       - Unexpected dependencies discovered during chaos
     detection_pattern: 'production|staging|canary|environment'
@@ -175,7 +175,7 @@ sharp_edges:
          # Export metrics window for post-analysis
          prometheus_snapshot --start=T1 --end=T2
     symptoms:
-      - "Nothing happened" but system was down
+      - '"Nothing happened" but system was down'
       - Can't correlate failures to chaos events
       - Alerts didn't fire when they should have
     detection_pattern: 'observability|monitoring|alert|dashboard|metrics'

@@ -11,8 +11,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'new WebSocket\\([^)]+\\)(?![\\s\\S]*\\.onerror)'
-      - 'WebSocketServer\\([^)]*\\)(?![\\s\\S]*\\.on\\([\'"]error)'
+      - 'new WebSocket\([^)]+\)(?![\s\S]*\.onerror)'
+      - "WebSocketServer\\([^)]*\\)(?![\\\\s\\\\S]*\\.on\\([\"']error)"
     message: "WebSocket should have error handler"
     fix_action: "Add ws.onerror or ws.on('error') handler"
     applies_to:
@@ -40,8 +40,8 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'new WebSocket\\([\'"]ws://localhost'
-      - 'new WebSocket\\([\'"]wss://[a-z]+\\.'
+      - "new WebSocket\\([\"']ws://localhost"
+      - "new WebSocket\\([\"']wss://[a-z]+\\."
     message: "Consider using environment variable for WebSocket URL"
     fix_action: "Use process.env.NEXT_PUBLIC_WS_URL or similar"
     applies_to:
@@ -56,8 +56,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'new WebSocket\\([\'"]ws://'
-      - 'WebSocket\\([^)]*[\'"]ws://'
+      - "new WebSocket\\([\"']ws://"
+      - "WebSocket\\([^)]*[\"']ws://"
     message: "Use wss:// for secure WebSocket connections"
     fix_action: "Change ws:// to wss:// in production"
     applies_to:

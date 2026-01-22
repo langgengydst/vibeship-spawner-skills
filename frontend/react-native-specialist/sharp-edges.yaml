@@ -66,7 +66,7 @@ sharp_edges:
     symptoms:
       - Animations drop frames
       - UI freezes during data updates
-      - "Slow bridge" warnings in profiler
+      - '"Slow bridge" warnings in profiler'
     detection_pattern: 'Animated\.timing|setInterval.*setState'
 
   - id: memory-leak-listeners

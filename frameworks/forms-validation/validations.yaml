@@ -22,7 +22,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - "errors\.[\w]+.*\n.*<input(?!.*aria-invalid)"
+      - "errors\\.[\\w]+.*\\n.*<input(?!.*aria-invalid)"
     message: "Add aria-invalid for accessibility"
     fix_action: "Add aria-invalid={!!errors.fieldName}"
     applies_to:

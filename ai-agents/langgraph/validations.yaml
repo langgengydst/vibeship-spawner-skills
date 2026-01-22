@@ -15,7 +15,7 @@ validations:
     name: END Used as String
     severity: high
     type: regex
-    pattern: 'return\s*["\']end["\']|return\s*["\']END["\']'
+    pattern: "return\\s*[\"']end[\"']|return\\s*[\"']END[\"']"
     message: "Use END constant, not string 'end' or 'END'."
     fix_action: "from langgraph.graph import END; return END"
     applies_to:
@@ -66,7 +66,7 @@ validations:
     name: Agent Loop Without Max Iterations
     severity: medium
     type: regex
-    pattern: 'add_edge\([^,]+,\s*["\'][^"\']+["\']\s*\).*\n.*add_edge\(["\'][^"\']+["\']\s*,'
+    pattern: "add_edge\\([^,]+,\\s*[\"'][^\"']+[\"']\\s*\\).*\\n.*add_edge\\([\"'][^\"']+[\"']\\s*,"
     negative_pattern: 'iterations|max_|count|limit'
     message: "Agent loop without iteration limit may run forever."
     fix_action: "Add iteration counter in state and check in routing"
@@ -77,7 +77,7 @@ validations:
     name: SQLite Memory Checkpointer in Production
     severity: medium
     type: regex
-    pattern: 'SqliteSaver\.from_conn_string\(["\']:memory:["\']\)'
+    pattern: "SqliteSaver\\.from_conn_string\\([\"']:memory:[\"']\\)"
     message: "In-memory SQLite loses state on restart. Use persistent storage in production."
     fix_action: "Use PostgresSaver or file-based SQLite for production"
     applies_to:

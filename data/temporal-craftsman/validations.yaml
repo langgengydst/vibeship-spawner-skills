@@ -115,7 +115,7 @@ validations:
     severity: info
     type: regex
     pattern:
-      - 'task_queue.*=.*["\']default["\']'
+      - "task_queue.*=.*[\"']default[\"']"
       - 'task_queue.*=.*["\']main["\']'
     message: "Using generic task queue. Consider dedicated queues for isolation."
     fix_action: "Create dedicated task queues for different workflow types"

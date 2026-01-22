@@ -96,7 +96,7 @@ sharp_edges:
       - Build takes hours, most time on shaders
       - Memory usage much higher than expected
       - Hitching when new materials appear
-      - "Shader keyword limit exceeded" errors
+      - '"Shader keyword limit exceeded" errors'
     detection_pattern: 'multi_compile|shader_feature|#pragma multi_compile'
     version_range: "*"
     red_flags:

@@ -89,11 +89,11 @@ validations:
     severity: error
     type: regex
     pattern:
-      - 'password:\s*["\'][^$\{]+'
-      - 'api_key:\s*["\'][^$\{]+'
-      - 'token:\s*["\'][^$\{]+'
-      - 'secret:\s*["\'][^$\{]+'
-      - 'AWS_SECRET_ACCESS_KEY:\s*["\'][^$\{]+'
+      - "password:\\s*[\"'][^${]+"
+      - "api_key:\\s*[\"'][^${]+"
+      - "token:\\s*[\"'][^${]+"
+      - "secret:\\s*[\"'][^${]+"
+      - "AWS_SECRET_ACCESS_KEY:\\s*[\"'][^${]+"
     message: "Hardcoded secret value in workflow file. Will be visible in version control."
     fix_action: "Use GitHub Secrets and reference with ${{ secrets.SECRET_NAME }}"
     applies_to:

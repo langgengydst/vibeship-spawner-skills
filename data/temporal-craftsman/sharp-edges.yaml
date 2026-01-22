@@ -407,7 +407,7 @@ sharp_edges:
       - "Fast workflows blocked by slow ones"
       - "Can't scale specific workloads"
       - "All workers equally loaded despite different work"
-    detection_pattern: 'task_queue.*=.*["\']default["\']'
+    detection_pattern: "task_queue.*=.*[\"']default[\"']"
     version_range: ">=1.0.0"
 
   - id: signal-handler-blocking

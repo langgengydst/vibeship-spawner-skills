@@ -181,7 +181,7 @@ sharp_edges:
     symptoms:
       - Default agent behavior
       - Missing tools or settings
-      - "KeyError" on config access
+      - '"KeyError" on config access'
     detection_pattern: 'agents_config|tasks_config'
 
   - id: tool-not-called
@@ -238,7 +238,7 @@ sharp_edges:
       )
     symptoms:
       - Agent makes up facts
-      - "Based on my knowledge" instead of search
+      - '"Based on my knowledge" instead of search'
       - Outdated information
     detection_pattern: 'tools.*=.*\[\]|@tool'
 

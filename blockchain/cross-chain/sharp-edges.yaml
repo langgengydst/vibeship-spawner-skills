@@ -109,7 +109,7 @@ sharp_edges:
       }
     symptoms:
       - One-way transfers work, reverse fails
-      - "Peer not set" errors
+      - '"Peer not set" errors'
       - Message rejection on receive
     detection_pattern: 'setPeer(?!.*setPeer.*setPeer)'
 

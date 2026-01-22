@@ -11,8 +11,8 @@ validations:
     severity: warning
     type: regex
     pattern:
-      - 'cmds\.joint\([^)]*name\s*=\s*["\'](?!.*{)[^"\']+["\']'
-      - 'pm\.joint\([^)]*name\s*=\s*["\'](?!.*{)[^"\']+["\']'
+      - "cmds\\.joint\\([^)]*name\\s*=\\s*[\"'](?!.*{)[^\"']+[\"']"
+      - "pm\\.joint\\([^)]*name\\s*=\\s*[\"'](?!.*{)[^\"']+[\"']"
     message: "Hardcoded joint names make rigs inflexible. Use naming convention variables or template strings."
     fix_action: "Create naming convention constants: SIDE_PREFIX, JOINT_SUFFIX, etc. Use f-strings or format()."
     applies_to:

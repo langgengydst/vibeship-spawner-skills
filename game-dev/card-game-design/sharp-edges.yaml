@@ -8,7 +8,7 @@ sharp_edges:
   # ===========================================================================
 
   - id: card-free-spells
-    summary: "Free spells" at 0 mana break game balance fundamentally
+    summary: '"Free spells" at 0 mana break game balance fundamentally'
     severity: critical
     situation: |
       You design a card that costs 0 mana or can be cast for free via an

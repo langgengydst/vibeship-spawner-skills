@@ -178,7 +178,7 @@ sharp_edges:
     symptoms:
       - Decision changes after exec joins meeting
       - Team recommendation not in final decision doc
-      - "Leadership decided" without rationale
+      - '"Leadership decided" without rationale'
       - Experts stop giving real opinions
     detection_pattern: "leadership decided|exec wants|from the top|just do it"
 
@@ -363,7 +363,7 @@ sharp_edges:
          - "We'll revisit after MVP"
          - If not revisited by date, default wins
     symptoms:
-      - "We haven't decided that yet"
+      - '"We haven''t decided that yet"'
       - Different team members assume different answers
       - Inconsistent implementations
       - "I thought we were doing X?"

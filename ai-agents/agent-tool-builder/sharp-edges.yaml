@@ -165,8 +165,8 @@ sharp_edges:
 
       # Always serialize to string before returning.
     detection_pattern:
-      - "return\s*\{"
-      - "return\s*dict"
+      - "return\\\\s*\\{"
+      - "return\\\\s*dict"
 
   - id: missing-error-is-error-flag
     severity: medium
@@ -308,7 +308,7 @@ sharp_edges:
          # High-level: "manage_calendar"
          # Internally routes to specific operations
     detection_pattern:
-      - "tools.*\[.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,"
+      - "tools.*\\\\[.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,.*,"
 
 common_mistakes:
   - mistake: "Using placeholder descriptions like 'Does X'"
