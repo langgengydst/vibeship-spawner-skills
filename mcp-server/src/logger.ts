@@ -28,19 +28,7 @@ export const toolLogger = (
   };
 
   if (error) {
-    logData.error = error;
-    logData.status = "FAILED";
-    logger.error(
-      logData,
-      `Tool Call: ${toolName} FAILED [${sessionId || "unknown"}]`,
-    );
-  } else {
-    logData.result = result;
-    logData.status = "SUCCESS";
-    logger.info(
-      logData,
-      `Tool Call: ${toolName} SUCCESS [${sessionId || "unknown"}]`,
-    );
+    logger.error(`Tool Call: ${toolName} FAILED [${sessionId || "working"}]`);
   }
 };
 
@@ -51,3 +39,15 @@ export interface ExtendedLogger extends pino.Logger {
 }
 
 export const log = logger as ExtendedLogger;
+
+// Extend Pino.Logger type with our custom tool logger method
+export const extendedLogger = logger as pino.Logger & {
+  tool: (
+    toolName: string,
+    args: any,
+    result?: any,
+    error?: any,
+    durationMs?: number,
+    sessionId?: string,
+  ) => void;
+};
