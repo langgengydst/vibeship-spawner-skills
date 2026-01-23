@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { glob } from 'glob';
+import { logger } from './logger.js';
 
 export interface SharpEdge {
   id: string;
@@ -48,9 +49,11 @@ export class SharpEdgeManager {
             this.edges.push(...edges);
         }
       } catch (e) {
-        console.error(`Error loading sharp edges from ${file}:`, e);
+        logger.error({ error: e }, `Error loading sharp edges from ${file}`);
       }
     }
+    
+    logger.info(`Loaded ${this.edges.length} sharp edges`);
   }
 
   async check(code?: string, skillId?: string): Promise<SharpEdge[]> {
@@ -74,10 +77,9 @@ export class SharpEdgeManager {
                   try {
                       const re = new RegExp(edge.detection_pattern, 'i');
                       return re.test(code);
-                  } catch (e) {
-                      console.error(`Invalid regex for edge ${edge.id}: ${edge.detection_pattern}`, e);
-                      return false;
-                  }
+              } catch (e) {
+                  logger.error({ error: e }, `Invalid regex for edge ${edge.id}: ${edge.detection_pattern}`);
+              }
               }
               return false;
           });

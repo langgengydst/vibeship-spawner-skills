@@ -1,3 +1,4 @@
+import { logger } from './logger.js';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -24,8 +25,7 @@ export class MemoryManager {
         this.memory = JSON.parse(content);
       }
     } catch (e) {
-      console.error("Failed to load memory:", e);
-      this.memory = {};
+      logger.error({ error: e }, "Failed to load memory");
     }
   }
 
@@ -37,7 +37,7 @@ export class MemoryManager {
       }
       fs.writeFileSync(this.memoryPath, JSON.stringify(this.memory, null, 2));
     } catch (e) {
-      console.error("Failed to save memory:", e);
+      logger.error({ error: e }, "Failed to save memory");
     }
   }
 

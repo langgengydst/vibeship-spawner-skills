@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { glob } from 'glob';
+import { logger } from './logger.js';
 
 export interface ValidationRule {
   id: string;
@@ -50,9 +51,11 @@ export class ValidationManager {
             this.rules.push(...data.validations);
         }
       } catch (e) {
-        console.error(`Error loading validations from ${file}:`, e);
+        logger.error({ error: e }, `Error loading validations from ${file}`);
       }
     }
+    
+    logger.info(`Loaded ${this.rules.length} validation rules`);
   }
 
   async validate(code: string, language?: string, context?: string): Promise<ValidationResult[]> {
@@ -76,7 +79,7 @@ export class ValidationManager {
                       });
                   }
               } catch (e) {
-                  console.error(`Invalid regex for rule ${rule.id}: ${rule.pattern}`, e);
+                  logger.error({ error: e }, `Invalid regex for rule ${rule.id}: ${rule.pattern}`);
               }
           }
       }

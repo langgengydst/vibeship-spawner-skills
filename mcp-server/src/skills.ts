@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { glob } from 'glob';
+import { logger } from './logger.js';
 
 export interface Skill {
   id: string;
@@ -73,7 +74,7 @@ export class SkillManager {
                 }
             }
         } catch (e) {
-            console.warn(`Warning: Failed to load sharp-edges.yaml for ${id}`, e);
+            logger.warn({ error: e }, `Warning: Failed to load sharp-edges.yaml for ${id}`);
         }
 
         try {
@@ -86,7 +87,7 @@ export class SkillManager {
                 }
             }
         } catch (e) {
-            console.warn(`Warning: Failed to load validations.yaml for ${id}`, e);
+            logger.warn({ error: e }, `Warning: Failed to load validations.yaml for ${id}`);
         }
 
         try {
@@ -96,7 +97,7 @@ export class SkillManager {
                 collaboration = yaml.load(cContent) as any;
             }
         } catch (e) {
-            console.warn(`Warning: Failed to load collaboration.yaml for ${id}`, e);
+            logger.warn({ error: e }, `Warning: Failed to load collaboration.yaml for ${id}`);
         }
 
         this.skills.push({
@@ -113,9 +114,11 @@ export class SkillManager {
             collaboration: collaboration
         });
       } catch (e) {
-        console.error(`Error loading skill from ${file}:`, e);
+        logger.error({ error: e }, `Error loading skill from ${file}`);
       }
     }
+
+    logger.info(`Loaded ${this.skills.length} skills`);
   }
 
   async listSkills(category?: string): Promise<Partial<Skill>[]> {

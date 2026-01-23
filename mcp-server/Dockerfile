@@ -1,5 +1,5 @@
-# Use Node.js as base image
-FROM node:20-alpine
+# Use Bun as base image
+FROM oven/bun:1-alpine
 
 # Set working directory
 WORKDIR /app
@@ -42,13 +42,13 @@ COPY mcp-server/tsconfig.json .
 COPY mcp-server/src src/
 
 # Install dependencies
-RUN npm install
+RUN bun install
 
 # Build the server
-RUN npm run build
+RUN bun run build
 
 # Expose port
 EXPOSE 3000
 
 # Start server
-CMD ["npm", "start"]
+CMD ["bun", "run", "start"]
