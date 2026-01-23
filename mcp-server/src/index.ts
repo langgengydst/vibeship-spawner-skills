@@ -234,6 +234,7 @@ async ({ task }) => {
 });
 
 const transport = new StreamableHTTPServerTransport({
+  sessionIdGenerator: undefined,
   enableJsonResponse: true,
 });
 

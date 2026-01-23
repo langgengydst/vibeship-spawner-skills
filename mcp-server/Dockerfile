@@ -36,10 +36,9 @@ COPY testing/ testing/
 COPY trading/ trading/
 
 # Setup MCP Server
+WORKDIR /app
+COPY mcp-server /app/mcp-server
 WORKDIR /app/mcp-server
-COPY mcp-server/package.json .
-COPY mcp-server/tsconfig.json .
-COPY mcp-server/src src/
 
 # Install dependencies
 RUN bun install
