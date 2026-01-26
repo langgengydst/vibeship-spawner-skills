@@ -145,19 +145,53 @@ export class SkillManager {
         await this.loadSkills();
     }
 
-    const lowerQuery = query.toLowerCase();
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
     
-    const results = this.skills.filter(skill => {
-        if (category && skill.category !== category) return false;
+    if (terms.length === 0) {
+        let filtered = this.skills;
+        if (category) {
+            filtered = filtered.filter(s => s.category === category);
+        }
         
-        return (
-            skill.name.toLowerCase().includes(lowerQuery) ||
-            skill.id.toLowerCase().includes(lowerQuery) ||
-            (skill.description && skill.description.toLowerCase().includes(lowerQuery))
-        );
+        return filtered.map(s => ({
+            id: s.id,
+            name: s.name,
+            category: s.category,
+            description: s.description ? s.description.substring(0, 200) + (s.description.length > 200 ? '...' : '') : ''
+        }));
+    }
+
+    const scored = this.skills.map(skill => {
+        if (category && skill.category !== category) {
+            return { skill, score: 0 };
+        }
+
+        const lowerName = skill.name.toLowerCase();
+        const lowerId = skill.id.toLowerCase().replace(/-/g, ' ');
+        const lowerDescription = skill.description ? skill.description.toLowerCase() : '';
+
+        let score = 0;
+
+        for (const term of terms) {
+            if (lowerName.includes(term)) {
+                score += 10;
+            }
+            if (lowerId.includes(term)) {
+                score += 10;
+            }
+            if (lowerDescription.includes(term)) {
+                score += 1;
+            }
+        }
+
+        return { skill, score };
     });
 
-    // Return metadata only for search as well
+    const results = scored
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(item => item.skill);
+
     return results.map(s => ({
         id: s.id,
         name: s.name,
