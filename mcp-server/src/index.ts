@@ -7,6 +7,8 @@ import { MemoryManager } from "./memory.js";
 import { SharpEdgeManager } from "./sharp-edges.js";
 import { UnstickManager } from "./unstick.js";
 import { Orchestrator } from "./orchestrate.js";
+import { registerPrompts } from "./prompts.js";
+import { registerResources } from "./resources.js";
 import { log as logger } from "./logger.js";
 import path from "path";
 import { fileURLToPath } from 'url';
@@ -32,7 +34,11 @@ const server = new McpServer({
   version: "1.0.0",
 });
 
-server.registerTool("spawner_list_skills", {
+registerPrompts(server, { skillManager, repoRoot });
+registerResources(server);
+
+server.registerTool("list_available_skills", {
+  description: "List all available skill categories and skills. Use this to explore what capabilities are available.",
   inputSchema: {
     category: z.string().optional().describe("Optional category to filter by"),
   },
@@ -51,7 +57,8 @@ async ({ category }) => {
   }
 });
 
-server.registerTool("spawner_search_skills", {
+server.registerTool("find_expert_skill", {
+  description: "Use this to find specialized expert knowledge. Input a query like 'react patterns' or 'database migration' to find skills that can help you.",
   inputSchema: {
     query: z.string().describe("Search term for skills (name or description)"),
     category: z.string().optional().describe("Optional category to filter by"),
@@ -71,7 +78,8 @@ async ({ query, category }) => {
   }
 });
 
-server.registerTool("spawner_load_skill", {
+server.registerTool("consult_skill", {
+  description: "Load the full context and instructions for a specific skill. Use this when you need deep expertise on a topic.",
   inputSchema: {
     id: z.string().describe("The unique ID of skill to load"),
   },
@@ -96,7 +104,8 @@ async ({ id }) => {
   }
 });
 
-server.registerTool("spawner_validate", {
+server.registerTool("validate_code_implementation", {
+  description: "Validate code against defined patterns and rules. Use this before finalizing any code.",
   inputSchema: {
     code: z.string().describe("Code content to validate"),
     language: z.string().optional().describe("Programming language of code (e.g. typescript, python)"),
@@ -122,7 +131,8 @@ async ({ code, language, context }) => {
   }
 });
 
-server.registerTool("spawner_remember", {
+server.registerTool("access_project_memory", {
+  description: "Store or retrieve project-level decisions and context. Use this to maintain continuity.",
   inputSchema: {
     action: z.enum(["set", "get", "list"]).describe("Action to perform"),
     key: z.string().optional().describe("Key for memory entry"),
@@ -160,7 +170,8 @@ async ({ action, key, value }) => {
   }
 });
 
-server.registerTool("spawner_watch_out", {
+server.registerTool("analyze_risk_sharp_edges", {
+  description: "Scan code for 'sharp edges' - high-risk patterns or known gotchas. Use this proactively.",
   inputSchema: {
     code: z.string().optional().describe("Code content to scan for sharp edges"),
     skill_id: z.string().optional().describe("Specific skill to check for sharp edges"),
@@ -185,7 +196,8 @@ async ({ code, skill_id }) => {
   }
 });
 
-server.registerTool("spawner_unstick", {
+server.registerTool("get_troubleshooting_advice", {
+  description: "Get expert advice when you are stuck or seeing errors. Provides specific solutions based on the problem.",
   inputSchema: {
     problem: z.string().describe("Description of stuck state"),
   },
@@ -209,7 +221,8 @@ async ({ problem }) => {
   }
 });
 
-server.registerTool("spawner_orchestrate", {
+server.registerTool("orchestrate_development_plan", {
+  description: "Create a comprehensive development plan for a high-level task. Break down complex goals into actionable steps.",
   inputSchema: {
     task: z.string().describe("The user's high-level goal"),
   },
@@ -261,7 +274,11 @@ async function runServer() {
   });
 }
 
-runServer().catch((error) => {
-  logger.error("[Server] Fatal error:", error);
-  process.exit(1);
-});
+export { server };
+
+if (import.meta.main) {
+  runServer().catch((error) => {
+    logger.error("[Server] Fatal error:", error);
+    process.exit(1);
+  });
+}
